@@ -1,0 +1,13 @@
+Pointer inconsistencies in 2L
+
+The 2L spec defines the pointer operations as follows:
+
+          | Up: Move the data pointer to the right (> in BF)
+          | Down: Move the data pointer to the left (< in BF)
+
+In Gregor Richards's 2L interpreter, these operations are actually reversed;
+a * encountered going down moves the data pointer to the right, and a *
+encountered going up moves the data pointer to the left.
+
+HelloWorld.2l was tested with this interpreter and therefore assumes this
+incorrect (or at least contrary to the documentation) behavior.

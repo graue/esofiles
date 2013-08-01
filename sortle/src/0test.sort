@@ -1,0 +1,4 @@
+# should print "success", not "0"
+
+a := 0
+success := ""

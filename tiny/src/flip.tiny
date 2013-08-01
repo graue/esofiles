@@ -1,0 +1,22 @@
+000100 "\e[2J\e[0;0H Flip \n"
+000110 "A local california talkshow host once said\n"
+000120 "that the chances of winning the new lottery\n"
+000130 "Were about the same as flipping a coin \n"
+000140 "Twenty five times, either heads or tails in a \n"
+000150 "row. I wonder how long it would take...\n\n"
+000155 "Press enter when ready to begin.. "[?]
+000160 [0]~ h t m p n f 
+000170 [0] r
+000180 [n] p 	[~ 2 %] n 	[f 1 +] f
+000181 [p 185 *]@
+000182 [h 1 +] h 	[190] @
+000185 [t 1 +] t 
+000190 [p n = ! 170 *] @
+000200 [r 1 +] r
+000210 [r m > ! 180 *] @
+000215 [r] m
+000220 "Run :" '%02ld' [r] ? '%10ld' "   Flips:" [f]? 
+000225 "  Heads:" [h]? "  Tails :" [t]? "\n"
+000230 [m 24 > ! 180 *] @
+000240 .
+

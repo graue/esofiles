@@ -1,0 +1,289 @@
+
+bf(in|l|ent|cr|out) {
+		move8from(cr|l)to
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		bf(in|l|ent|cr|out)b
+		move8from(l|cr)to
+		copy8from(cr|out)to zero|out
+		move8from(cr|l)to
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		bf(in|l|ent|cr|out)c
+		move8from(l|cr)to
+		inc8(cr)8ced
+		copy8from(cr|out)to zero|out
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		copy8from(cr|out)to zero|out
+		copy8from(cr|out)to zero|out
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		copy8from(cr|out)to zero|out
+		bf(in|l|ent|cr|out)d
+		move8from(cr|l)to
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		bf(in|l|ent|cr|out)e
+		move8from(l|cr)to
+		copy8from(cr|out)to zero|out
+		move8from(cr|l)to
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		bf(in|l|ent|cr|out)f
+		move8from(l|cr)to
+		dec8(cr)8cni
+		copy8from(cr|out)to zero|out
+		dec8(cr)8cni
+		dec8(cr)8cni
+		dec8(cr)8cni
+		dec8(cr)8cni
+		dec8(cr)8cni
+		dec8(cr)8cni
+		dec8(cr)8cni
+		dec8(cr)8cni
+		copy8from(cr|out)to zero|out
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		copy8from(cr|out)to zero|out
+		dec8(cr)8cni
+		dec8(cr)8cni
+		dec8(cr)8cni
+		dec8(cr)8cni
+		dec8(cr)8cni
+		dec8(cr)8cni
+		copy8from(cr|out)to zero|out
+		dec8(cr)8cni
+		dec8(cr)8cni
+		dec8(cr)8cni
+		dec8(cr)8cni
+		dec8(cr)8cni
+		dec8(cr)8cni
+		dec8(cr)8cni
+		dec8(cr)8cni
+		copy8from(cr|out)to zero|out
+		bf(in|l|ent|cr|out)g
+		move8from(cr|l)to
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		bf(in|l|ent|cr|out)h
+		move8from(l|cr)to
+		inc8(cr)8ced
+		copy8from(cr|out)to zero|out
+		bf(in|l|ent|cr|out)i
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		copy8from(cr|out)to zero|out
+} (in|l|ent|cr|out)a
+
+bf(in|l|ent|cr|out) {
+	8zeros(cr|allzero)set allzero |[
+		move8from(l|cr)to
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		move8from(cr|l)to
+		dec8(cr)8cni
+		bf(in|l|ent|cr|out)b
+	] ent
+} (in|l|ent|cr|out)b
+
+bf(in|l|ent|cr|out) {
+	8zeros(cr|allzero)set allzero |[
+		move8from(l|cr)to
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		move8from(cr|l)to
+		dec8(cr)8cni
+		bf(in|l|ent|cr|out)c
+	] ent
+} (in|l|ent|cr|out)c
+
+bf(in|l|ent|cr|out) {
+	8zeros(cr|allzero)set allzero |[
+		dec8(cr)8cni
+		bf(in|l|ent|cr|out)d
+	] ent
+} (in|l|ent|cr|out)d
+
+bf(in|l|ent|cr|out) {
+	8zeros(cr|allzero)set allzero |[
+		move8from(l|cr)to
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		move8from(cr|l)to
+		dec8(cr)8cni
+		bf(in|l|ent|cr|out)e
+	] ent
+} (in|l|ent|cr|out)e
+
+bf(in|l|ent|cr|out) {
+	8zeros(cr|allzero)set allzero |[
+		move8from(l|cr)to
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		move8from(cr|l)to
+		dec8(cr)8cni
+		bf(in|l|ent|cr|out)f
+	] ent
+} (in|l|ent|cr|out)f
+
+bf(in|l|ent|cr|out) {
+	8zeros(cr|allzero)set allzero |[
+		dec8(cr)8cni
+		bf(in|l|ent|cr|out)g
+	] ent
+} (in|l|ent|cr|out)g
+
+bf(in|l|ent|cr|out) {
+	8zeros(cr|allzero)set allzero |[
+		move8from(l|cr)to
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		inc8(cr)8ced
+		move8from(cr|l)to
+		dec8(cr)8cni
+		bf(in|l|ent|cr|out)h
+	] ent
+} (in|l|ent|cr|out)h
+
+bf(in|l|ent|cr|out) {
+	8zeros(cr|allzero)set allzero |[
+		dec8(cr)8cni
+		bf(in|l|ent|cr|out)i
+	] ent
+} (in|l|ent|cr|out)i
+
+8zeros(x|b) {
+	x|[x|[x|[x|[x|[x|[x|[x|[b|b]|x]|x]|x]|x]|x]|x]|x]|x
+} (x|b)set
+
+move8from(a|b) {
+	a t a t a t a t a t a t a t a
+	b t b t b t b t b t b t b t b
+} (a|b)to
+
+copy8from(a|b) {
+	a[u|u]t u v a[u|u]t u v a[u|u]t u v a[u|u]t u v
+	a[u|u]t u v a[u|u]t u v a[u|u]t u v a[u|u]t u v
+	t a t a t a t a t a t a t a t a
+	v b v b v b v b v b v b v b v b
+} (a|b)to
+
+dec8(s) {
+	<< If s is all zeroes, dec will recurse endlessly. To avoid >>
+	<< that, add 256 here if bits 0..7 are all 0. We need to do >>
+	<< this anyway at one end or the other, so that bits beyond >>
+	<< #7 are not affected if the inc/dec rolls over.           >>
+	s|[s|[s|[s|[s|[s|[s|[s|[inc(s)ced]|s]|s]|s]|s]|s]|s]|s]|s
+
+	dec(s)cni
+} (s)8cni
+
+inc(s) {
+	s [ inc(s)ced ] | s
+} (s)ced
+
+str(s|count) {
+        s [
+                s temp s temp s temp s temp
+                s temp s temp s temp s temp
+                count str(s|count)len | count
+                temp s temp s temp s temp s
+                temp s temp s temp s temp s
+        ] s
+} (s|count)len
+
+copyrev(a|b) {
+	a [
+		a[u|u]t u v a[u|u]t u v a[u|u]t u v a[u|u]t u v
+		a[u|u]t u v a[u|u]t u v a[u|u]t u v a[u|u]t u v
+		v b v b v b v b v b v b v b v b
+		zero | b
+		copyrev(a|b)stream
+		t a t a t a t a t a t a t a t a
+	] a
+} (a|b)stream
+
+dump(s|ent) {
+	s [
+		s ent s ent s ent s ent
+		s ent s ent s ent s ent
+		dump(s|ent)stream
+	] ent
+} (s|ent)stream
+
+(ent|in) {
+	<< run the brainfuck program >>
+	bf(in|l|ent|cr|temp_out)a
+	<< copy the output >>
+	copyrev(temp_out|out)stream
+	<< unrun the brainfuck program to erase temp_out, cr, and l, and empty the bit bucket >>
+	a(temp_out|cr|ent|l|in)fb
+	<< dump the input into the bit bucket >>
+	dump(in|ent)stream
+} (out|ent)

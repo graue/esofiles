@@ -1,0 +1,16 @@
+00010 "\e[2J\e[0;0HI Guess -- I guess your number...\n"
+00015 [0] ~ 
+00020 "Think of a number bewteen 1 and 999, Got it?\n"
+00030 [ 1 ] b c  [999] t "hit any key..." [?] 
+00040 [t b + 2 /] g                                      # [~ t b - % b +] g  
+00050 "\n\nMy number " [c] ? " guess is " [g] ? "\n"
+00055 [c 1 +] c
+00060 "Is that   1:too big          2:too small       0:just right ?" [?] r
+00070            [r 1 = 100 *] @    [r 2 = 110 *] @   [r 0 = 120 *] @
+00071 [60] @
+00100 [g] t [40] @
+00110 [g] b [40] @
+00120 "\nHey! I got it in " [c]? " guesses!\n"
+00130 "\nTry again?    0:yes 1:no " [? 0 = 20 *] @
+00140 "\nOk, See you later\n\n" .
+ 

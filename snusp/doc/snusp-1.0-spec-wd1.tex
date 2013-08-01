@@ -1,0 +1,553 @@
+\documentclass[a4paper]{article}
+
+\makeatletter
+
+%\newenvironment{dashdescription} {\list{}{\labelwidth\z@
+%\itemindent-\leftmargin \let\makelabel\dashdescriptionlabel}} {\endlist}
+%
+%\newcommand*\dashdescriptionlabel[1]{\hspace\labelsep \normalfont\bfseries
+%#1---}
+%
+%\makebox[\textwidth]{\hrulefill}
+
+\newcommand\comment[2]{\begin{description} \item[#1] #2 \end{description}}
+
+\newcommand\rationale[1]{\comment{Rationale:}{#1}}
+
+\newcommand\note[1]{\comment{Note:}{#1}}
+
+\newcommand\issue[1]{{\comment{\textit{Issue:}}{\it #1}}}
+
+\newcommand\todo[1]{{\comment{\textit{Todo:}}{\it #1}}}
+
+\makeatother
+
+\title{\textsc{SNUSP} 1.0 Language Specification\\Working Draft 1}
+
+\author{Daniel Brockman}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+
+%=============================================================================
+
+
+\section{Introduction}
+
+The \textsc{SNUSP} language was created in September, 2003 to develop a
+complete and utter fucking waste of time.  (The name \textsc{SNUSP} is a
+recursive acronym for ``\textsc{SNUSP}'s Not \textsc{Unix}, but Structured
+\textsc{Path}.'')  We are currently evaluating the possibilities of developing
+a \textsc{SNUSP} operating system kernel.  However, variants of the
+\textsc{SNUSP} system, which use the \textsc{Linux} kernel, are already in
+use; though these systems are often referred to as ``\textsc{Linux},'' they
+are more accurately called ``\textsc{SNUSP}/\textsc{Linux} systems.''
+
+\issue{This is not even funny.  How do you write an introduction to something
+like this?}
+
+
+
+\subsection{History}
+
+One rainy night in August, 2003, Francis Rogers was sitting in his apartment
+in [where his lives] experimenting with \textsc{C}.  Inspired by the
+remarkably beautiful and symmetrical eight-instruction classic
+\textsc{Brainfuck}, as well as the crazy multi-dimensional stack-shuffling
+language \textsc{Befunge}, he was writing an interpreter for a language he
+would later come to call \textsc{Path}.  Borrowing the basic instructions and
+linear memory model from \textsc{Brainfuck}, and the two-dimensional code
+space from \textsc{Befunge}, he created a language both simple to understand
+and simple to use.  Once Rogers realized that he had created something
+interesting---that is, once he got the interpreter to run a
+spectacular bell-emmitting program---he immediately posted the source code and
+a quick rundown on the language to the Something Awful
+Forums\footnote{\texttt{<http://forums.somethingawful.com/>}} for peer review.
+
+\textsc{Path} was highly appreciated as a respectable middle-ground by
+everyone who adored \textsc{Brainfuck} but was scared by \textsc{Befunge} (or
+vice versa), and a few who seemed new to programming but decided to pick up
+\textsc{Path} because it looked so cute.  Not very surprisingly, everyone else
+thought the language looked horribly obfuscated, and immediately started to
+question the sanity of everyone involved with its development.  Nevertheless,
+several \textsc{Path} tools created by enthusiasts popped up over the course
+of a week: interpreters written in \textsc{C}, \textsc{C++}, \textsc{Perl},
+and \textsc{Java}; debuggers for \textsc{Tk}, \textsc{Windows}, and
+\textsc{Swing}; and a simple web-based interpreter interface written in
+\textsc{PHP}.
+
+The original \textsc{Path} was not perfect, however, and as more suggestions
+for improving \textsc{Path} were made and implemented by the interpreter
+writers, the language borders started to blur.  Every \textsc{Path} coder had
+his own flavour---\textsc{SNUSP} was one of the more well-defined ones---but
+noone could say what \textsc{Path} really was anymore.  To sort out this mess,
+Rogers announced that he wished to keep the name ``\textsc{Path}'' for his
+original version of the language, and asked everybody who wanted changes to
+fork off under a new name (no pun intended).  This opened the door for the
+\textsc{SNUSP} project to begin serious work on defining a completely
+independent new language derived from traditional \textsc{Path}.
+
+
+
+\subsection{Goals}
+
+The \textsc{SNUSP} language, with its roots in \textsc{Path}, is intended to
+be an \ae sthetically pleasing, modular language with an orthogonal
+instruction set and a bright future.  This specification defines three
+increasingly sophisticated levels of the \textsc{SNUSP} language:
+
+\begin{description}
+
+\item[\textsc{Core SNUSP}] is---like traditional \textsc{Path}---essentially a
+modification of \textsc{Brainfuck} to use a two-di\-men\-sion\-al code space;
+
+\item[\textsc{Modular SNUSP}] is an extension of \textsc{Core SNUSP}, adding a
+subroutine mechanism; finally,
+
+\item[\textsc{Bloated SNUSP}] is an extension of \textsc{Modular SNUSP},
+adding support for indeterminism, concurrency, and a second data memory
+dimension.
+
+\end{description}
+
+The first and second levels are theoretically complete; it it unlikely that
+future versions of this specification will alter them.  The third level, on
+the other hand, is specifically designated for new features---particularly
+ones that add bloat.
+
+Plans exist on developing a standard library in \textsc{Modular SNUSP}, with
+the goal of increasing the viability of \textsc{SNUSP} as a development
+platform for mission-critical applications.  It will factor out certain basic
+building blocks and provide subroutines for mathematical functions, string
+manipulation, etc.
+
+
+%=============================================================================
+
+
+\section{Memory}
+
+There are three kinds of run-time memory in \textsc{SNUSP}:
+
+\begin{description}
+
+\item[code space] contains run-time representations of program source;
+
+\item[data memory] (or simply ``memory'') contains integers that are
+accessed and modified by \textsc{SNUSP} programs when carrying out their task;
+finally,
+
+\item[the call stack] (used in \textsc{Modular SNUSP}) is, in familiar terms,
+a FILO queue storing the return addresses of subroutine calls, i.e.,
+\textbf{enter} instructions.
+
+\end{description}
+
+
+
+\subsection{Memory Units}
+
+Code space and data memory are both two-dimensional and made up of units
+called, respectively, \emph{code cells} and \emph{data cells}.  The call stack
+is one-dimensional and made up of \emph{stack frames}.
+
+\note{The second data memory dimension can be exploited only by programs
+written in \textsc{Bloated SNUSP}.  In lower levels of \textsc{SNUSP}, data
+memory is effectively one-dimensional, since the data pointer can only move in
+two opposite directions---\textbf{left} and \textbf{right}.}
+
+\note{The term ``stack frame'' normally refers to both the return address and
+the local data of a subroutine.  However, in \textsc{SNUSP} there is no such
+thing as ``local data,'' and return addresses are completely separated from
+data memory.  As a practical convention, most subroutines guarantee the
+invariance of previous memory; but since the language does not actually define
+subroutines, there is nothing to enforce this.}
+
+
+
+\subsection{Accessibility}
+
+Unlike in \textsc{Befunge}, code space is completely inaccessible for
+inspection or change by \textsc{SNUSP} programs; it is only used internally by
+the interpreter.  Thus, once the interpreter has loaded a program, code space
+does not change until another program is loaded.
+
+Data memory, on the other hand, is completely accessible to \textsc{SNUSP}
+programs as mutable working storage---just like in \textsc{Brainfuck}.
+
+The call stack is accessible to \textsc{SNUSP} programs as a side-effect of
+the \textbf{enter} and \textbf{leave} instructions.  However, it cannot be
+randomly accessed.
+
+
+
+\subsection{Limitations}
+
+The following limitations apply to the three memory sections:
+
+\begin{itemize}
+
+\item Code space is bounded in all directions, and it is impossible for the
+instruction pointer to point outside it.
+
+\item Data memory can grow as large as physical memory restrictions allow it
+to.  However, it is bounded in both dimensions:  If at any point the number of
+times the data pointer has been moved to the left exceeds the number of times
+it has been moved to the right, the resulting behavior is undefined.  The
+equivalent is true for the orthogonal dimension: The number of moves upwards
+must not exceed the number of moves downwards.
+
+\rationale{This does not practically impose a limit on normal \textsc{SNUSP}
+programs, but simplifies the implementation of interpreters.}
+
+\issue{This is the most obvious irregulatity that I know about in the SNUSP
+language.  Should we define what happens if the data pointer falls off?  We
+have three choices:
+
+\begin{itemize}
+
+\item Leave it undefined.  This leaves a hole in the language, but maybe this
+is the way it should be.
+
+\item Define the behavior.  Terminating the process seems to be the only
+reasonable choice here, but it is not elegant.
+
+\item Remove the boundaries altogether, eliminating the issue.  This seems
+to be the most elegant solution.  Can you live with this, interpreter writers?
+
+\end{itemize}}
+
+\item The call stack is unbounded and can grow as high as physical memory
+limitations allow it to.
+
+\end{itemize}
+
+
+%=============================================================================
+
+
+\section{Syntax}
+
+\textsc{SNUSP} source files are read and transplanted into code space one line
+at a time.  A conforming \textsc{SNUSP} interpreter is required to recognize
+all of the following character sequences as end-of-line indicators:
+
+\begin{itemize}
+
+\item carriage return (13), line feed (10)
+
+\item carriage return (13)
+
+\item line feed (10)
+
+\end{itemize}
+
+Further, when loading a source file, conforming interpreters must behave as if
+all lines were padded to the right with spaces (32), so as to make all lines
+equally long.
+
+
+
+\subsection{Instruction Characters}
+
+When each line is read into code memory from the source file, the source
+characters are translated to instructions according to the following table:
+
+\begin{center}\begin{tabular}{|ccc|}
+
+\hline
+
+\textsc{ASCII} & Glyph & Instruction \\
+
+\hline \hline
+
+\multicolumn{3}{|c|}{\textsc{Bloated SNUSP}} \\
+
+37 & \verb"%" & \textbf{rand} \\
+
+38 & \verb"&" & \textbf{split} \\
+
+59 & \verb";" & \textbf{down} \\
+
+58 & \verb":" & \textbf{up} \\
+
+\hline
+
+\multicolumn{3}{|c|}{\textsc{Modular SNUSP}} \\
+
+64 & \verb"@" & \textbf{enter} \\
+
+35 & \verb"#" & \textbf{leave} \\
+
+\hline
+
+\multicolumn{3}{|c|}{\textsc{Core SNUSP}} \\
+
+62 & \verb">" & \textbf{right} \\
+
+60 & \verb"<" & \textbf{left} \\
+
+43 & \verb"+" & \textbf{incr} \\
+
+45 & \verb"-" & \textbf{decr} \\
+
+44 & \verb"," & \textbf{read} \\
+
+46 & \verb"." & \textbf{write} \\
+
+47 & \verb"/" & \textbf{ruld} \\
+
+92 & \verb"\" & \textbf{lurd} \\
+
+33 & \verb"!" & \textbf{skip} \\
+
+63 & \verb"?" & \textbf{skipz} \\
+
+\hline
+
+32 & \verb" " & \textbf{noop} \\
+
+61 & \verb"=" & \textbf{noop} \\
+
+124 & \verb"|" & \textbf{noop} \\
+
+\hline
+
+\end{tabular}\end{center}
+
+All other characters translate to \textbf{noop} instructions.
+
+
+
+\subsection{The Starting Indicator}
+
+The \emph{starting indicator} tells the interpreter where to begin execution.
+If the source file contains any dollar signs (36), the first one to appear is
+the starting indicator; otherwise, the first character---whatever it may
+be---is the starting indicator.
+
+
+
+%=============================================================================
+
+
+\section{Execution}
+
+A \textsc{SNUSP} program may be executed indirectly through an interpreter, or
+directly as a stand-alone process with a built-in interpreter.  In any case,
+when a \textsc{SNUSP} program is invoked, there is no way to pass arguments to
+it; the only way to give it input it is through the standard input stream.
+The program, however, can give output---apart from through the standard output
+stream---via the process exit code.
+
+
+
+\subsection{Variables}
+
+During execution three variables are used to keep track of the program state,
+apart from the various kinds of memory:
+
+\begin{description}
+
+\item[the instruction pointer] that points to an instruction in code space
+called the \emph{current instruction},
+
+\item[the data pointer] that points to a cell in data memory called the
+\emph{current data cell}, and
+
+\item[the current direction] that indicates direction in which the instruction
+pointer is moving.
+
+\end{description}
+
+
+
+\todo{Maybe add a section about threads here.}
+
+
+\subsection{Ticks and Turns}
+
+At the start of execution, a thread is created, its instruction pointer is set
+to point to the cell that contains the starting indicator, and its current
+direction is set to \textbf{right}.  Its call stack starts out empty and the
+data memory originally contains nothing but zeroes.
+
+Execution of a \textsc{SNUSP} program is then carried out in small steps
+called \emph{ticks}.  Each thread gets one \emph{turn} per tick, but the order
+in which the turns are taken is undefined.  The thread that is currently
+taking its turn is called the \emph{active thread}.  A turn proceeds as
+follows:
+
+\begin{enumerate}
+
+\item The current instruction is carried out.
+
+\item The instruction pointer is moved one step in the current direction
+unless this would cause the instruction pointer to point outside code space,
+in which case the active thread is \emph{stopped}.
+
+\end{enumerate}
+
+When a thread is stopped, all its resources are released and it ceases taking
+turns.  When all threads are stopped, the process terminates with the exit
+code set to the value of the current memory cell of the last thread to take a
+turn.
+
+
+%=============================================================================
+
+
+\section{Instructions}
+
+All instructions in \textsc{SNUSP} are atomic, in the sense that there are no
+real syntactic or semantic restrictions on how they are to be combined.  Some
+instructions access and/or mutate the current memory cell, but no other parts
+of data memory are ever touched.
+
+The \textbf{noop} instruction is special, as it actually denotes \emph{lack}
+of any instruction at all:
+
+\begin{description}
+
+\item[noop] (\verb" ", \verb"|", \verb"=") Do nothing.
+
+\end{description}
+
+
+
+\subsection{\textsc{Core SNUSP}}
+
+The first six instructions in this set---\textbf{left}, \textbf{right},
+\textbf{incr}, \textbf{decr}, \textbf{read}, and \textbf{write}---are
+identical to their \textsc{Brainfuck} counterparts.  The remaining
+four---\textbf{ruld}, \textbf{lurd}, \textbf{skip}, and
+\textbf{skipz}---replace the pair of looping instructions found in
+\textsc{Brainfuck}---\verb"[" and \verb"]"---as general-purpose flow control
+instructions that can be combined to create loops and similar code structures.
+
+\begin{description}
+
+\item[left] (\verb">") Move the data pointer one cell to the left.
+
+\item[right] (\verb"<") Move the data pointer one cell to the right.
+
+\item[incr] (\verb"+") If the value of the current data cell is less than the
+maximum allowed value, increment it; otherwise, set it to zero.
+
+\item[decr] (\verb"-") If the value of the current data cell is greater than
+zero, decrement it; otherwise, set it to the maximum allowed value.
+
+\item[read] (\verb",") Read a byte from standard input and put it in the
+current data cell.  If the input stream is exhausted, block until more data
+becomes available.
+
+\item[write] (\verb".") If the value of the current data cell is
+representable by a single byte, write this byte to standard output.
+Otherwise, the behavior is implementation-defined.
+
+\issue{Ruling run-time errors out, there are a number of different methods for
+squeezing a 32-bit value into a byte: \begin{itemize} \item doing it modulo
+the maximum value, \item outputting zero, and \item outputting the maximum
+value. \end{itemize}  Should we choose one of these?}
+
+\item[ruld] (\verb"\") If the current direction is \begin{itemize} \item
+\textbf{left}, change it to \textbf{up} \item \textbf{right}, change it to
+\textbf{down}, \end{itemize} and vice versa. (Mnemonic:
+right$\Longleftrightarrow$up, left$\Longleftrightarrow$down)
+
+\item[lurd] (\verb"/") If the current direction is \begin{itemize} \item
+\textbf{left}, change it to \textbf{up} \item \textbf{right}, change it to
+\textbf{down}, \end{itemize} and vice versa.  (Mnemonic:
+left$\Longleftrightarrow$up, right$\Longleftrightarrow$down)
+
+\item[skip] (\verb"!") Move the instruction pointer one step in the current
+direction.
+
+\item[skipz] (\verb"?") If the value of the current data cell is zero, move the
+instruction pointer one step in the current direction; otherwise, do nothing.
+
+\end{description}
+
+
+
+\subsection{\textsc{Modular SNUSP}}
+
+This level adds two additional instructions, which provide the means for
+implementing subroutines in \textsc{SNUSP}.
+
+\begin{description}
+
+\item[enter] (\verb"@") Push the current direction and instruction pointer to
+the call stack.
+
+\item[leave] (\verb"#") If the call stack is empty, stop the active thread;
+otherwise, pop the topmost stackframe, set the current direction and
+instruction pointer to the values recieved from the stack, and move the
+instruction pointer one step in the current direction.
+
+\end{description}
+
+The following example demonstrates how to implement a subroutine called
+\verb"ECHO", using the \textbf{enter} and \textbf{leave} instructions, and how
+to call it twice from the main program execution path:
+
+\begin{verbatim}
+
+       /==!/======ECHO==,==.==#
+       |   |
+$==>==@/==@/==<==#
+
+\end{verbatim}
+
+
+
+\subsection{\textsc{Bloated SNUSP}}
+
+This level adds four new instructions, for a grand total of sixteen
+\textsc{SNUSP} instructions.  The first two simply add ways of moving through
+the second data memory dimension; this is particularly useful in the context
+of concurrency, which is provided by another instruction for starting new
+threads.  The last instruction provides a way to obtain random numbers in
+arbitrary ranges.
+
+\begin{description}
+
+\item[up] (\verb":") Move the data pointer one cell upwards.
+
+\item[down] (\verb";") Move the data pointer one cell downwards.
+
+\item[split] (\verb"&") Create a new thread, and move the instruction pointer
+of the old thread one step in the current direction.
+
+\item[rand] (\verb"%") Set the value of the current data cell to a random
+number between zero and the current value of the cell, inclusive.
+
+\end{description}
+
+All threads share a single code space and a single data memory; however, each
+thread has its own instruction pointer, direction, memory pointer, and call
+stack.  Upon thread creation, the instruction pointer, direction, and memory
+pointer is copied from the creating thread; the call stack, on the other hand,
+is created empty.
+
+\todo{Some or all of the above should be moved.}
+
+The following example demonstrates how to print ``\verb"!"'' until a key is
+pressed, using two concurrent threads:
+
+\begin{verbatim}
+
+                    /==.==<==\       
+                    |        |       
+     /+++++++++++==&\==>===?!/==<<==#
+     \+++++++++++\  |                
+$==>==+++++++++++/  \==>==,==#       
+
+\end{verbatim}
+
+\end{document}
+

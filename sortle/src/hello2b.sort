@@ -1,0 +1,3 @@
+# like hello2.sort, but testing escape sequences in strings
+hello := "hello, \22world\22\0a"
+world := "hello, \22world\22\0a"

@@ -1,0 +1,12 @@
+This is not a full program (although it can be run as such), but rather a
+reusable subroutine.  Therefore, input is taken directly from memory, and output
+is stored back in memory and on the stack.  There is no user interaction.
+
+Input:  Numerator in (1,1)
+        Denominator is hard-coded 2
+Output: Quotient in (1,1)
+        Remainder pushed on the stack
+        Nothing else cluttered
+
+The algorithm takes O(numerator) time.  There might exist a faster algorithm but
+I don't know it.

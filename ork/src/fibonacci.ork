@@ -1,0 +1,76 @@
+# Copyright (c) 2005 Gregor Richards
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+There is such a thing as a fibonacci generator.
+A fibonacci generator has a result which is a number.
+A fibonacci generator can fibonacci a number.
+A fibonacci generator can recursiveFibonacci a number.
+
+There is such a thing as a fibonacci recursor.
+A fibonacci recursor can fibonacciRecurse a number.
+A fibonacci recursor can subFibonacciRecurse a number.
+A fibonacci recursor has a result which is a number.
+
+When a fibonacci generator is to fibonacci a number:
+There is a mathematician called Fibonacci.
+Fibonacci's first operand is the number.
+Fibonacci's second operand is 1.
+Fibonacci is to compare.
+If Fibonacci says it's greater then I am to recursiveFibonacci the number.
+If Fibonacci says it's equal then result is the number.
+If Fibonacci says it's less then result is the number.
+
+When a fibonacci generator is to recursiveFibonacci a number:
+There is a mathematician called Fibonacci.
+There is a number called b.
+Fibonacci's first operand is the number.
+Fibonacci's second operand is 1.
+Fibonacci is to subtract.
+I am to fibonacci Fibonacci's result.
+b is my result.
+Fibonacci's second operand is 2.
+Fibonacci is to subtract.
+I am to fibonacci Fibonacci's result.
+Fibonacci's first operand is b.
+Fibonacci's second operand is result.
+Fibonacci is to add.
+My result is Fibonacci's result.
+
+When a fibonacci recursor is to fibonacciRecurse a number:
+There is a mathematician called Fibonacci.
+Fibonacci's first operand is the number.
+Fibonacci's second operand is 0.
+Fibonacci is to compare.
+If Fibonacci says it's greater then I am to subFibonacciRecurse the number.
+
+When a fibonacci recursor is to subFibonacciRecurse a number:
+There is a mathematician called Fibonacci.
+There is a fibonacci generator called fibogen.
+There is a scribe called StdOut.
+Fibonacci's first operand is the number.
+Fibonacci's second operand is 1.
+Fibonacci is to subtract.
+I am to fibonacciRecurse Fibonacci's result.
+fibogen is to fibonacci the number.
+StdOut is to write fibogen's result.
+StdOut is to write "\n"
+
+When this program starts:
+There is a fibonacci recursor called fibo.
+There is a number called inp.
+inp is 25.
+fibo is to fibonacciRecurse inp.

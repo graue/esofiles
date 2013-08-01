@@ -1,0 +1,43 @@
+; rot13.pt
+; use lowercase only
+
+LBL begin
+INP 1           ;input character in #1
+DEC 1 eof       ;decrement #1, if 0 jump to 'eof'
+INC 1           ;increment #1 again
+CPY *1 2        ;make a copy to work on in #2 
+CPY 97 3        ;ASCII 'a' to subtract
+
+LBL subtractA
+DEC 3 done      ;decrement #3, jump to done when 0 (and 97 has been subtracted)
+DEC 2 nochange  ;decrement #2, if it's 0 jump to nochange (as it's no letter)
+DEC 0 subtractA ;jump back
+LBL done
+
+; #2 now has 0-25 for a-z. Subtract 13, and wrap around
+CPY 13 3        ;13 to subtract
+LBL encode
+DEC 3 encoded   ;decrement #3, jump to encoded when 0
+DEC 2 wrap      ;decrement #2, wrap if 0
+DEC 0 encode
+LBL wrap        ;wrap around
+CPY 25 2        ;set 2 to 25
+DEC 0 encode
+LBL encoded
+
+; now make it an ASCII character and output it
+CPY 97 3        ;ASCII 'a' to add
+LBL ascii
+DEC 3 asciidone
+INC 2
+DEC 0 ascii
+LBL asciidone
+OUT *2          ;output
+DEC 0 begin     ;go get another character
+
+;no change
+LBL nochange
+OUT *1          ;nothing should be changed
+DEC 0 begin     ;go get another character
+
+LBL eof

@@ -1,0 +1,17 @@
+## Trivial Beturing program that swaps a's and b's along a line.
+## $Id$
+# D(40, 4)
+# @(40, 4)
+$bbab$
+# C(0, 0)
+# @(0, 0)
+ . . . . . .
+*v*<*<*<*>*v
+aa .ab . .aa .
+>/*>./*^*^</*v
+bb .ba . .bb .
+>/*^./*^*^</*v
+$$ .$$ . .$$ .
+>/*^</*>*^.@*v
+         . . .
+*@      *^*<*<

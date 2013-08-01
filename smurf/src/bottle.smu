@@ -1,0 +1,38 @@
+"\"1 bottle of beer on the wall.\\n\\n1 bottle of beer on the wall\\n1 bottle
+ of beer\\nTake one down, pass it around\\n0 bottles of beer on the wall.
+\\n\\n\"o\"\"x""10"p
+"9876543210""numbers"p
+"9876543210""count"p
+"count"g
+h
+" bottles of beer"
++
+"line1"p
+
+"line1"g
+o
+" on the wall\n"o
+"line1"g
+o
+"\n"o
+"Take one down, pass it around\n"o
+
+"count"g
+t
+"count"p
+
+"count"gg
+"10"gq+
+"\"10\"p\"9876543210\"\"numbers\"p"+
+"count"gq+
+"\"count\"p\"count\"gh\" bottles of beer\"+\"line1\"p\"line1\"go\" on the
+ wall.\\n\\n\"o\"line1\"go\" on the wall\\n\"o\"line1\"go\"\\n\"o\"Take one down, pass it around\\n\"o\"count\"gt\"count\"p
+\"count\"gg\"10\"gq+\"\\\"10\\\"p\\\"9876543210\\\"\\\"numbers\\\"p\"+\"count\"gq+"
+"\"quine2\"p\"quine1\"p\"quine1\"g+\"quine1\"gq+\"quine2\"gq+\"quine2\"g+x"
+"quine2"p
+"quine1"p
+"quine1"g+
+"quine1"gq+
+"quine2"gq+
+"quine2"g+
+x

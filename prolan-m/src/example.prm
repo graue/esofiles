@@ -1,0 +1,14 @@
+(aa,b) (ba,a) (bc,a) (c,start) (d,) (b,finish) (,)
+
+Example program from the PROLAN/M documentation. If you run it with the 
+input string "abcabcd", the result is "finish", going through the 
+following steps:
+
+abcabcd
+aaabcd
+babcd
+abcd
+aad
+bd
+b
+finish

@@ -1,0 +1,88 @@
+/=x//
+# We don't want the line above running until the next iteration,
+# so guard it with a loop. The same loop also checks for =9 and
+# prevents anything further happening in that case.
+/=9/!
+  # -- is used to mark the current location within the program.
+  /--/=1/!
+    /^/--/
+  # =x is needed to mark the end of the output. Also output a newline!
+  /=x/=1/!
+    /^/=n=x/
+  # If there isn't a stack, create one. %% is used as a stack marker.
+  /%%/=1/!
+    /$/%%/
+  # Turn temporary brackets {{ }} back to =( =)
+  /\{\{/=(/
+  /\}\}/=)/
+  # The next block can leave the temporary bracket reversion until later.
+  /=1/!
+    # '()': push onto stack.
+    /--=\(/@
+      # Change inner brackets at the start of the program to {{ }} temporarily.
+      /--=\(([^)]*?)=\(([^)]*?)=\)/--=\($1\{\{$2\}\}/
+      # Move the set from the program to the stack.
+      /--(=\([^)]*?\))(.*?)%%/--$2%%$1/
+    # ':': duplicate the TOS.
+    /--=\:/@
+      # Change inner brackets at the start of the stack to {{ }} temporarily.
+      /%%=\(([^)]*?)=\(([^)]*?)=\)/%%=\($1\{\{$2\}\}/
+      # Simultaneously remove the : and duplicate the TOS.
+      /--=\:(.*?)%%(=\([^)]*?\))/--$1%%$2$2/
+    # 'a': enclose the TOS in brackets.
+    /--a/@
+      # Change inner brackets at the start of the stack to {{ }} temporarily.
+      /%%=\(([^)]*?)=\(([^)]*?)=\)/%%=\($1\{\{$2\}\}/
+      # Simultaneously remove the a and enclose the TOS.
+      /--a(.*?)%%(=\([^)]*?\))/--$1%%=\($2=\)/
+    # 'S': output the dequoted TOS, popping it.
+    /--S/@
+      # Change inner brackets at the start of the stack to {{ }} temporarily.
+      /%%=\(([^)]*?)=\(([^)]*?)=\)/%%=\($1\{\{$2\}\}/
+      # Move the TOS to the end of the output area, and remove the S.
+      /=n=x(.*?)--S(.*?)%%=\(([^)]*?)=\)/$3=n=x$1--$2%%/
+    # '!': pop the TOS.
+    /--=\!/@
+      # Change inner brackets at the start of the stack to {{ }} temporarily.
+      /%%=\(([^)]*?)=\(([^)]*?)=\)/%%=\($1\{\{$2\}\}/
+      # Simultaneously remove the ! and the TOS.
+      /--=\!(.*?)%%=\([^)]*?\)/--$1%%/
+    # '~': swap the top two stack elements.
+    /--=\~/@
+      # Change inner brackets at the start of the stack to {{ }} temporarily.
+      /%%=\(([^)]*?)=\(([^)]*?)=\)/%%=\($1\{\{$2\}\}/
+      # Change inner brackets in the second stack element to {{ }} temporarily.
+      /%%=\(([^)]*?)=\)=\(([^)]*?)=\(([^)]*?)=\)/%%=\($1=\)=\($2\{\{$3\}\}/
+      # Simultaneously remove the ~ and swap TOS and SE2.
+      /--=\~(.*?)%%(=\([^)]*?\))(=\([^)]*?\))/--$1%%$3$2/
+    # '*': concatenate the TOS after the second stack element.
+    /--=\*/@
+      # Change inner brackets at the start of the stack to {{ }} temporarily.
+      /%%=\(([^)]*?)=\(([^)]*?)=\)/%%=\($1\{\{$2\}\}/
+      # Change inner brackets in the second stack element to {{ }} temporarily.
+      /%%=\(([^)]*?)=\)=\(([^)]*?)=\(([^)]*?)=\)/%%=\($1=\)=\($2\{\{$3\}\}/
+      # Simultaneously remove the ~ and concatenate SE2 and TOS.
+      /--=\*(.*?)%%=\(([^)]*?)=\)=\(([^)]*?)=\)/--$1%%=\($3$2=\)/
+    # Loop back if there are any non-^ commands left to run.
+    /--[aS]/<
+    /--=[(:!~*]/<
+  # '^': move TOS to the program, dequoting it. We then need {{ }} reversion.
+  /--=\^/@
+    # Change inner brackets at the start of the stack to {{ }} temporarily.
+    /%%=\(([^)]*?)=\(([^)]*?)=\)/%%=\($1\{\{$2\}\}/
+    # Simultaneously remove the ^ and move the TOS to the start of the program.
+    /--=\^(.*?)%%=\(([^)]*?)=\)/--$2$1%%/
+  # Loop back if there are any commands left to run.
+  /--[aS]/<
+  /--=[(:!~^*]/<
+  # Loop back if dequoting's needed.
+  /\{\{/<
+  /\}\}/<
+  # Clear the stack and IP in preparation for the next program to run.
+  /=x./*
+    /=x./=x/
+  # Remove =1 for the first iteration. Don't loop back afterwards!
+  /=1/*
+    /=1//
+  .
+.

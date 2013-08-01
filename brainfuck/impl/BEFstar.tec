@@ -1,0 +1,192 @@
+HK
+
+!@i/,+[-.,+]/!
+
+!@i/>+++++++++[<+++++++++++>-]<[>[-]>[-]<<[>+>+<<-]>>[<<+>>-]>>>
+[-]<<<+++++++++<[>>>+<<[>+>[-]<<-]>[<+>-]>[<<++++++++++>>>+<
+-]<<-<-]+++++++++>[<->-]>>+>[<[-]<<+>>>-]>[-]+<<[>+>-<<-]<<<
+[>>+>+<<<-]>>>[<<<+>>>-]>[<+>-]<<-[>[-]<[-]]>>+<[>[-]<-]<+++
++++++[<++++++<++++++>>-]>>>[>+>+<<-]>>[<<+>>-]<[<<<<<.>>>>>-
+]<<<<<<.>>[-]>[-]++++[<++++++++>-]<.>++++[<++++++++>-]<++.>+
+++++[<+++++++++>-]<.><+++++..--------.-------.>>[>>+>+<<<-]>
+>>[<<<+>>>-]<[<<<<++++++++++++++.>>>>-]<<<<[-]>++++[<+++++++
++>-]<.>+++++++++[<+++++++++>-]<--.---------.>+++++++[<------
+---->-]<.>++++++[<+++++++++++>-]<.+++..+++++++++++++.>++++++
+++[<---------->-]<--.>+++++++++[<+++++++++>-]<--.-.>++++++++
+[<---------->-]<++.>++++++++[<++++++++++>-]<++++.-----------
+-.---.>+++++++[<---------->-]<+.>++++++++[<+++++++++++>-]<-.
+>++[<----------->-]<.+++++++++++..>+++++++++[<---------->-]<
+-----.---.>>>[>+>+<<-]>>[<<+>>-]<[<<<<<.>>>>>-]<<<<<<.>>>+++
++[<++++++>-]<--.>++++[<++++++++>-]<++.>+++++[<+++++++++>-]<.
+><+++++..--------.-------.>>[>>+>+<<<-]>>>[<<<+>>>-]<[<<<<++
+++++++++++++.>>>>-]<<<<[-]>++++[<++++++++>-]<.>+++++++++[<++
++++++++>-]<--.---------.>+++++++[<---------->-]<.>++++++[<++
++++++++++>-]<.+++..+++++++++++++.>++++++++++[<---------->-]<
+-.---.>+++++++[<++++++++++>-]<++++.+++++++++++++.++++++++++.
+------.>+++++++[<---------->-]<+.>++++++++[<++++++++++>-]<-.
+-.---------.>+++++++[<---------->-]<+.>+++++++[<++++++++++>-
+]<--.+++++++++++.++++++++.---------.>++++++++[<---------->-]
+<++.>+++++[<+++++++++++++>-]<.+++++++++++++.----------.>++++
++++[<---------->-]<++.>++++++++[<++++++++++>-]<.>+++[<----->
+-]<.>+++[<++++++>-]<..>+++++++++[<--------->-]<--.>+++++++[<
+++++++++++>-]<+++.+++++++++++.>++++++++[<----------->-]<++++
+.>+++++[<+++++++++++++>-]<.>+++[<++++++>-]<-.---.++++++.----
+---.----------.>++++++++[<----------->-]<+.---.[-]<<<->[-]>[
+-]<<[>+>+<<-]>>[<<+>>-]>>>[-]<<<+++++++++<[>>>+<<[>+>[-]<<-]
+>[<+>-]>[<<++++++++++>>>+<-]<<-<-]+++++++++>[<->-]>>+>[<[-]<
+<+>>>-]>[-]+<<[>+>-<<-]<<<[>>+>+<<<-]>>>[<<<+>>>-]<>>[<+>-]<
+<-[>[-]<[-]]>>+<[>[-]<-]<++++++++[<++++++<++++++>>-]>>>[>+>+
+<<-]>>[<<+>>-]<[<<<<<.>>>>>-]<<<<<<.>>[-]>[-]++++[<++++++++>
+-]<.>++++[<++++++++>-]<++.>+++++[<+++++++++>-]<.><+++++..---
+-----.-------.>>[>>+>+<<<-]>>>[<<<+>>>-]<[<<<<++++++++++++++
+.>>>>-]<<<<[-]>++++[<++++++++>-]<.>+++++++++[<+++++++++>-]<-
+-.---------.>+++++++[<---------->-]<.>++++++[<+++++++++++>-]
+<.+++..+++++++++++++.>++++++++[<---------->-]<--.>+++++++++[
+<+++++++++>-]<--.-.>++++++++[<---------->-]<++.>++++++++[<++
+++++++++>-]<++++.------------.---.>+++++++[<---------->-]<+.
+>++++++++[<+++++++++++>-]<-.>++[<----------->-]<.+++++++++++
+..>+++++++++[<---------->-]<-----.---.+++.---.[-]<<<]/!
+
+@i/>++++++++++>+>+[[+++++[>++++++++<-]>.<++++++[>--------<-]+<<<]>.>>[[-]<[>+<-]>>[<<+>+>-]<[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>[-]>+>+<<<-[>+<-]]]]]]]]]]]+>>>]<<<]/
+
+@^UB#@S/{^EQQ,/#          !See the [ and ] routines for explanations of these two q-registers!
+@^UC#@S/,^EQQ}/@-1S/{/#
+
+@^UR#.U1ZJ
+QZ\
+^SC
+
+.,.+-^SXQ !store the number as text into reg Q!
+-^SD   !delete the number we added!
+Q1J
+# 
+
+@^U9/[]-+<>.,/
+
+<@:-FD/^N^EG9/;>   !everything that is not contained in q-reg 9!
+J
+30000<0@I//>
+ZJ  !jump to end of buffer!
+ZUL  !save value of Z to q-reg L!
+30000J
+
+0U1  !"kl"!
+0U2  !store IP of "parent bracket"!
+0U3  !store -A!
+0U6  !store IP of its match!
+0U7  !temp nr. x!
+@^U4/[]/         !load "[]" into 4!
+@^U5#
+
+<           !due to a strange bug in TECOC, I had to use a q-reg to store my command string!
+  @:S/^EG4/U7 Q7;       !So, search for a [ or a ], and branch out if none found!
+  -AU3
+  (Q3-91)"= !Found a [ if the (-A-91) == 0!
+    %1
+  |Q1"= 
+    .U6
+    ZJ 
+    @i/{/ Q2\ @i/,/ Q6\ @i/}/     !append {parent,match} to the end of the buffer. Both numbers!
+    Q6J                           !point to right after the bracket!
+    0; '    !if Q-reg 1 is 0, then we have a winner. Store the IP and gitouttahere!
+  -1%1                       !Else it must be a ]!
+  '>
+#
+
+
+<
+  @:S/[/UT      !Find bracket!
+  .U2            !store its ip!
+  10^T13^T
+  QT;
+  QT"N           !if found (T.ne.0), then!  
+  M5
+  Q2J !jump to old ip!
+  '
+>
+
+0UP  !Mem pointer is 0!
+
+30000J
+.US  !The start of the BF program!
+.UI  !Set IP == . at this point!
+
+
+
+<
+ (0A-43)"=                             !is it a +. If so, do our trick, jump to end! 
+   QPJ   !move pointer to mem[P]!
+   0AUT  !save 0A (value of cell) to T!   
+   D     !delete the character!
+   QT+1@I//  !insert T+1 at mem[P]!
+   QIJ    !jump back to IP!
+   @O/end/'    
+
+
+ (0A-45)"=              !is it a -!
+   QPJ   !move pointer to mem[P]!
+   0AUT  !save 0A (value of cell) to T!   
+   D     !delete the character!
+   QT-1@I//  !insert T+1 at mem[P]!
+   QIJ    !jump back to IP!
+ @O/end/' 
+
+ (0A-60)"= QP-1UP @O/end/'    !is it a <!
+ !simply substracts 1 from P!
+
+ (0A-62)"= QP+1UP @O/end/'    !is it a >!
+
+ (0A-46)"=                    !is it a .!
+    -.+QPA^T   
+    (-.+QPA-10)"= 13^T'       !if the char was 10, then output a 13 too!
+    @O/end/'  !Since A sees everything relative to . we trick it a bit.  -.+QPA^T is just a devious way!
+              !of saying "print out Pth char"!  
+
+ (0A-44)"=      !is it a ,!
+   ^TUT   !get a char into T!
+   8^T
+   QPJ
+   D
+   QT@I//  !insert T at mem[P]!   
+   QIJ    !jump back to IP!
+ @O/end/'     
+
+
+ (0A-91)"=     !found a [. Oh dear!
+    -.+QPA"=   !if mem[P] == 0!
+      
+      QI+1UZ     !Z = I+1!
+      QLJ      !jump to end of BF program!
+      MR       !run our number conversion routine!
+      MB       !again, to overcome a strange bug in TECOC, I had to store the search in a Q-reg!
+      \-1J      !jump to the position that we read from the list, returned in Q!
+      .UI      !set IP to current position!
+    '          !endif!
+
+ 
+ @O/end/' 
+
+ (0A-93)"= 
+    -.+QPA"N   !if mem[P] .ne. 0!
+
+      QI+1UZ   !Z = I+1. This because the position stored in the match part of the {parent,match} construct!
+               !points to the position right after the ], and we want to give the right number to the R routine!
+      QLJ      !jump to end of BF program!
+      MR       !run our number conversion routine!
+      MC       !the same bug-fooling q-reg trick!
+      \-1J      !jump to the position that we read from the list, -1 because the end of the loop increments!
+      .UI      !set IP to current position!
+    '          !endif!
+
+ 
+ @O/end/'   
+
+    
+
+  
+
+ !end!
+ QI+1UI  !add 1 to IP!
+ (.-Z)"= .=@^a/END/^c^c'     !are we at the end?!
+ C
+>

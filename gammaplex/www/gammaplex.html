@@ -1,0 +1,1676 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>Gammaplex</title>
+  <meta content="Lode Vandevenne" name="author">
+</head>
+<body bgcolor="#FFFFFF" text="#000000" link="#0000FF">
+<h1>Gammaplex Programming Language v0.31</h1>
+<h3>By Lode Vandevenne</h3>
+<p align="left">The Gammaplex programming language is an esoteric programming 
+  language that, unlike most esoteric programming languages, has graphical output 
+  and mouse input. It also has much more commands. Unlike some esoteric programming 
+  languages, Gammaplex doesn't try to be obfuscated or hard to use. But that doesn't 
+  make it un-esoteric, on the contrary!<br>
+  <br>
+  Like many esoteric programming languages, inspired by Befunge, gammaplex has 
+  a 2-dimensional instruction array, and the instruction pointer can move in the 
+  directions North, East, South or East. It's also Turing complete (if it would 
+  have an infinite instruction array). Every instruction is a single character.<br>
+  <br>
+  The gammaplex interpreter (available both for Windows and Linux), it's source 
+  code, and a few examples are available to <b>download</b> <a
+ href="gammaplex.zip">here</a>. The interpreter is written in C++ and uses SDL.</p>
+<p>The most recent version of this manual is at <a href="http://www.student.kuleuven.ac.be/%7Em0216922/gammaplex/gammaplex.html">http://www.student.kuleuven.ac.be/~m0216922/gammaplex/gammaplex.html</a> 
+  but this is a <b>temporary</b> location.</p>
+<h2>Index</h2>
+<ul>
+  <li><a href="#interpreter">The Interpreter</a></li>
+  <ul>
+    <li><a href="#interface">Using the Interpreter</a></li>
+    <li><a href="#files">How to make Code Files</a></li>
+    <li><a href="#debug">The Debug Modes</a></li>
+  </ul>
+  <li><a href="#virtual">The Gammaplex Virtual Machine</a> </li>
+  <li><a href="#instructions">The Instructions</a> 
+    <ul>
+      <li><a href="#basic">Basic Instructions</a></li>
+      <li><a href="#extended">Extended Instructions</a></li>
+      <li><a href="#decimal">Decimal Numbers</a></li>
+      <li><a href="#strings">Strings</a></li>
+    </ul>
+  </li>
+  <li><a href="#styles">Graphical Styles</a></li>
+  <li><a href="#examples">Examples</a></li>
+  <li><a href="#tips">Tips</a></li>
+  <li><a href="#challenges">Challenges</a></li>
+  <li><a href="#bugs">Known Bugs</a></li>
+  <li><a href="#tagboard">Contact Information</a></li>
+</ul>
+<h2><a name="interpreter"></a>The Interpreter</h2>
+<h3><a name="interface"></a>Using the Interpreter<br>
+</h3>
+<p>This section explains how to use the official Gammaplex interpreter to run 
+  your code files.</p>
+<p>The interpreter uses SDL, a multiplatform library for multimedia, so you need 
+  the newest SDL.DLL (included in the zip) for Windows, or install SDL in your 
+  Linux if you're using Linux.<br>
+  <br>
+  If you start the interpreter, it'll try to load the code file &quot;gamma.txt&quot;, 
+  and if it doesn't find that file, load an empty program and allow you to load 
+  another file by going to the menu. You can also let the interpreter start with 
+  another file, if you start it from a console and give the filename as parameter. 
+  For example, if you want it to use the file &quot;sierpinski.txt&quot; in Windows, 
+  start gammaplex with "gammaplex.exe sierpinski.txt" from the console.</p>
+<p>To exit the interpreter, press the "close" button of the window (always works) 
+  or press escape and then press 2 (only works if the program isn't in "sleep" 
+  mode)</p>
+  <p>
+  The Linux version of the interpreter is included  in the same .zip file that contains the windows executable, 
+  and is called "gammaplex" without   file extension. To make sure the program can open files relative to it's
+  program path, open   it from a console with "./gammaplex" while being in the folder of gammaplex.</p>
+<p>If you press escape in the interpreter, a menu will show up. To choose one 
+  of the options, simply press the number of the option on your keyboard. You 
+  have the following options:</p>
+<ul>
+  <li>1. Continue: will go back to the program</li>
+  <li>2. Exit: quits the interpreter (you can also press the close button with 
+    the mouse for this)</li>
+  <li>3. Load Code File: this option will ask you to type in the filename of the 
+    code file you want to load. The code file path is relative to the interpreter 
+    executable.</li>
+  <li>4. Memory Editor: allows you to edit instructions, register and stack values, 
+    etc... See below for more help on this.</li>
+  <li>5. Debugging Options: allows you to set the debug mode</li>
+  <li>6. Execute Command: allows you to execute a single command that you type. 
+    It executes that command and thus changes the program state, but doesn't move 
+    the IP (unless the command itself moves the IP of course). You can choose 
+    if you want to enter the command as a character (press a single key on the 
+    keyboard) or number (type in the ascii value of the command). When entering 
+    commands as a character, type E to stop the command entering mode (shift + 
+    e).</li>
+  <li>9. About...: shows version number of the interpreter and language</li>
+</ul>
+<p>The &quot;Memory Editor&quot; options are the following:</p>
+<ul>
+  <li>0. Continue: don't do anything, continue the program</li>
+  <li>1. Show Info: shows instruction array width (iw), instruction array height 
+    (ih), instruction pointer position (ix and iy) and direction (id).</li>
+  <li>2. Modify Register: allows you to change a value of any of the registers: 
+    first type the address, then the new value.</li>
+  <li>3. Pop Stack: pops the top value off the stack</li>
+  <li>4. Push Stack: pushes a value to the stack, it'll ask you to type in the 
+    number (you can type floating point numbers but you only see the point if 
+    you place something non zero behind the point)</li>
+  <li>5. Modify Instruction: allows you to modify an instruction: first asks x 
+    and y coordinate (0, 0 is the top left one), then asks the new instruction 
+    value.</li>
+  <li>6. Modify Instruction Array: allows you to change the width and height of 
+    the instruction array</li>
+  <li>7. Modify IP: allows you to change x and y coordinate and direction of the 
+    Instruction Pointer. For the direction, 0 = north, 1 = east, 2 = south, 3 
+    = west.</li>
+</ul>
+<p>Note that the menu might look messed up if the screen is smaller than 256x256 
+  pixels because there isn't enough space for all the text.</p>
+<p><img src="menu.png" width="261" height="280"></p>
+<p><font color="#000000">Note: input always uses the american keyboard layout, 
+  because it's SDL's default.</font></p>
+<h3><a name="files"></a>How to make Code Files</h3>
+<p>The code file has to be a plain text file, interpreted as a 2D grid of characters. 
+  Every line has to be exactly as long. The width of the first line determinates 
+  the width of the instruction array, and the number of lines determinates the 
+  height of the instruction array.<br>
+  <br>
+  Do make sure that every line of the text file is as long! The interpreter <i>ignores</i> 
+  endline characters and assumes every line is as long as the first line. The 
+  first line has to be terminated with any ascii character smaller than 32 (so 
+  an "enter" will do), after that it simply reads all the other characters of 
+  the file, ignoring values smaller than 32, and adds them to the instruction 
+  array with the width given by the length of the first line. It doesn't matter 
+  what ascii code(s) your text editor uses for &quot;enter&quot;.<br>
+  <br>
+  Every instruction is a single character with an ascii value higher than 31 and 
+  smaller than 128. A list of each instruction follows below. The program will 
+  start with the top left character (0, 0), or at the last '@' character in the 
+  file.</p>
+<p>Here's an example of a codefile, edited in Notepad. See further inthis document 
+  for more examples:</p>
+<p><img src="codefile.png" width="218" height="150"></p>
+<h3><a name="debug"></a>The Debug Modes</h3>
+There are 4 debug modes in the interpreter:<br>
+<ul>
+  <li>0: no debug enabled</li>
+  <li>1: prints the info described bolow to the screen</li>
+  <li>2: prints the info described below to the screen, AND refreshes the screen 
+    so that you can actually see the printed info</li>
+  <li>3: does the above, AND pauses after EVERY SINGLE COMMAND, you have to press 
+    a key each time to execute the next one</li>
+</ul>
+<p>The 'U' command cycles between these modes, and initially it's 0. With 'XU' 
+  you can set it back to 0.<br>
+  <br>
+  You can also set the debug mode by pressing escape, then 5, then the number 
+  of the debug mode.</p>
+<p>It prints the following info:<br>
+  <br>
+  <b>In White:</b><br>
+</p>
+<ul>
+  <li>ix: instruction pointer x coordinate (leftmost characters of the code have 
+    x coordinate 0)</li>
+  <li>iy: instruction pointer y coordinate (top line of the code has y coordinate 
+    0) </li>
+  <li>id: instruction pointer direction: 0=north, 1=east, 2=south, 3=west</li>
+  <li>instr: current instruction as a character (so you'll see the same symbol 
+    as in the source text file)</li>
+  <li>im: instructionMode: 0=normal, 1=extended, 2=string mode, 3=string command 
+    mode </li>
+  <li>ticks: the number of commands executed so far</li>
+  <li>dc: the decimal counter</li>
+</ul>
+<p><b><font color="#FF0000">In Red:</font></b></p>
+<ul>
+  <li>Register 0 to register 12 (i.e. the 13 named registers, the top 2 red values 
+    are &quot;position A&quot;, the bottom red value is &quot;style&quot;, etc...)</li>
+</ul>
+<p><font color="#00FF00"><b>In Green:</b></font></p>
+<ul>
+  <li>The top 12 stack values (the topmost one printed is also the top of the 
+    stack)</li>
+</ul>
+<p>This screenshot contains an example of the enabled debugging mode:</p>
+<p><img alt="" src="screen3.png" style="width: 262px; height: 280px;"></p>
+<h2><a name="virtual"></a>The Gammaplex Virtual Machine<br>
+</h2>
+<p>Gammaplex allows you to use both a stack and random access memory to store 
+  your variables. The random access memory units are called registers.</p>
+<p>The official version of Gammaplex puts some memory limitations. Gammaplex has 
+  1048576 registers and a stack of 1048576 values. All of those are floating point 
+  numbers. If a certain parameter or calculation requires integers, it converts 
+  it to integer, then does the calculation, then converts it back to float (for 
+  example for the '&amp;' binary AND command). The first 16 register values are 
+  the parameters for some functions. These are the <b>named registers</b>:<br>
+  <br>
+  register[0]: x<br>
+  register[1]: y<br>
+  register[2]: R<br>
+  register[3]: G<br>
+  register[4]: B<br>
+  register[5]: radius<br>
+  register[6]: x2<br>
+  register[7]: y2<br>
+  register[8]: R2<br
+ >
+  register[9]: G2<br
+ >
+  register[10]: B2<br
+ >
+  register[11]: transparency (0 = opaque, 128 = semitransparent, 255 = invisible); 
+  note that this is the opposite of &quot;opacity&quot; where 0 means invisible 
+  and 255 means opaque.<br >
+  register[12]: style<br>
+  <br>
+  Registers [0] and [1] together form "position A"<br>
+  Registers [6] and [7] together form "position B"<br>
+  Registers [2], [3] and [4] together form "color", and is set to 255, 255, 255 
+  by default at the start<br>
+  Registers[8], [9] and [10] together form "color2"<br>
+  <br>
+  The first 8 registers are used as input and output for functions like C (circle, 
+  uses x, y as position, radius as radius, and RGB as color), etc... The next 
+  5 registers are used for the graphics styles. The other registers can be used 
+  as memory, but the stack can be used for that as well.<br>
+  <br>
+  Please don't use registers up to register[15] for your own variables, they might 
+  get a meaning later.<br>
+  <br>
+  The stack is a typical LIFO stack: you push() values on top of it, and pop() 
+  values again from the top. The stack is for example used for mathematical functions, 
+  for example to add two values: push the first value on the stack, then push 
+  the second value from the stack, then use the "+" command, and the two top values 
+  will be popped from the stack (i.e. they're removed from it), and their sum 
+  is added to the stack again. <br>
+  <br>
+  Here's a full list of all parameters of the virtual machine:<br>
+</p>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody> 
+  <tr> 
+    <td style="vertical-align: top;">Register[1048576]<br>
+    </td>
+    <td style="vertical-align: top;">The random access memory of Gammaplex. This 
+      memory consists out of 1048576 floating point registers. The first 16 are 
+      the named registers and are used as parameters for some standard functions.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;">Stack[1048576]<br>
+    </td>
+    <td style="vertical-align: top;">The stack memory of Gammaplex. This is a 
+      LIFO stack containing up to 1048576 floating piont values. The stack used 
+      for math and such. It wraps around, so if you filled the stack with 1048576 
+      values, and add a new one, the oldest one is overwritten. However it's safer 
+      not to assume this wrap around if you want to support possible versions 
+      with other amounts.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;">Instruction[1024][1024]<br>
+    </td>
+    <td style="vertical-align: top;">You can have maximum 1024x1024 instructions. 
+      Each instruction is a character (8 bit) with an ascii code between 31 and 
+      128. Instruction array size is smaller if your code file is smaller.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;">IP (IX, IY)<br>
+    </td>
+    <td style="vertical-align: top;">The instruction pointer: where in the instruction 
+      array we currently are (IX coordinate is horizontal, IY coordinate vertical 
+      position in the array).</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;">ID<br>
+    </td>
+    <td style="vertical-align: top;">Instruction Pointer Direction: 0 = north, 
+      1 = east, 2 = south, 3 = west, this is the direction the IP is moving to. 
+      If it reaches a side, it &quot;teleports&quot; to the other side (wraps 
+      around). The initial direction is EAST. Some commands allow you to change 
+      the IP direction.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;">SP</td>
+    <td style="vertical-align: top;">Stack Pointer. This is used internally to 
+      handle the stack.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;">RP<br>
+    </td>
+    <td style="vertical-align: top;">Register Pointer: this points to a position 
+      in the random access memory. It is the address of the register you're currently 
+      reading from / writing to. The string *RP refers to the value of the register 
+      this RP is pointing to.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;">DC<br>
+    </td>
+    <td style="vertical-align: top;">Decimal Counter: used for entering decimal 
+      numbers.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;">debugMode</td>
+    <td style="vertical-align: top;">The type of debug mode the interpreter is 
+      using, if it supports debug modes. In the official interpreter are 4 debugmodes.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;"> gosubx[1024], gosuby[1024], gosubd[1024]</td>
+    <td style="vertical-align: top;">Used internally for GOSUB and RETURN: contains 
+      the up to 1024 last locations of the IP, including direction. If you jump 
+      more than 1024 times with a GOSUB, the interpreter will forget the oldest 
+      location. </td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;">GP</td>
+    <td style="vertical-align: top;">Gosub Pointer. This is used internally.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;">instructionMode</td>
+    <td style="vertical-align: top;">This is used internally by the official implementation 
+      of the interpreter. While the intruction pointer travels through instructions, 
+      it gives a meaning to each single character instruction based on the instructionMode. 
+      0 = normal instructions, 1 = extended instruction (after an 'X' command), 
+      2 = string mode, 3 = string command: command after using &quot; in string 
+      mode.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;">anchorTime</td>
+    <td style="vertical-align: top;">Minimum time between two anchors in milliseconds, 
+      can be set with 'Xj'</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;">lastAnchorTime</td>
+    <td style="vertical-align: top;">Time at previous anchor or program begin, 
+      used internally</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;">stackProgram[16]</td>
+    <td style="vertical-align: top;">The up to 16 registers that are part of a 
+      &quot;stack program&quot; that allows you to automaticly push and pop a 
+      whole set of registers to the stack. Change with 'a' or 'A'. Push and pop 
+      these registers in order with { and }.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;">numStackProgram</td>
+    <td style="vertical-align: top;">Number of registers in current stack program. 
+      Change with 'a' or 'A'.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;">screenBuffer[1600 * 1200];</td>
+    <td style="vertical-align: top;">The pixels of the graphical window, maximum 
+      resolution is 1600 x 1200 pixels. Debugging and menu text are not drawn 
+      to the screenBuffer but directly to the screen, all other texts printed 
+      by your code are.</td>
+  </tr>
+  </tbody> 
+</table>
+<p>Unless mentioned otherwise, all the parameters of the virtual machine are set 
+  to 0 at start. An exception is color A which is set to white, and the IP which 
+  is set to the location of the last '@' in your code if there is one. </p>
+<h2><a name="instructions"></a>The Instructions</h2>
+<h3><a name="basic"></a>Basic Instructions<br>
+</h3>
+<p>The Gammaplex programming language has a lot of official instructions. Each 
+  instruction is a single ascii character, that the IP will read while traveling 
+  through the text file containing the instructions. The history of these instructions 
+  is a bit messy. As a result, the set of inctructions contains some inconsistensies 
+  here and there. Effort was made to give each instruction an as memorable character 
+  as possible.</p>
+<p>Instructions are case sensitive! Each instruction has an ascii value between 
+  31 and 128.</p>
+<p>In the table of inctructions, &quot;pop&quot; means: the top stack value is 
+  read, and removed. "pop, pop", means that two parameters from the stack are 
+  used, each pop is a different value. For example this explains how to read the 
+  explanation of the '?' command.<br>
+</p>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tr> 
+    <td style="vertical-align: top;" colspan="3">Basic Instructions</td>
+  </tr>
+  <tbody> 
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>u<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">117</td>
+    <td style="vertical-align: top;" width="96%">increment RP. This changes which 
+      register value you're currently writing to, when a program starts, RP is 
+      set to 0. You can increment it to higher values to store variables inother 
+      memory addresses. </td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>d<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">100</td>
+    <td style="vertical-align: top;" width="96%">decrement RP</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>?<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">63</td>
+    <td style="vertical-align: top;" width="96%">Serves as condition: If pop is 
+      not zero, the IP continues normally. If it is zero, jump over the next command 
+      as if the'?' were a ';'. So the command immediatly after the '?' is only 
+      executed if the popped value is &quot;true&quot;, i.e. non zero.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>/<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">47</td>
+    <td style="vertical-align: top;" width="96%">rotate ID (IP direction), as 
+      if it bounces on a 45&deg; wall</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>\<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">92</td>
+    <td style="vertical-align: top;" width="96%">rotate ID (IP direction), as 
+      if it bounces on a 45&deg; wall</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>^<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">94</td>
+    <td style="vertical-align: top;" width="96%">set ID to North (0)</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>&gt;<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">62</td>
+    <td style="vertical-align: top;" width="96%">set ID to East (1)</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>v<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">118</td>
+    <td style="vertical-align: top;" width="96%">set ID to South (2)</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>&lt;<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">60</td>
+    <td style="vertical-align: top;" width="96%">set ID to West (3)</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>G<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">71</td>
+    <td style="vertical-align: top;" width="96%">serves as "GOTO": IX = pop, IY 
+      = pop, top left corner has position (0, 0). The new position is the command 
+      executed next time. The IP direction remains the same as it was.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>g<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">103</td>
+    <td style="vertical-align: top;" width="96%">store current IP position: push 
+      IY, push IX</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>@<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">64</td>
+    <td style="vertical-align: top;" width="96%">start here. If there is no @, 
+      it'll start at position (0, 0), this start position (0, 0) is then the first 
+      command executed, if there's an @ that @ is the first command executed (but 
+      executing @ does nothing). If there are multiple, it'll start at the last 
+      one. If it encounters one while running the code, it ignores it.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>&nbsp;<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">32</td>
+    <td style="vertical-align: top;" width="96%">(space): NOP, do nothing. It'll 
+      also keep the DC at what it is, this means that spaces between decimal numbers 
+      are completely ignored.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>#<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">35</td>
+    <td style="vertical-align: top;" width="96%">NOP, do nothing. Unlike the other 
+      NOP command, it sets the DC back to 1, like most instructions automaticly 
+      do.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>;<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">59</td>
+    <td style="vertical-align: top;" width="96%">jump over the next command, this 
+      means the IP will move two steps at once and ignore the next command.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>E</b></td>
+    <td style="vertical-align: top;" width="2%">69</td>
+    <td style="vertical-align: top;" width="96%">end: this instruction traps the 
+      IP forever: it always makes the IP move back, while the program flow makes 
+      it automaticly move forward again, causing an infinite loop.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>e<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">101</td>
+    <td style="vertical-align: top;" width="96%">sleep: the program halts until 
+      you press any key</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>j</b></td>
+    <td style="vertical-align: top;" width="2%">106</td>
+    <td style="vertical-align: top;" width="96%">time anchor: will wait until 
+      time since previous time anchor (or if none, program start) is the set time 
+      (default: 50ms, change with Xj). Not very precise, but handy to limit the 
+      speed of games on too fast computers.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>(<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">40</td>
+    <td style="vertical-align: top;" width="96%">put *RP on the stack (this means, 
+      put the register RP is pointing at on the stack)</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>)<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">41</td>
+    <td style="vertical-align: top;" width="96%">pop *RP from the stack</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>[<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">91</td>
+    <td style="vertical-align: top;" width="96%">put RP on the stack (NOT the 
+      value in the register, but the register pointer itself)</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>]<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">93</td>
+    <td style="vertical-align: top;" width="96%">pop RP from the stack</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>{<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">123</td>
+    <td style="vertical-align: top;" width="96%">push stack program. A stack program 
+      is a series of registers that you can choose to be put on the stack all 
+      at once with this single command.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>}<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">125</td>
+    <td style="vertical-align: top;" width="96%">pop stack program</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>a<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">97</td>
+    <td style="vertical-align: top;" width="96%">set stack program preset (and 
+      pop program number from stack): 0 = none, 1 = pos A, 2 = pos B, 3 = color 
+      1, 4 = color 2, 5 = reg[0]_to_reg[7], 6 = reg[0]_to_reg[12]</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>A<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">65</td>
+    <td style="vertical-align: top;" width="96%">set stack program advanced: up 
+      to 16 addresses, pop number of adresses (n), then pop the n addresses. This 
+      way you can choose which addresses are pushed and popped by { and }</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>D<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">68</td>
+    <td style="vertical-align: top;" width="96%">delete current stack value: pop 
+      from the stack and do nothing with the value. The next newest stack value 
+      is now on top.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>w<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">119</td>
+    <td style="vertical-align: top;" width="96%">duplicate current stack value 
+      (pop, push, push).</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>W<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">87</td>
+    <td style="vertical-align: top;" width="96%">duplicate the last two stack 
+      values (x y becomes x y x y)</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>Y<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">89</td>
+    <td style="vertical-align: top;" width="96%">duplicate the last pop values. 
+      For example if the stack contains, from oldest to newest, &quot;1, 4, 2, 
+      3&quot;, the last 3 values below the 3 will be duplicated, so the stack 
+      now contains &quot;1, 4, 2, 1, 4, 2&quot;</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>s<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">115</td>
+    <td style="vertical-align: top;" width="96%">swap the two topmost stack values.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>S<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">83</td>
+    <td style="vertical-align: top;" width="96%">swap the topmost with the third 
+      highest stack value (i.e. swap s and s - 2 if s represents the topmost value)</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>$<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">36</td>
+    <td style="vertical-align: top;" width="96%">swap s and s - pop. So if the 
+      stack contains from oldest to newest, &quot;1, 2, 3, 4, 3&quot;, it'll swap 
+      the values &quot;4&quot; and the one 3 older than 4, in this case &quot;1&quot;, 
+      so the stack will now contain &quot;4, 2, 3, 1&quot;.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>z<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">122</td>
+    <td style="vertical-align: top;" width="96%">rolldown s - 2. This will take 
+      the third oldest value out of the stack and then push it to the top.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>Z<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">90</td>
+    <td style="vertical-align: top;" width="96%">rolldown s - pop. This will take 
+      the &quot;pop&quot; oldest value out of the stack and then push it to the 
+      top.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>+<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">43</td>
+    <td style="vertical-align: top;" width="96%">Add.<br>
+      This command, like most of the following mathematical commands, works with 
+      the stack: it removes the input values from the stack, and pushes the output 
+      again on the stack. If the stack contains "x, y, z" where z is the newest 
+      (topmost) value, after using "+", it'll contain "x, y+z", in other words 
+      it does push(pop + pop).</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>-<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">45</td>
+    <td style="vertical-align: top;" width="96%">Subtract. The first popped value 
+      is substracted from the second popped one. (so the second pushed is substracted 
+      from the first pushed, which is the most intuitive way) </td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>*<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">42</td>
+    <td style="vertical-align: top;" width="96%">Multiply</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>:<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">58</td>
+    <td style="vertical-align: top;" width="96%">Divide. The first popped value 
+      is divided through the second popped one.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>~<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">126</td>
+    <td style="vertical-align: top;" width="96%">Power. The first popped value 
+      is raised to the second popped one.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>V<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">86</td>
+    <td style="vertical-align: top;" width="96%">Square Root of topmost stack 
+      value.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>T<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">84</td>
+    <td style="vertical-align: top;" width="96%">Cosine of topmost stack value.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>p<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">112</td>
+    <td style="vertical-align: top;" width="96%">Push pi (3.14159...).</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>%<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">37</td>
+    <td style="vertical-align: top;" width="96%">Modulo Division. It'll automaticly 
+      convert the values to integer, make sure the second one is larger than 1 
+      (if it isn't, it'll use 1), and after taking the modulo, converts back to 
+      float and pushes the result to the stack.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>&amp;<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">38</td>
+    <td style="vertical-align: top;" width="96%">Binary AND</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>|<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">124</td>
+    <td style="vertical-align: top;" width="96%">Binary OR</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>x<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">120</td>
+    <td style="vertical-align: top;" width="96%">Binary XOR</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>!<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">33</td>
+    <td style="vertical-align: top;" width="96%">Logical NOT. Sets topmost stack 
+      value to 0 if it's non-zero, or to 1 if it's zero.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>_<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">95</td>
+    <td style="vertical-align: top;" width="96%">Negate the topmost stack value.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>"<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">34</td>
+    <td style="vertical-align: top;" width="96%">Increment (++)</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>'<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">39</td>
+    <td style="vertical-align: top;" width="96%">Decrement (--)</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>N<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">78</td>
+    <td style="vertical-align: top;" width="96%">set last stack value to 0</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>0<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">48</td>
+    <td style="vertical-align: top;" width="96%">decimal 0. This is one of the 
+      decimal commands, more details about these commands can be found in the 
+      &quot;Decimal Numbers&quot; chapter of this manual.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>1<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">49</td>
+    <td style="vertical-align: top;" width="96%">decimal 1</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>2<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">50</td>
+    <td style="vertical-align: top;" width="96%">decimal 2</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>3<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">51</td>
+    <td style="vertical-align: top;" width="96%">decimal 3</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>4<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">52</td>
+    <td style="vertical-align: top;" width="96%">decimal 4</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>5<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">53</td>
+    <td style="vertical-align: top;" width="96%">decimal 5</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>6<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">54</td>
+    <td style="vertical-align: top;" width="96%">decimal 6</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>7<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">55</td>
+    <td style="vertical-align: top;" width="96%">decimal 7</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>8<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">56</td>
+    <td style="vertical-align: top;" width="96%">decimal 8</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>9<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">57</td>
+    <td style="vertical-align: top;" width="96%">decimal 9</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>.<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">46</td>
+    <td style="vertical-align: top;" width="96%">decimal point. Sets DC to 0.1</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>=<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">61</td>
+    <td style="vertical-align: top;" width="96%">pop and compare last two stack 
+      values, if they're equal, pushes 1, else pushes 0</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>,<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">44</td>
+    <td style="vertical-align: top;" width="96%">if pop is smaller than pop, push 
+      1, else push 0. Note the order: first value popped smaller than second value 
+      popped means: first value pushed larger than second value pushed.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>t<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">116</td>
+    <td style="vertical-align: top;" width="96%">push the time to the stack in 
+      milliseconds since the program started</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>o<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">111</td>
+    <td style="vertical-align: top;" width="96%">round: remove that what's behind 
+      the point of the top stack value, take the integer part</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>k</b></td>
+    <td style="vertical-align: top;" width="2%">107</td>
+    <td style="vertical-align: top;" width="96%">random: either put 0 or 1 to 
+      the stack, 50% chance each</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>K<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">75</td>
+    <td style="vertical-align: top;" width="96%">random: put a random floating 
+      point number between 0 and 1 on the stack, uniform distrubution</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>n<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">110</td>
+    <td style="vertical-align: top;" width="96%">push 255 to the stack, 255 is 
+      an often needed value.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>l<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">108</td>
+    <td style="vertical-align: top;" width="96%">change screen resolution to x, 
+      y (x and y are the first and second named registers). The default resolution 
+      when the program starts is 256x256.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>P<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">80</td>
+    <td style="vertical-align: top;" width="96%">put pixel at x, y with color 
+      R, G, B, where x, y, R, G and B are all read from the named registers.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>r<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">114</td>
+    <td style="vertical-align: top;" width="96%">print character popped from the 
+      stack at position x, y with color R, G, B. Uses the ascii charset. Position 
+      x, y is in pixel coordinates, not letter coordinates. After printing the 
+      character, it'll automaticly increment x with 8, or set x to x%8 and increment 
+      y with 8 if the side of the screen was reached, or set y to y%8 if the bottom 
+      of the screen was reached. In other words, you can print series of characters 
+      without having to care about the coordinates.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>i<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">105</td>
+    <td style="vertical-align: top;" width="96%">Prints the value popped from 
+      the stack as integer. Will not automaticly increment x, but will push the 
+      number of characters printed to the stack. If you don't need that value, 
+      delete it from the stack after using this command.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>f<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">102</td>
+    <td style="vertical-align: top;" width="96%">Prints the floating point number 
+      popped from the stack.Will not automaticly increment x, but will push the 
+      number of characters printed to the stack. If you don't need that value, 
+      delete it from the stack after using this command.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>C<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">67</td>
+    <td style="vertical-align: top;" width="96%">draw non filled circle at x, 
+      y with radius radius and color R, G, B</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>F<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">70</td>
+    <td style="vertical-align: top;" width="96%">filled circle</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>L<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">76</td>
+    <td style="vertical-align: top;" width="96%">line from x, y to x2, y2, with 
+      color R, G, B. A line is automaticly clipped to the screen.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>B<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">66</td>
+    <td style="vertical-align: top;" width="96%">Box (rectangle) from x, y, to 
+      x2, y2 with color R, G, B</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>H<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">72</td>
+    <td style="vertical-align: top;" width="96%">HSV to RGB color: reads highest 
+      3 stack values as "HSV" color, and pops them as R, G and B on the stack 
+      again. Color coordinates are values between 0 and 256.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>R<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">82</td>
+    <td style="vertical-align: top;" width="96%">redraw the screen. This has to 
+      be done to make any new pixels, lines, circles, etc... visible. To speed 
+      up your graphics, don't use this command after every single pixel you draw, 
+      but only after drawing all pixels of a frame. Redrawing the screen is slow 
+      but necessary.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>c<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">99</td>
+    <td style="vertical-align: top;" width="96%">cls: clear the screen to black. 
+      You can only see the effect of cls after redrawing the screen again, and 
+      you have to use it if you want old pixels to be removed again without overwriting 
+      them individually.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>h<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">104</td>
+    <td style="vertical-align: top;" width="96%">push "height of screen - 1" on 
+      the stack.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>y<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">79</td>
+    <td style="vertical-align: top;" width="96%">push "width of screen - 1" on 
+      the stack.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>I<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">73</td>
+    <td style="vertical-align: top;" width="96%">input a character: program pauses, 
+      allows you to type a single character and then continues. The typing cursor 
+      is drawn at location is x, y. This command also pops a value from the stack 
+      to choose a message behind which you can type your character: <br>
+      0=nothing, 1=&quot;&gt;&quot;, 2=&quot;]&quot;, 3=&quot;enter char:&quot;, 
+      4=&quot;please enter a character:&quot;, 5=&quot;enter key:&quot;, 6=&quot;please 
+      enter a key:&quot;</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>J<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">74</td>
+    <td style="vertical-align: top;" width="96%"> 
+      <p>input a number program pauses, allows you to type a single number and 
+        then continues. The typing cursor is drawn at location is x, y. This command 
+        also pops a value from the stack to choose a message behind which you 
+        can type your character: <br>
+        0=nothing, 1=&quot;&gt;&quot;, 2=&quot;]&quot;, 3=&quot;enter number:&quot;, 
+        4=&quot;please enter a number:&quot;, 5=&quot;enter value:&quot;, 6=&quot;please 
+        enter a value:&quot;<br>
+        Note: you can type floating point numbers. In the current official implementation 
+        of the interpreter, the point may only show up after there actually is 
+        something non-zero behind the point though.</p>
+    </td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>M<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">77</td>
+    <td style="vertical-align: top;" width="96%">push mouse position Y and X to 
+      the stack. The mouse position is given in pixel coordinates, relative to 
+      the top left corner.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>m<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">109</td>
+    <td style="vertical-align: top;" width="96%">push &quot;right mouse button 
+      pressed&quot;, &quot;left mouse button pressed&quot; to the stack as boolean 
+      values. For example if the right mouse button is pressed and the left mouse 
+      button isn't, the values 1 and 0 will be popped to the stack.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>U<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">85</td>
+    <td style="vertical-align: top;" width="96%">toggle DEBUG mode. This is a 
+      deprecated command since the user is supposed to be able to choose a debug 
+      mode in the options of the interepreter instead of using a program command.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>q<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">113</td>
+    <td style="vertical-align: top;" width="96%">Get Instruction (x = pop, y = 
+      pop) and push it. Instruction number pushed is the ascii value of the character 
+      of the instruction. This command is useful for reading code for self modifying 
+      programs, and to put blocks of data in your code. For example if you make 
+      a game and want it to have a level of 64x64 squares where each square represents 
+      one of 256 tiles, you can put the level directly in the code as a 64x64 
+      matrix and read from it with q.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>Q<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">81</td>
+    <td style="vertical-align: top;" width="96%">Self modifying code: set instrucion 
+      at instruction position x=pop, y=pop to pop. Push, in this order, the instruction 
+      value, the y position and the x position, to the stack before using this 
+      command. </td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>X<br>
+      </b></td>
+    <td style="vertical-align: top;" width="2%">88</td>
+    <td style="vertical-align: top;" width="96%">Extended instruction: indicates 
+      the next character in the code is to be interpreted as an extended instruction.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>b</b></td>
+    <td style="vertical-align: top;" width="2%">98</td>
+    <td style="vertical-align: top;" width="96%">Reserved for plugin commands: 
+      there exist no plugin commands yet, but b is reserved for that.</td>
+  </tr>
+  </tbody> 
+</table>
+<h3><font color="#FF0000"><font color="#C00000"><a name="extended"></a></font></font>Extended 
+  Instructions</h3>
+<p> Because there are more instructions than there are possible ascii values between 
+  31 and 128, not all instructions can be a single character. Extended instructions 
+  are placed after the X command.</p>
+<p>Some instructions are interpreted as basic after an X, here are some rules 
+  about extended instructions:</p>
+<ul>
+  <li>The following commands behind an X do the same as when they're not behind 
+    an X and make the next command not-extended: #</li>
+  <li>The following commands behind an X do the same as when they're not behind 
+    an X, but make the next command extended as if that one was placed after an 
+    'X': v, ^, &lt;, &gt;, /, \, (space), @</li>
+  <li>The official extended commands is given in the table below.</li>
+  <li>There exist String commands, placed after a &quot; in a string.</li>
+  <li>Non existing extended instructions after an X are ignored, but might be 
+    used later if new features are added so please never use an unused extended 
+    instruction as NOP.<b></b><font color="#C00000"><b><br>
+    </b></font></li>
+</ul>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tr > 
+    <td style="vertical-align: top;" width="2%"><b>X; </b></td>
+    <td style="vertical-align: top;" width="98%">Jump over two commands at once 
+      (e.g. to jump over an extended command)</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>X?<br>
+      </b></td>
+    <td style="vertical-align: top;" width="98%">Works like '?', but will jump 
+      two commands at once (e.g. to jump over an extended command)</td>
+  </tr>
+  <tbody> 
+  <tr > 
+    <td style="vertical-align: top;" width="2%"><b>X"<br>
+      </b></td>
+    <td style="vertical-align: top;" width="98%">Open String. How strings work 
+      is explained in the &quot;Strings&quot; chapter of this manual.</td>
+  </tr>
+  <tr > 
+    <td style="vertical-align: top;" width="2%"><b>"X<br>
+      </b></td>
+    <td style="vertical-align: top;" width="98%">Close String</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>XU<br>
+      </b></td>
+    <td style="vertical-align: top;" width="98%">sets debug mode back to 0. This 
+      is a deprecated command since the user is supposed to be able to choose 
+      a debug mode in the options of the interepreter instead of using a program 
+      command.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>XG<br>
+      </b></td>
+    <td style="vertical-align: top;" width="98%">GOSUB: works like GOTO, but stores 
+      the current position in the gosub array. This allows you to make sub sections 
+      in your code that can be called at any time, and after which you can return 
+      to the original location in your program.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>Xg<br>
+      </b></td>
+    <td style="vertical-align: top;" width="98%"> 
+      <p>RETURN: Jumps back to last GOSUB command. The IP will also get the direction 
+        it had back then. It'll execute the next instruction after the old gosub 
+        command, not the gosub itself anymore, that'd be pretty useless.</p>
+    </td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>Xj<br>
+      </b></td>
+    <td style="vertical-align: top;" width="98%">Set the anchor time for time 
+      anchors.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>XI</b></td>
+    <td style="vertical-align: top;" width="98%"> 
+      <p>Input a string: program pauses, allows you to type a string and then 
+        continues. The typing cursor is drawn at location is x, y. This command 
+        also pops a value from the stack to choose a message behind which you 
+        can type your character: <br>
+        0=nothing, 1=&quot;&gt;&quot;, 2=&quot;]&quot;, 3=&quot;enter text:&quot;, 
+        4=&quot;please enter text:&quot;, 5=&quot;enter string:&quot;, 6=&quot;please 
+        enter string:&quot;, 7 = &quot;enter name:&quot;, 8 = &quot;enter filename:&quot;, 
+        9 = &quot;enter command:&quot;</p>
+      <p>Max string length 256. String pushed to the stack with 0 termination 
+        character and in such an order that when using Xr to print it, it looks 
+        correct and not mirrored.</p>
+    </td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>XH<br>
+      </b></td>
+    <td style="vertical-align: top;" width="98%">RGB to HSV: the inverse functin 
+      of 'H'</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>XX<br>
+      </b></td>
+    <td style="vertical-align: top;" width="98%">Reserved for extended extended 
+      instructions, would it ever be needed.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>Xs</b></td>
+    <td style="vertical-align: top;" width="98%">Mirror last pop stack values</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>XS</b></td>
+    <td style="vertical-align: top;" width="98%">Mirror string on stack: mirror 
+      all values until first zero or &gt; 255 value in stack, where a zero or 
+      character &gt; 255 represent the termination character of the string.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>Xw</b></td>
+    <td style="vertical-align: top;" width="98%">Duplicate string, and put '0' 
+      character between old and new string.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>Xr</b></td>
+    <td style="vertical-align: top;" width="98%">Print String. String in stack 
+      has to be terminated with a value &lt;= 0 or &gt; 255, first letter printed 
+      is first popped value, the terminatino character is popped too but not drawn 
+      (since it isn't a char).</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>XP</b></td>
+    <td style="vertical-align: top;" width="98%">Get pixel (as opposed to 'P' 
+      which sets a pixel): push color of pixel (x, y) to color A.</td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top;" width="2%"><b>XT<br>
+      </b></td>
+    <td style="vertical-align: top;" width="98%"> 
+      <p>Trigonometry: This command can do trigonometric and hyperbolic functions 
+        and their inverses, plus a few extra mathematical functions. The full 
+        functionality of this command is given in the &quot;Trigonometry&quot; 
+        chapter of the manual.</p>
+    </td>
+  </tr>
+  </tbody> 
+</table>
+<h3><font color="#000000"><a name="decimal"></a>Decimal Numbers</font></h3>
+<p><font color="#000000">You can easily type decimal numbers in your code, these 
+  will be pushed to the stack. Each character of the decimal number is actually 
+  a command, and the commands are designed so that you can type them normally. 
+  It works as follows: </font></p>
+<p><font color="#000000">To be able to do this, a Decimal Counter is used, which 
+  is initially 1. Any command, <i>except the ones in the following list</i>, sets 
+  the DC back to 1:<br>
+  <br>
+  <tt>0123456789.\/@; &lt;&gt;^v</tt><br
+ style="font-family: monospace;">
+  <br>
+  Please note that "space" is also in that list, while '#' is not, so '#' can 
+  be used to separate two decimal numbers, while space, 'v', ... can be used to 
+  continue typing the decimal number.<br>
+  <br>
+  </font>The decimal number commands (0-9) do the following:<br>
+</p>
+<ul>
+  <li>If DC is equal to 1, push n to the stack (i.e. create a new value on the 
+    stack, rather than modifying an existing one), and set DC to 0</li>
+  <li>If DC is 0, it multiplies the top stack value with 10, and adds n to it 
+    (e.g. if the value on the stack was 5, and now you do the command '4', the 
+    value on the stack becomes 54)</li>
+  <li>If DC is not 0 and not 1 but something between those, it adds DC * n to 
+    the top stack value, and then divide DC through 10. For example if DC is 0.1, 
+    and the top stack value is 54, and you do the command '8', the top stack value 
+    will now become 54.8, and the DC will become 0.01.</li>
+</ul>
+<p>So the DC is equal to 0 when pushing digits before the point, and is 0.1, 0.01, 
+  ... when pushing digits after the point. It's 1 when not pushing any digits.</p>
+<p>The '.' or decimal point command will set the DC to 0.1, and if DC was 1 (i.e. 
+  you used a point as initial digit of the number, like .445), will push a zero 
+  to the stack (this is the zero before the point and creates your new value you're 
+  entering). For example if you want to push "256.23" to the stack, you have to 
+  give the following commands in the following order, this is the same order as 
+  when you normally write down a decimal number:<br>
+  <br>
+  <code>256.23</code></p>
+<p><font color="#000000">That is, if the IP</font> is moving to the east. If the 
+  IP is going in another direction, you have to type the commands in the other 
+  direction, for example if it goes to the west, to add 256.23, you have to type 
+  32.652 in your code instea<font color="#000000">d.<br>
+  <br>
+  To add two values to the stack, 256.23 and 255, use for example<br>
+  <br>
+  </font><code>256.23#255</code></p>
+<p><font color="#000000">The # command sets the DC back to 1 so that the next 
+  decimal command will push a new value to the stack. With a sp</font>ace: <code>256.23 
+  552</code>, you <font color="#000000">will NOT be adding two values to the stack, 
+  but only one value namely 256.23552, because space is in the list of commands 
+  that doesn't set the DC back to 1.<br>
+  <br>
+  You can output (print) numbers to the screen with 'i' or 'f'.</font></p>
+<h3><a name="goniofreak"></a>Trigonometry</h3>
+<p>The 'XT' command can do trigonometric and hyperbolic functions and their inverses, 
+  plus a few extra mathematical functions.</p>
+<ul>
+  <li>First, XT pops a value from the stack that represents which function it 
+    has to do.</li>
+  <li>Then, it pops a second value from the stack, called &quot;u&quot; here, 
+    which is the value it'll perform the calculation on.</li>
+  <li>A few functions, which have a number higher than 63, take 2 arguments and 
+    thus pop a third value, &quot;v&quot; (the second parameter for the function). 
+  </li>
+  <li>After performing the calculation, it pushes the result.<br>
+  </li>
+</ul>
+<p>Here are the numbers of the functions it can perform:</p>
+<pre>0.  0: <i>the zero function</i>
+
+1.  sin(u): <i>sine</i>
+2.  cos(u): <i>cosine</i>
+3.  tan(u): <i>tangent</i>
+4.  sec(u): <i>secant</i>
+5.  csc(u): <i>cosecant</i>
+6.  cot(u): <i>cotangent</i>
+
+7.  asin(u): <i>inverse sine</i>
+8.  acos(u): <i>inverse cosine</i>
+9.  atan(u): <i>inverse tangent</i>
+10. asec(u): <i>inverse secant</i>
+11. acsc(u): <i>inverse cosecant</i>
+12. acot(u): <i>inverse cotangent</i>
+
+13. sinh(u): <i>hyperbolic sine</i>
+14. cosh(u): <i>hyperbolic cosine</i>
+15. tanh(u): <i>hyperbolic tangent</i>
+16. sech(u): <i>hyperbolic secant</i>
+17. csch(u): <i>hyperbolic cosecant</i>
+18. coth(u): <i>hyperbolic cotangent</i>
+
+19. asinh(u): <i>inverse hyperbolic sine</i>
+20. acosh(u): <i>inverse hyperbolic cosine</i>
+21. atanh(u): <i>inverse hyperbolic tangent</i>
+22. asech(u): <i>inverse hyperbolic secant</i>
+23. acsch(u): <i>inverse hyperbolic cosecant</i>
+24. acoth(u): <i>inverse hyperbolic cotangent</i>
+
+25. exp(u): <i>exponential: e^u</i>
+26. ln(u): <i>natural logarithm (base e)</i>
+27. exp(-(u * u)): <i>standard normal distribution </i>
+28. sign(u): <i>returns -1, 0 or 1 (the sign of u)</i>
+
+64. atan2(v, u): <i>computes the principal value of the arc tangent of v/u, using the signs of both arguments to determine the quadrant of the return value</i>
+65. log_u(v): <i>base u logarithm of v, that is: ln(v)/ln(u)
+
+</i>For example to put the hyperbolic secant of 0.5 on the stack, use <tt>0.5#16XT</tt></pre>
+<h3><a name="strings"></a>Strings</h3>
+<p>With the instruction X&quot; (extended &quot;) you can make strings in your 
+  code. When in string mode, every character the pointer walks over will be pushed 
+  as an ascii value to the stack instead of executed. A string starts with X" 
+  and ends with "X. The end-X doesn't make the next character extended. To push 
+  a " symbol to the stack, use "". </p>
+<p>Inside a string, you can still execute commands, if you put the command after 
+  a &quot; character. Such a command inside a string is called a string command. 
+  There are only a few commands that work as a string command. The following commands 
+  are enabled as string command and do the same as what they do as normal command:</p>
+<pre>&quot;&gt; &quot;v &quot;&lt; &quot;^ &quot;\ &quot;/ &quot;; &quot;(space)    &quot;# &quot;@ &quot;+ &quot;- &quot;* &quot;:</pre>
+<p>The following string commands do something different:</p>
+<p>&quot;X: end the string<br>
+  &quot;&quot;: push a &quot; character to the stack<br>
+  &quot;2: the next two characters will be executed as normal command, so this 
+  command is used to extend the lifespan of the string command mode, e.g. if you 
+  need to go through a few 'v', '&lt;', etc...</p>
+<p>Other string commands do nothing in this version of Gammaplex. </p>
+<p>For example:</p>
+<pre>0X"""hell";+o world"""XXS</pre>
+<p>Will first push a 0 to the stack, this is the string termination character. 
+  Then it'll push the following characters to the stack: '"' 'h' 'e' 'l' 'l' 'o' 
+  ' ' 'w' 'o' 'r' 'l' 'd' '"'. The ';' character is executed as a command to jump 
+  over the '+'. The '+' is never executed and never pushed to the stack. After 
+  pushing the string, it'll mirror it with 'XS', because when pushing a string 
+  to the stack this way the topmost character of the stack is the last character 
+  of the string, which'll make it being printed the wrong way (mirrored)<font color="#C00000">.<br>
+  </font></p>
+<h2><font color="#C00000"><a name="styles"></a></font>Graphical Styles</h2>
+<p>Graphical shapes are drawn with the positions and color of the named registers. 
+  With the extended style registers you can enable more drawing options.</p>
+<p>R2, G2 and B2 together form a second color used for some styles.<br>
+  <br>
+  Transparency is the transparency value used if the transparency style is enabled. 
+  Transparency 0 means no transparency (opaque), 128 means semi transparent (50%), 
+  255 means 100% transparent (invisible). You cna also pick any value in between.</p>
+<p>Style, register[10], is used to enable the special styles. Style is a binary 
+  number where each bit enables or disables a different style option. The sum 
+  of the numbers of the following options is the style value to have these options 
+  enabled:</p>
+<ul>
+  <li>0: no special style.</li>
+  <li>1: enable transparency (using register[11] for transparency value)</li>
+  <li>2: multiply blending</li>
+  <li>4: make underlying pixels negative color (effect visible if transparency 
+    or blending is used)</li>
+  <li>8: do not draw over pixels with color2</li>
+  <li>16: only draw over pixels with color2</li>
+  <li>32: pattern 1: 50% dots</li>
+  <li>64: pattern 2: less dots</li>
+  <li>128: pattern 3: horizontal lines =</li>
+  <li>256: pattern 4: vertical lines |||||</li>
+  <li>512: invert pattern: transparent pixels are now filled ones and vica versa</li>
+  <li>1024: horizontal gradient</li>
+  <li>2048: vertical gradient</li>
+  <li>4096: enable background color for text (color2 is used for the background) 
+    (with gradient: background does opposite gradient)<br>
+  </li>
+</ul>
+<h2></h2>
+<p>Transparency and multiply blending together make &quot;mysterious blending&quot;.</p>
+<p>&quot;do not draw&quot; and &quot;only draw&quot; together form &quot;draw 
+  with (color1 + color2)/2 over color2, draw normally over the rest&quot;</p>
+<p>Horizontal and vertical gradient together make 45&deg; gradient. The gradient 
+  is from one side of the screen to the other side, and uses color1 and color2. 
+  &quot;only draw&quot; and &quot;do not draw&quot; are disabled when gradient 
+  is enabled.</p>
+<p>Dot and stripe patterns mixed form dotted line patterns (the combination of 
+  all removed pixels).<br>
+</p>
+<h2><a name="examples"></a>Examples</h2>
+<p>Most of these examples are included with the official interpreter as text files. 
+</p>
+<table width="80%" border="1" cellpadding="2" cellspacing="0">
+  <tr> 
+    <td bgcolor="#CCCCCC"><b>Hello World</b> </td>
+  </tr>
+  <tr> 
+    <td bgcolor="#CCCCCC"> 
+      <pre><font color="#FF0000">X&quot;Hello World!&quot;XXSXrRE</font></pre>
+      <p>First, the string &quot;Hello World!&quot; is pushed to the stack, then 
+        it's mirrored with 'XS' so that it'll be in the correct order for printing 
+        it, it's printed with 'Xr', and then finally the screen is redrawn with 
+        'R' so that you can actually see the text pixels that are drawn. The color 
+        of the text is white because that's the default value for the color registers. 
+        At the end of the program, the instruction pointer is trapped with the 
+        infinite loop 'E' ('E' does the same as '&gt;&lt;' would do).</p>
+    </td>
+  </tr>
+</table>
+<p><br>
+</p>
+<table width="80%" border="1" cellpadding="2" cellspacing="0">
+  <tr> 
+    <td bgcolor="#CCCCCC"><b>Hello World 2</b></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#CCCCCC"> 
+      <p>The previous example was a very simple hello world program, here's another 
+        one. It pushes the Hello World characters separately with their ascii 
+        values. The code of the program has a special shape, using the 2D properties 
+        of code files, and the direction of the instruction pointer is guided 
+        through the whole program until it reaches the end.</p>
+      <pre><font color="#FF0000">@v     &gt;   r108wv  #        &gt;         r100rv <br> 2     1   #       #        8        #     &gt;v<br> 5     0   #       #        0       #       R<br> 5     1   #       #        1       #       v<br> #######   v11rr&lt;  #        r       #       ^<br> w     r   1       #        4       #       #<br> w     2   r       #        1       #       #<br> K     7   3       #        1        #     # <br> &gt;     ^   &gt;2r119  r111r    ^######   #####  </font></pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table width="80%" border="1" cellpadding="2" cellspacing="0">
+  <tr> 
+    <td bgcolor="#CCCCCC"><b>Gammaplex Demo</b></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#CCCCCC"> 
+      <p>This little program is included in the file gamma.txt and is the code 
+        loaded by default by the interpreter if you don't instruct it to load 
+        another file. It shows bouncing text &quot;Gammaplex&quot; with a gradient, 
+        the bouncing effect uses the time for it's animation.</p>
+      <pre><font color="#FF0000">X&quot;Gammaplex&quot;XXS0#0nv<br>v    )]21#4201}a4  &lt;<br>&gt;t650:T124*124+t400v<br>^DcRrXwX}a1+29*29T:&lt;
+</font></pre>
+      <p>This code is more complex and contains loops.</p>
+      <p>First, the text &quot;Gammaplex&quot; is pushed to the stack and then 
+        mirrored with 'XS' (because it's mirrored on the stack due to the way 
+        it's pushed). Then color2 is set to (255, 0, 0)=red with the commands 
+        '0#0n4a}' ('n' pushes 255 to the stack, '4a}' sets the last 3 stack values 
+        to the color2 registers). Then, style (register 12) is set to 1024, which 
+        means horizontal gradient will be enabled. Color1 is already white automaticly 
+        at program start, so it's a horizontal white-red gradient.</p>
+      <p>Then, the loop starts. First, the loop sets y to 124 + 124 * cos(time/650), 
+        and then x to 92 + 92 * cos(time/400). These are coordinates that will 
+        always be inside the screen, 92*2 is the rightmost position of the text 
+        &quot;Gammaplex&quot; so that the &quot;x&quot; will be at the right side 
+        of the screen. These coordinates are set to the position A registers (the 
+        position the text will be printed at) with '1a}'. Then, first the Gammaplex 
+        text is duplicated in the stack with 'Xw' so that it can be used in the 
+        next loop again, and then printed with 'Xr' (this pops the text again). 
+        Finally, the screen is redrawn with 'R' and cleared with 'c', and the 
+        string termination zero is popped with 'D', so that for the next loop 
+        the duplicated text is available with the &quot;G&quot; on top of the 
+        stack. Then the whole loop starts again, forever.</p>
+      <p>You can change the animation speed by changing the values 650 and 400. 
+        The time is in milliseconds, and these animation speed parameters are 
+        what you divide this time through.</p>
+      <p>The path the &quot;Gammaplex&quot; text follows on the screen is a lissajous 
+        shape by the way.</p>
+    </td>
+  </tr>
+</table>
+<p><br>
+</p>
+<table width="80%" border="1" cellspacing="0" cellpadding="2">
+  <tr> 
+    <td bgcolor="#CCCCCC"><b>Sierpinski</b></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#CCCCCC"> 
+      <p>Draws a sierpinsky triangle at a screen of resolution 512x512</p>
+      <pre><font color="#FF0000">@512)u5v<br>va1l)21&lt;<br>&gt;W}W&amp;?Pv<br>^Rs v?&lt; <br>;   ^ =&quot;<br>      h <br>;&gt;Ns&quot;w^w<br>^^?=  y&lt;</font></pre>
+      <p>The code above contains a double loop!<br>
+        <br>
+        Here's a screenshot of this program while it is still busy drawing the 
+        triangle:<br>
+        <br>
+        <img alt="" src="screen2.png" style="width: 516px; height: 536px;"></p>
+      <p>This program goes quite slow because it has to do the inner loop 262144 
+        times, thereby checking all possible commands all the time and executing 
+        them. This program can be seen as a benchmark how slow or fast the current 
+        version of the interpreter is.</p>
+    </td>
+  </tr>
+</table>
+<p><br>
+</p>
+<table width="80%" border="1" cellspacing="0" cellpadding="2">
+  <tr>
+    <td bgcolor="#CCCCCC"><b>Painting program</b></td>
+  </tr>
+  <tr>
+    <td bgcolor="#CCCCCC">Draws white lines between the current mouse position 
+      and the previous one if you press the left mouse button. If you press the 
+      right mouse button, it'll clear the screen. 
+      <pre><font color="#FF0000">@uu   v<br>&gt;{2a}Mv<br>avm}a1&lt;<br>1&gt;;   v<br>^Rc?L?&lt;</font></pre>
+      <p>There's a single loop in this program, this loop is contained in all 
+        lines except the first one, and follows the v, &gt;, &lt; and ^ symbols 
+        all the time. The loop contains two conditions:one for left and one for 
+        right mouse button, which is why the condition are behind the 'm' command. 
+        The loop also uses the presets for position A and position B of stack 
+        programs to push and pop those, for drawing the lines.<br>
+        <br>
+        Here's a screenshot:<br>
+        <br>
+        <img alt="" src="screen1.png" style="width: 262px; height: 280px;"></p>
+</td>
+  </tr>
+</table>
+<p><br>
+</p>
+<table width="80%" border="1" cellspacing="0" cellpadding="2">
+  <tr>
+    <td bgcolor="#CCCCCC"><b>Beefed-up painting program by Torkel:</b> </td>
+  </tr>
+  <tr>
+    <td bgcolor="#CCCCCC"> 
+      <pre><font color="#FF0000">@uuuu      2a} v<br>&gt;   R    v w821&lt;<br>^v?v?mL}a\0wwddv<br>         1      <br>         M      <br>}  ?     ^ &lt;vu)&lt;<br>a; ; &gt;)u)u)^&gt;)uv<br>^2M&lt; ^ddww552L)&lt;<br>^&gt;;v;&lt;&gt;1a{2a}M1v<br>          v  }a&lt;<br>          &gt;m?v v<br>   &gt;c^^;?      &lt;<br>      ^  Rc?L&lt;  </font></pre>
+      <p>Right and left mouse button clears screen,<br>
+        Right mouse button cycles between line and freehand mode, [a bit buggy 
+        appearantly ;)]<br>
+        Left puts a line in line mode and draws in freehand mode.</p>
+      </td>
+  </tr>
+</table>
+<p><b><br>
+  </b> </p>
+<table width="80%" border="1" cellspacing="0" cellpadding="2">
+  <tr>
+    <td bgcolor="#CCCCCC"><b>Pong game by Tron3k:</b></td>
+  </tr>
+  <tr>
+    <td bgcolor="#CCCCCC"> 
+      <p><br>
+        <img alt="" src="tron3kpong.gif" style="width: 262px; height: 281px;"><br>
+        <br>
+        <br>
+        Move your paddle (the one on the left side) with the mouse (it has a limited 
+        speed), the ball bounces on the edge of the paddle but will go through 
+        the paddle's sides so beware! You play against the computer AI.</p>
+      <pre><font color="#FF0000"> #001#033GThisProgramWasWrittenByTron3k-tron3k_at_<br>\gmail.com_BTW..._itWASreallyHARD8]103)9]103)18]15<br>\8)t19])184]128)184](19](%19])19](64+19])2]255)3]2<br>\55)4]255)99]0)20]1)21]1)20](_20])c8](50+30])0]5)8<br>\](1])6]15)8](7])L30](1])30](7])L0]5)8](1])6]5)30]<br>\(7])L0]15)6]15)L005#032Gomfglol9](50+30])0]250)6]<br>\240)9](1])9](7])L30](1])30](7])L0]240)6]240)9](1]<br>\)30](7])L0]250)6]250)L5]8)18](0])19](1])F0]10)1]1<br>\0)180](iD0]240)181](iDR18](20](+18])19](21](+19])<br>\30]8)30](19](,31])31](!31])010#004#31](?GDD21](_2<br>\1])30]247)19](30](,31])31](!31])011#009#31](?GDD2<br>\1](_21])011#028GTRON3KRULESM22])23])8](25+31])31]<br>\(23](,30])012#043#30](?GDD8](1+8])013#003G#8](1-8<br>\])013#025#99](?GDD99]20)99](')40]3)40](99](,41])0<br>\15#031#41](?GDD9](25+31])31](19](,30])015#022#30]<br>\(?GDD9](1+9])015#031G#9](1-9])44]23)18](44](=29])<br>\29](!29])018#014#29](?GDD8](19](,34])018#014#34](<br>\?GDD8](50+31])19](31](,32])018#014#32](?GDD20](_2<br>\0])18](2+18])44]232)18](44](=29])29](!29])020#048<br>\#29](?GDD9](19](,34])020#048#34](?GDD9](50+31])19<br>\](31](,32])020#048#32](?GDD20](_20])#18](2-18])40<br>\]13)40](')021#005#40](?GDD30]0)18](30](,31])025#0<br>\46#31](?GDD0]0)6]255)1]255)7]255)1](')7](')L40]25<br>\)40](')023#002#40](?GDDR022#034#1](?GDD2]0)3]0)4]<br>\0)0]0)6]255)1]255)7]255)1](')7](')L40]25)40](')02<br>\4#042#40](?GDDR024#025#1](?GDD181](&quot;)001#033G30]2<br>\55)30](18](,31])030#018#31](?GDD0]0)6]255)1]255)7<br>\]255)1](')7](')L40]25)40](')027#023#40](?GDDR027#<br>\006#1](?GDD2]0)3]0)4]0)0]0)6]255)1]255)7]255)1]('<br>\)7](')L40]25)40](')029#014#40](?GDDR028#046#1](?G<br>\DD180](&quot;)001#033G003#034G&gt;&lt;######################</font></pre>
+      <p>This is a very nice achievement, the first game made in Gammaplex. I 
+        tried figuring out how it works but didn't get far.</p>
+</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table width="80%" border="1" cellspacing="0" cellpadding="2">
+  <tr>
+    <td bgcolor="#CCCCCC"><b>Polyglot by Marinus Oosters:</b></td>
+  </tr>
+  <tr>
+    <td bgcolor="#CCCCCC"> 
+      <p>This is a polyglot that works in quite a lot of languages, including 
+        Gammaplex. It prints HI.</p>
+      <pre><font color="#FF0000">#define print(x) main(){printf(x);return 0;} /* >+++++[<++>-]<[>++++
+# +++<-]>++.+.[-]>+++++[<++>-]<.[-][
+#
+# This polyglot prints "HI" when run in
+# Brainfuck, C, COW, Perl, Python, Gammaplex, l33t, and ruby
+#
+# */
+print ("HI\n")
+#/*
+# @X"H"Xr X"I"Xr RE
+# moOMoOMoOMoOMoOMoOMOOmOoMoOMoOmoOMOomoo
+# mOoMOOmoOMoOMoOMoOMoOMoOMoOMoOmOoMOomoo
+# moOMoOMoOMooMoOMooMOOMOomoomoOMoOMoOMoO
+# MoOMoOMOOmOoMoOMoOmoOMOomoomOoMooMOOMOo
+# moo 5 0 7 99999998 1 7 0 1 8 9999995 1 91
+# ] */</font></pre>
+    </td>
+  </tr>
+</table>
+<p><br>
+  Have fun designing your own programs, and mail me the results if you like. Contact 
+  information can be found at the bottom of this page.</p>
+<h2><a name="tips"></a>Tips</h2>
+<p>When using GOTO and GOSUB, use at least 3 digits for the coordinates, even 
+  if the coordinates have less digits, e.g. use 002#035 instead of 2#35 to give 
+  the coordinates to go to: since you'll be messing with your code and thus changing 
+  positions a lot while designing, positions might change, so it's best to have 
+  enough room to type possible bigger numbers for goto coordinates, and this also 
+  allows you to spot them easier since they're more recognisable.</p>
+<p>There are many shortcuts, for example you can use n instead of 255 to push 
+  the often needed 255 to the stack, you can use &quot;stack programs&quot; to 
+  push and pop named registers with less commands, and you can use &quot;time 
+  anchors&quot; to automaticly limit the speed of loops.</p>
+<h2><a name="challenges"></a>Challenges</h2>
+Some are very hard, others should be possible 
+<ul>
+  <li>Prime number calculator</li>
+  <li>Game Of Life</li>
+  <li>A quine (without using the 'q' command to read code of course, that would 
+    be too easy)</li>
+  <li>An adventure game, either with parser or with single character input like 
+    &quot;n&quot;, &quot;e&quot;, &quot;s&quot;, &quot;w&quot;, ... </li>
+  <li>Mandelbrot Set and/or Julia Set</li>
+  <li>Spinning 3D wireframe cube</li>
+  <li>Tic Tac Toe</li>
+  <li>A game like Tetris, 2D space shooter, snake, ...</li>
+</ul>
+<h2><a name="bugs"></a>Known Bugs</h2>
+<ul>
+  <li>This is not a bug, but I've been unable to test if the keyboard layout used 
+    for input is correct on an american keyboard. If you use an american keyboard, 
+    please let me know if all characters, including shift characters (like '?') 
+    work. You can for example test this by pressing escape, then 6, then 1, and 
+    it'll ask you to press a character.</li>
+</ul>
+<h2><a name="tagboard"></a>Contact Information</h2>
+<p>You can email me at the email address shown in the image below. I put it in 
+  an image to prevent spam. If you can't read the image, you can also form the 
+  address as follows: my first name at my family name dot net. The name can be 
+  found in the copyright message at the bottom.</p>
+<p><img src="antispam.png" width="303" height="32"></p>
+<p>You can enter messages in this Tag-board, if it isn't down:<br>
+  <script language="Javascript" type="text/javascript"
+ src="http://www.tag-board.com/tagboard.js?boardname=gammaplex"></script>
+</p>
+<table border="0" cellpadding="2" cellspacing="0" width="300">
+  <tbody>
+    <tr>
+      <td height="200" valign="top" width="300"> <iframe
+ src="http://www.tag-board.com/my.tag?name=gammaplex" name="tag"
+ marginwidth="0" marginheight="0" height="200" width="300"></iframe>
+      <script>netscape_support();</script> <br>
+      </td>
+    </tr>
+    <tr>
+      <td> <a href="http://www.tag-board.com/" target="_new">Powered
+by TagBoard Message Board</a> </td>
+    </tr>
+    <tr>
+      <td>
+      <form action="http://www.tag-board.com/add.tag" method="post"
+ name="tagform" target="tag"> <input name="name" value="gammaplex"
+ type="hidden"> Name<br>
+        <input name="tagname" maxlength="20"><br>
+URL or Email<br>
+        <input name="tagurl" maxlength="100"><br>
+Messages(<a href="http://www.tag-board.com/smilies/smilies.htm"
+ onclick="return pop_up_smilies();" target="_blank">smilies</a>) <br>
+        <textarea cols="24" rows="3" name="message" wrap=""></textarea><br>
+        <input class="button" value="TAG"
+ onclick="return Clear_Last_Message_on_Submit();" type="submit"> </form>
+      <script>rememberme()</script> </td>
+    </tr>
+  </tbody>
+</table>
+&nbsp;
+<br>
+Copyright (c) 2004-2005 by Lode Vandevenne, All Rights Reserved 
+<script language="javascript" type="text/javascript"
+ src="http://ss.webring.com/navbar?f=j;y=lode;u=defurl">
+</script>
+<noscript><center>
+<table bgcolor=gray cellspacing=0 border=2><tr>
+<td><table cellpadding=2 cellspacing=0 border=0><tr><td align=center>
+<font face=arial size=-1>This site is a member of WebRing. <br>To
+browse visit <a
+href="http://ss.webring.com/navbar?f=l;y=lode;u=defurl">
+Here</a>.</font></td></tr></table></td></tr></table>
+</center></noscript>
+</body>
+</html>

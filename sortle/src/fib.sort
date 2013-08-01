@@ -1,0 +1,22 @@
+# Print the nth Fibonacci number, where n >= 1 is the number
+# that appears on the first line without quotes (try 60).
+#
+# You can change it to anything as long as the integers in your
+# Sortle implementation will hold the desired Fibonacci number.
+#
+# This uses 3n+10 expression evaluations. The expressions are
+# listed in the order they "usually" run in (other than during
+# initialization and termination).
+#
+# Written by Graue in 2012. Public domain. No warranty.
+
+a := "0" 60 "halt" ~ ~ ".!1" "" ? ".!2" "" ? ".!3" "" ? ".!4" "" ? ".!5" "" ? ".!6" "" ? ".!7" "" ? ".!8" "" ? ".!9" "" ? ".!0" "" ? "." "" ? ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
+
+# a = b; b = c; c = a+b
+ax := "e.!xd(a)" "" ? "b(.)!x" "" ? "e.!(x)da" "" ? ~ ~ "(e" "0(.)!halt" "" ? "xda)" ~ ~ "" ? ^ "x(.)!y" "" ? ^
+bx := "b" "c(.)!x" "" ? "x" ~ ~ "e" "0(.)!halt" "" ? "(x)da" ~ ~ "" ? "c(.)!x" "" ? "y" ~ ~ ^
+acx := "c" "a(.)!x" "" ? "b(.)!x" "" ? + "1" ^ ~ "x" ~ "x.!y" "" ? ^
+
+# d = e; e = d+1  (e counts which Fibonacci number is in c)
+dx := "e.!x(d)a" "" ? "e(.)!xda" "" ? 0 + ~ "e.!(x)da" "" ? ~ "x.!y" "" ? ^
+eaxda := "e" "d(.)!x" "" ? 1 + "xda" ~ ~

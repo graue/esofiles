@@ -1,0 +1,21 @@
+The Qdeql Programming Language
+
+Qdeql is a minimalistic programming language with just one queue for
+data storage and nothing else. The commands are
+
+  = NEXT   Dequeue a byte and enqueue it again
+  - DEC    Dequeue a byte, subtract one (wrapping around), and enqueue it
+  \ BEGIN  Dequeue a byte and skip to the instruction after the
+           corresponding END if the byte is zero; otherwise, enqueue the
+           byte again, followed by two zero bytes
+  / END    Go back to the corresponding BEGIN
+  & INPUT  Read a byte from stdin and enqueue it (0 for EOF)
+  * OUTPUT Dequeue a byte and write it to stdout
+
+As you may have guessed, the queue is a queue of bytes. They're treated 
+as integers from 0 to 255.
+
+Dequeueing an empty queue produces zero.
+
+contact: graue@oceanbase.org
+website: http://www.oceanbase.org/graue/qdeql/

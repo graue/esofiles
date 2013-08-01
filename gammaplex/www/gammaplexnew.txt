@@ -1,0 +1,59 @@
+Gammaplex Programming Language - Version Info
+=============================================
+
+New updates in Gammaplex version 0.3
+------------------------------------
+
+Time anchors: time anchors are positions in the program where the program will wait until a certain minimum amount of milliseconds since the previous time anchor is reached. This allows you to limit the speed on too fast computers. Time anchors are the 'j' command, set the anchor time with 'Xj'.
+
+GOTO command fixed: now the instruction you go to is executed as well.
+
+GOSUB and RETURN commands. Up to 1024 positions (with IP direction) are remembered.
+
+Now, when you don't use an @ symbol to start the program, the instruction at position (0,0) is the first one executed, instead of (1,0).
+
+Extended commands: some new commands are extended: place them after an 'X' character (there were too many commands to be all a single character).
+
+Bigger maximum instruction array: 1024x1024
+
+Stack Programs: you can now program which registers { and } have to push/pop. Up to 16 registers of your choice can be chosen. There are also presets to easily push/pop the named registers. For this, he commands a, A, b, B, k, K, { and } are changed.
+
+The "Color" Registers are now set to white by default at the start
+
+More mathematical commands: Round numbers (take the integer part) with 'o', random numbers: with k and K you can get a random bit or a random value, the trigonometry command which can do the 24 trigonometric and hyperbolic functions and their inverse, and more.
+
+Interpreter upgraded with a menu: Press escape to see options such as loading a file, modifying registers and instructions, executing a command, ...
+
+New graphical functions: Draw rectangles with 'B'. Convert colors from HSV to RGB and back with 'H' and 'XH'. Get pixel with 'XP'
+
+Input a character with 'I', a number with 'J' or a string with 'XI'.
+
+Lots of little bugfixes, for example the commands ':', 'T', 'V', '-', '~', 'y', 'h', 'p'... were broken or slightly incorrect (for example ':' divided the stack values in the wrong order), etc...
+
+Strings: push strings to the stack with X" and "X, characters between these are pushed to the stack instead of executed. You can also print strings with 'Xr'
+
+The Decimal Counter system is changed: Decimal Numbers now entered normally instead of the weird way of the previous version.
+
+Graphical Drawing Styles: new named registers are added for these. With the different styles, you have more control over the way the graphical shapes (pixels, circles, lines, ...) are drawn: styles allow things like Transparency, Only draw or Don't draw over pixels with a certain color, Dot and Line Patterns, Text Background Color, Gradient, and more.
+
+
+Old Updates
+-----------
+
+9 july 2005: the source code is now also included in this zip file.
+
+9 july 2005: improved the manual a bit.
+
+5 september 2004: Linux version of the Gammaplex interpreter added. It's simply included in the same .zip file that contains the windows executable, and is called "Gammaplex" without file extension. To make sure the program can open files relative to it's program path, open it from a console with "./Gammaplex" while being in the folder of Gammaplex.
+
+26 august 2004: Minor update (v0.31): You can now also enter negative numbers while entering numbers in the interpreter, by putting a "-" sign in front of the number (you can't see the "-" symbol until there's something nonzero behind the sign, since it prints the number as floating point). Also increased size of the memory (i.e. the registers) and the stack, and the number of gosub locations. Also increased the precision of pi (the one pushed with the 'p' command) to like much more decimals behind the point.
+
+24 august 2004: A big update (version v0.3) of Gammaplex with much more features. Backwards compatibility is lost, but the pain of this is kept to a minimum. Major new features are time anchors, stack programs, gosub/return, changed decimal counter system, strings, trigonometry and graphical styles. See next section for the changes.
+
+3 august 2004: Update v0.2. The commands q, Q, f, r, i, C and F are added to allow self modifying code, text and number output and more graphics, and y was broken and works for real now too!
+
+2 august 2004: Gammaplex v0.1 and it's interpreter released after 2 days of designing and programming it.
+
+=============================================
+
+Gammaplex : Copyright 2004-2005 by Lode Vandevenne

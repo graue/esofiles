@@ -1,0 +1,36 @@
+BEFstar.tec and BEFstarObf.tec are from Tom Eklo:f <Tom.Eklof@laurea.fi>, 
+who writes:
+
+Here is, in all its gory glory, my implementation of BF in TECO, named, 
+aptly enough, Brain Editor and Fucker or BEF* for short.
+
+Included are two files. BEFstar.tec is the commented, nonobfuscated 
+version of the source. BEFstarObf.tec is TECO at its best (ie. looks 
+completely hideous).
+
+
+
+To actually use the interpreter, you need an implementation of TECO, 
+preferably TECOC from http://almy.us/files/tecoclinux0398.tar.gz which 
+is what I tested my program on. Any TECO-11 v40 compliant implementation 
+should (NOT TESTED) work.
+
+Now, start TECO up, and when you get its prompt (a *), type
+eiBEFstar.tec$$
+($$ means <ESC><ESC>, ie. press the ESC key 2 times)
+
+Now BEF* will start interpreting the BF program at the start of the 
+buffer. I've conveniently included a couple of programs in the .tec 
+file, namely 99 Bottles, 'cat' and Fibonacci (which it runs by default). 
+To run a program other than Fibonacci, put a ! before and a ! after it, 
+and then uncomment (ie. remove the preceding and trailing !) another 
+one.
+
+Now, be warned, there are some serious bugs in the implementation: it 
+does no bounds checking, so if you move off the right end of your memory 
+(30000 bytes), you'll actually end up staring at the BF program, which 
+is sitting in the buffer right there next to the memory. Also, ',' can 
+only accept keyboard input and an ENTER keypress incorrectly issues 
+<CR><LF> instead of just a <LF>.
+
+Oh, and some programs just refuse to run. But that's life.

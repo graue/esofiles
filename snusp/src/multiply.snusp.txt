@@ -1,0 +1,11 @@
+Here's an example of a Modular SNUSP program that multiplies two single-digit
+numbers. The pipes (|) and equality signs (=) are designated no-op
+instructions used to keep track of the flow of the program (such staked-out
+paths are termed wires). The asterisks are used here to separate the library
+functions from the main program. The at signs (@) are the starting points of
+subroutine calls (mnemonic: the at sign looks like a round-trip).
+
+The SNUSP code is in STDIN, and the READ instruction takes data from the
+arguments. Run it like this:
+
+perl snusp.pl < multiply.snusp 2 3   # to multiply 2 by 3

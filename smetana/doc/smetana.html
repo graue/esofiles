@@ -1,0 +1,60 @@
+<html><head>
+    <meta http-equiv="Content-Type" content="text/html;CHARSET=iso-8859-1">
+    <title>Cat's Eye Technologies: The SMETANA Language</title>
+</head>
+<body   bgcolor="#ffffff" text="#000000" link="#439773"
+     vlink="#ac9444" alink="#0cd490"
+     background="/img/sinewhite.gif" >
+<h1>SMETANA</h1>
+<P>Chris Pressey, 1994(ish)
+<hr>
+
+<p>A long time ago (about six years ago),
+I was writing some amusing notes to
+myself and among them was an "algorithm
+that'll never fly," which went
+something like:
+
+<p>&nbsp;&nbsp;1. Swap steps one and two.
+<br>&nbsp;&nbsp;2. Flap wings.
+<br>&nbsp;&nbsp;3. Go back to step one.
+
+<p>It then occurred to me that reducing
+this form to the absurd (removing
+the "Flap wings" instruction) just <i>might</i>
+fail to yield a totally untractable language.
+
+<p>I originally wrote the interpreter as a Visual Basic
+application and named it SMETANA - both an acronym
+for "Self-Modifying, Extremely Tiny AutomatoN
+Application", and a reference to the composer of
+the same name.
+
+<ul><p><i>Turns out that the word</i> smetana <i>is
+also Russian for</i> sour cream<i>.  What do you know?
+Finally, I join the all-too-exclusive club of people
+who have invented a language
+named after a foodstuff!</i></ul>
+
+<p>The dsitribution available here is a much better
+implementation of the SMETANA interpreter in
+a much more device-independent and scalable form.
+I have retained the English syntax exactly.  The
+program ends when it tries to peform step
+number <i>n</i>, where <i>n</i> is one plus the number
+of steps given in the source.
+
+<!--
+<p>Todo: mine information about SMETANA's Turing-Complete
+status from the e-mail archives
+-->
+
+<p>Syntax of the SMETANA Language:
+
+<pre>  Smetana ::= Step {".\n" Step} ".".
+  Step    ::= "Step" Integer "." (GoTo | Swap).
+  GoTo    ::= "Go" "to" "step" Integer.
+  Swap    ::= "Swap" "step" Integer "with" "step" Integer.
+  Integer ::= "0".."9" {"0".."9"}.</pre>
+
+</body></html>

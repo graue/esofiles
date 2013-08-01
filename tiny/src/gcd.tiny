@@ -1,0 +1,11 @@
+00010 # Greatest Common Denominator
+00020 "Greatest Common Denominator \n"
+00030 "Input i >:" [?] i
+00040 "Input j >:" [?] j
+00050 [i j = 90 *] @
+00060 [i j > 80 *] @
+00070 [j i - ] j  [50]@
+00080 [i j - ] i  [50]@
+00090 "GCD = " [i] ? "\n\n"
+00100 "Again? 0:yes 1:no  >:" [? 0 = 30 *] @
+00110 .

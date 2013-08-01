@@ -1,0 +1,7 @@
+This program takes the number at (1,1) (input as the ASCII code of a character)
+and prints it in binary (I would do decimal but that would require a divide by
+ten subroutine), using the halving subroutine in half.w.  Since it takes the
+number direct;y from memory, this proram is not quite suitable for the end-user,
+but rather it can be used as a subroutine in a yet larger program.
+
+The algorithm takes O(n) time, most of which is spent in the halving subroutine.

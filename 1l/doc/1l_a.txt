@@ -1,0 +1,49 @@
+(This was the original description of the language. It is now obsolete.)
+
+1L_a is a two-dimensional language that takes 2L's concept farther; rather
+than the 3 symbols of 2L ('*', '+', everything else), 1L_a only has two
+(' ', everything else).
+
+The memory is an array of bits (a tape), unbounded on the right. The leftmost
+cell is called TL0, and the next couple cells are called TL1 and TL2. The
+data pointer starts out pointing to TL2. That is:
+
+TL0 TL1 TL2
+ 0   0   0   0   0   0  0 ...
+        ^^^
+
+The instruction pointer starts at the upper left corner of the source file
+moving down, and the program ends when the IP travels off the top or left
+side of the code. (Travelling off the right or the bottom results in
+undefined behavior, much like 2L.)
+
+The IP moves one cell at a time in the current direction, be that up, down,
+left, or right.
+
+There are two symbols: spaces and everything else.
+
+A space, if encountered by the IP moving left, moves the data pointer one
+cell to the left and then flips the bit at the data pointer. If a space is
+encountered by the IP moving up, the data pointer is moved one cell to the
+right. A space encountered while moving down or right is a nop.
+
+Everything else forms a "turning wall" like the + in 2L. The instruction
+pointer moves backwards one space, then turns 90 degrees left if the current
+bit is 0 or right if the current bit is 1.
+
+As in 2L, I/O is memory-mapped. Flipping the bit at TL0 causes an input or
+output operation, as follows:
+
+If TL1 and TL2, then a 1 bit is output.
+If TL1 and not TL2, then a 0 bit is output.
+If not TL1, then a bit is input and saved in TL2.
+
+The programmer should expect that asking for a bit of input will read and
+buffer a full byte from standard input and that no output will be done until
+8 bits have been output, at which point a byte will be written. I/O is most
+significant bit first; e.g., to output an ASCII A (65, binary 01000001), one
+would output a 0, a 1, five 0's, and a 1.
+
+1L_a is expected to be Turing-complete, but this has not been proven.
+
+1L_a is the work of <graue@oceanbase.org>.

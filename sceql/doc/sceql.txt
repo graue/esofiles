@@ -1,0 +1,16 @@
+Sceql (seckel): slow and clean esoteric queue language
+
+The program has access to a queue of bytes. The queue initially contains 
+a single zero byte.
+
+Instructions:
+
+= NEXT   Dequeue a byte and enqueue it again
+- DEC    Decrement the byte that would be dequeued next (wrapping)
+_ INC    Increment the byte that would be dequeued next (wrapping)
+\ BEGIN  Skip to the instruction after the corresponding END if the byte
+         that would be dequeued next is zero
+/ END    Go back to the corresponding BEGIN
+! GROW   Enqueue a new zero byte
+& INPUT  Read a byte from stdin and enqueue it (0 for EOF)
+* OUTPUT Dequeue a byte, write it to stdout, and enqueue it again

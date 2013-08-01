@@ -1,0 +1,37 @@
+This program prints sequential ASCII characters, starting with the character in
+(1,1) and ending with the character in (2,2).  Currently, it starts with 0 and
+ends with 9, so it counts through all digits.  A not-so-well-formatted table of
+all printable ASCII characters may be obtained by starting with ! and ending
+with ~.  The former ascii.w (not by me) also tries to print non-printable
+characters, and doesn't automatically stop (beep beep beep beep beep beep beep
+beep beep beep beep beep beep ad nauseum), so my version is fully superior.
+Space may not be used as endpoint (because the endpoints must be parsed as code
+once), but it may appear as intermediate value.
+
+The basic operation is:
+0. Get the current character and place it on the stack.
+1. Write the top-of-stack (the current character) to the terminal.
+2. Get the current character, which was lost from the stack in step 1, again.
+3. Get the termination character and place it on the stack.
+4. Subtract the two values on the stack.
+5. If the result of step 4 was zero (the last character has just been printed),
+   quit the program.  Otherwise, continue to step 6.
+6. The stack is, once again, empty, so push the current character.
+7. Increment the top of stack by dancing "left, left, right, left, right,
+   right", where all turns are 45 degrees.
+8. Put the top of stack in the current character position.
+9. With the stack empty again, go back to step 0 and repeat the whole process.
+
+The wire has many crossings, although all but one are harmless "bridges" which
+do not change direction and just shrink the wire a bit by avoiding padding.
+
+To do: write a newline when done (this is not as easy in Wierd as it sounds,
+because a newline cannot be entered as starting element for a cell), ask the
+user to enter the start and end characters (inputting and remembering is not
+that hard, but the nature of Wierd is such that adding anything at the
+beginning requires a lot of work to get the rest right, see notes in cat.doc
+about a Wierd editor).
+
+See cat.doc for general language notes.  In contrast to what is said there,
+this wire does have comments.  Not many, but the important actions are probably
+somewhere near where the comments say they are.

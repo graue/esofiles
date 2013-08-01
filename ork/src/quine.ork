@@ -1,0 +1,102 @@
+# Copyright (c) 2005 Gregor Richards
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+# Note: This comment won't be outputted by the quine, just the code.
+
+There is such a thing as a smart scribe.
+A smart scribe can write a phrase.
+A smart scribe can loopWrite.
+A smart scribe can put.
+A smart scribe can put2.
+A smart scribe can put3.
+A smart scribe can put4.
+A smart scribe has an ASCII which is a number array.
+A smart scribe has Will which is a scribe.
+
+When a smart scribe is to write a phrase:
+ASCII is to import the phrase.
+ASCII's current is 0.
+I am to loopWrite.
+
+When a smart scribe is to loopWrite:
+There is a mathematician called ProfBob.
+I am to put.
+ProfBob's first operand is ASCII's current.
+ProfBob's second operand is 1.
+ProfBob is to add.
+ASCII's current is ProfBob's result.
+ProfBob's first operand is ProfBob's result.
+ProfBob's second operand is ASCII's length.
+ProfBob is to compare.
+If ProfBob says it's less then I am to loop.
+
+When a smart scribe is to put:
+I have a mathematician called ProfBob.
+ASCII is to get ProfBob's first operand.
+ProfBob's second operand is 34.
+ProfBob is to compare.
+If ProfBob says it's equal then Will is to write "\\\""
+If ProfBob says it's less then I am to put2.
+If ProfBob says it's greater then I am to put2.
+
+When a smart scribe is to put2:
+I have a mathematician called ProfBob.
+ASCII is to get ProfBob's first operand.
+ProfBob's second operand is 10.
+ProfBob is to compare.
+If ProfBob says it's equal then Will is to write "\\n"
+If ProfBob says it's less then I am to put3.
+If ProfBob says it's greater then I am to put3.
+
+When a smart scribe is to put3:
+I have a mathematician called ProfBob.
+ASCII is to get ProfBob's first operand.
+ProfBob's second operand is 92.
+ProfBob is to compare.
+If ProfBob says it's equal then Will is to write "\\\\"
+If ProfBob says it's less then I am to put4.
+If ProfBob says it's greater then I am to put4.
+
+When a smart scribe is to put4:
+I have a number called b.
+ASCII is to get b.
+Will is to asciiWrite b.
+
+When this program starts:
+I have a phrase called b.
+I have a phrase called c.
+I have a phrase called d.
+I have a phrase called e.
+There is a scribe called Scribo.
+There is a smart scribe called Super Scribo.
+b is "There is such a thing as a smart scribe.\nA smart scribe can write a phrase.\nA smart scribe can loopWrite.\nA smart scribe can put.\nA smart scribe can put2.\nA smart scribe can put3.\nA smart scribe can put4.\nA smart scribe has an ASCII which is a number array.\nA smart scribe has Will which is a scribe.\n\nWhen a smart scribe is to write a phrase:\nASCII is to import the phrase.\nASCII's current is 0.\nI am to loopWrite.\n\nWhen a smart scribe is to loopWrite:\nThere is a mathematician called ProfBob.\nI am to put.\nProfBob's first operand is ASCII's current.\nProfBob's second operand is 1.\nProfBob is to add.\nASCII's current is ProfBob's result.\nProfBob's first operand is ProfBob's result.\nProfBob's second operand is ASCII's length.\nProfBob is to compare.\nIf ProfBob says it's less then I am to loop.\n\n"
+c is "When a smart scribe is to put:\nI have a mathematician called ProfBob.\nASCII is to get ProfBob's first operand.\nProfBob's second operand is 34.\nProfBob is to compare.\nIf ProfBob says it's equal then Will is to write \"\\\\\\\"\"\nIf ProfBob says it's less then I am to put2.\nIf ProfBob says it's greater then I am to put2.\n\nWhen a smart scribe is to put2:\nI have a mathematician called ProfBob.\nASCII is to get ProfBob's first operand.\nProfBob's second operand is 10.\nProfBob is to compare.\nIf ProfBob says it's equal then Will is to write \"\\\\n\"\nIf ProfBob says it's less then I am to put3.\nIf ProfBob says it's greater then I am to put3.\n\nWhen a smart scribe is to put3:\nI have a mathematician called ProfBob.\nASCII is to get ProfBob's first operand.\nProfBob's second operand is 92.\nProfBob is to compare.\nIf ProfBob says it's equal then Will is to write \"\\\\\\\\\"\nIf ProfBob says it's less then I am to put4.\nIf ProfBob says it's greater then I am to put4.\n\n"
+d is "When a smart scribe is to put4:\nI have a number called b.\nASCII is to get b.\nWill is to asciiWrite b.\n\nWhen this program starts:\nI have a phrase called b.\nI have a phrase called c.\nI have a phrase called d.\nI have a phrase called e.\nThere is a scribe called Scribo.\nThere is a smart scribe called Super Scribo.\nb is "
+e is "Scribo is to write b.\nScribo is to write c.\nScribo is to write d.\nScribo is to write \"\\\"\"\nSuper Scribo is to write b.\nScribo is to write \"\\\"\\nc is \\\"\"\nSuper Scribo is to write c.\nScribo is to write \"\\\"\\nd is \\\"\"\nSuper Scribo is to write d.\nScribo is to write \"\\\"\\ne is \\\"\"\nSuper Scribo is to write e.\nScribo is to write \"\\\"\\n\"\nScribo is to write e.\n"
+Scribo is to write b.
+Scribo is to write c.
+Scribo is to write d.
+Scribo is to write "\""
+Super Scribo is to write b.
+Scribo is to write "\"\nc is \""
+Super Scribo is to write c.
+Scribo is to write "\"\nd is \""
+Super Scribo is to write d.
+Scribo is to write "\"\ne is \""
+Super Scribo is to write e.
+Scribo is to write "\"\n"
+Scribo is to write e.

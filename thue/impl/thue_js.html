@@ -1,0 +1,167 @@
+<html>
+    <head>
+<BASE HREF="http://cyberspace.org/~lament/thue.html">
+
+        <title>Thue Interpreter</title>
+        <script src="thue.js">
+            document.write("Problems when loading thue.js!")
+        </script>
+        <script>
+            function init()
+            {
+                var code = document.getElementById("code").value
+                update_state(code)
+                clear_output()
+                init_execution()
+                show_workspace()
+            }
+            function do_step()
+            {
+                step()
+                show_workspace()
+                if (output_text != '') {
+                    output(output_text)
+                }
+            }
+            function do_run()
+            {
+                while (state != 'done') {
+                    step()
+                    if (output_text != '') {
+                        output(output_text)
+                    }
+                }
+                show_workspace()
+            }
+            function output(line)
+            {
+                document.getElementById("output").innerHTML += line;
+            }
+            function clear_output()
+            {
+                document.getElementById("output").innerHTML = '';
+            }
+            function show_workspace()
+            {
+                ws = document.getElementById("workspace")
+                if (state == 'done' || state == 'nothing') {
+                    if (state == 'done') {
+                        color = '#555555'
+                    } else {
+                        color = '#0000ff'
+                    }
+                    result = '<font color = "' + color + '">' + workspace + '</font>'
+                } else {
+                    if (state == 'selected') {
+                        color = "#ff0000"
+                    } else {
+                        if (magic == '') {
+                            color = "#00bb00"
+                        } else {
+                            color = "#bb00bb"
+                        }
+                    }
+                    result = workspace.substring(0,matchindex)
+                    result += '<font color="' + color + '">'
+                    if (magic == '') {
+                        result += workspace.substr(matchindex,matchlen)
+                    } else if (magic == 'none') {
+                        result += '()'
+                    } else if (magic == 'output') {
+                        result += '(O)'
+                    }
+                    result += '</font>'
+                    result += workspace.substr(matchindex+matchlen, workspace.length - 1)
+                }
+                result += '&nbsp;'
+                ws.innerHTML = result
+            }
+            function load(name)
+            {
+                // loads sample code
+                document.getElementById("code").value = samples[name]
+                init()
+            }
+            // Sample programs follow
+
+samples = {}
+
+samples['hello'] = 
+'@::=~Hello world!\n\
+::=\n\
+@'
+
+samples['sierpinski'] =
+"#::=Sierpinski's triangle, HTML version\n\
+#::=By Nikita Ayzikovsky\n\
+X::=~&nbsp;\n\
+Y::=~*\n\
+Z::=~<br>\n\
+_.::=._X\n\
+_*::=*_Y\n\
+._|::=.Z-|\n\
+*_|::=Z\n\
+..-::=.-.\n\
+**-::=*-.\n\
+*.-::=*-*\n\
+.*-::=.-*\n\
+@.-::=@_.\n\
+@*-::=@_*\n\
+::=\n\
+@_*...............................|"
+
+        load("hello")
+
+        </script>
+        <style type="text/css">td {vertical-align:top} th {text-align:left} #output div {margin-left:1em;font-family:monospace} #output {color:black;background:white;font-family:monospace;padding:0em 0.2em}</style>
+        <style type="text/css">td {vertical-align:top} th {text-align:left} #workspace div {margin-left:1em;font-family:monospace} #workspace {color:black;background:#ffffee;font-family:monospace;padding:0em 0.2em}</style>
+    </head>
+    <body>
+        <h1>Thue interpreter in Javascript</h1>
+        <i>It is pitch black. You are likely to be eaten by a Thue.</i><br>
+        Sample programs: 
+        <a onclick="load('hello'); return false;" href="#">hello world</a>,
+        <a onclick="load('sierpinski'); return false;" href="#">Sierpinski's triangle</a><br>
+        <textarea rows="15" cols="70" id="code"></textarea><br>
+        <div id="workspace">&nbsp;</div><br>
+        <button onclick="init()">Update</button>
+        <button onclick="do_run()">Run</button>
+        <button onclick="do_step()">Step</button>
+        <br><br>
+        <div id="output"></div><br>
+    </body>
+
+<!-- SOME SCRIPT SRC'S ON THIS PAGE HAVE BEEN REWRITTEN BY THE WAYBACK MACHINE
+OF THE INTERNET ARCHIVE IN ORDER TO PRESERVE THE TEMPORAL INTEGRITY OF THE SESSION. -->
+
+
+<SCRIPT language="Javascript">
+<!--
+
+// FILE ARCHIVED ON 20031210145310 AND RETRIEVED FROM THE
+// INTERNET ARCHIVE ON 20050513005944.
+// JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+// ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+// SECTION 108(a)(3)).
+
+   var sWayBackCGI = "http://web.archive.org/web/20031210145310/";
+
+   function xLateUrl(aCollection, sProp) {
+      var i = 0;
+      for(i = 0; i < aCollection.length; i++)
+         if (aCollection[i][sProp].indexOf("mailto:") == -1 &&
+             aCollection[i][sProp].indexOf("javascript:") == -1)
+            aCollection[i][sProp] = sWayBackCGI + aCollection[i][sProp];
+   }
+
+   if (document.links)  xLateUrl(document.links, "href");
+   if (document.images) xLateUrl(document.images, "src");
+   if (document.embeds) xLateUrl(document.embeds, "src");
+
+   if (document.body && document.body.background)
+      document.body.background = sWayBackCGI + document.body.background;
+
+//-->
+
+</SCRIPT>
+</html>

@@ -1,0 +1,135 @@
+w_title(1L_a Programming Language Standard, 2005)dnl
+
+! The 1L_a Programming Language Standard, 2005 ("1L_a105")
+
+Published by the 1L_a Standardization Committee
+
+! Overview
+
+1L_a is a powerful and expressive programming language in which program
+code is two-dimensional. Data are stored within a simulated virtual
+machine consisting of an array of bits.
+
+The goal of this standards document is to provide a clear guideline for
+would-be implementors of the 1L_a programming language, so that, going
+forward, implementors and programmers alike can coagulate in an infernal,
+synergistic quagmire.
+
+! Section 1: Source Code Representation
+
+!! Section 1.1: Instructions
+
+Source code in 1L_a consists of a rectangular, two-dimensional array of
+symbols representing instructions. This array's width and height must
+each be finite and no less than 1.
+
+The symbols are in a finite alphabet containing at least two distinct
+members. Of these, the symbol equal to that found in the upper left
+corner of the code array represents the GO instruction, while all other
+symbols in the alphabet represent the STOP instruction.
+
+!! Section 1.2: Internal Representation of Code
+
+It is implementation-defined how an array of source code is represented
+on disk.
+
+! Section 2: Data Access
+
+!! Section 2.1: The Data Array
+
+1L_a programs have access to an array of data bits, capable of storing
+the values 0 and 1. This array is bounded on the left.
+
+From a theoretical perspective, the array is unbounded on the right, so
+that no limit is placed on the number of bits available in the array.
+However, implementations on physical machines may provide a limited
+number of bits to the right, due to the machines' finite memory. Such
+implementations should terminate with an error if a 1L_a program
+attempts to access memory past the rightmost available bit.
+
+For the purposes of this Standard, the leftmost three bits shall be
+referred to as TL0, TL1, and TL2 (in order).
+
+Before a 1L_a program starts, all bits in the data array shall be set
+to 0.
+
+!! Section 2.2: The Data Pointer
+
+Besides the data array, 1L_a programs maintain the additional state of
+a _data pointer_. The data pointer refers to a particular bit in the
+data array. All operations directly available to a 1L_a program for
+manipulating the data array use the bit underneath the data pointer.
+
+Initially, the data pointer refers to TL2.
+
+Moving the data pointer to the left when it is already at TL0 results
+in undefined behavior.
+
+! Section 3: Execution
+
+!! Section 3.1: The Instruction Pointer
+
+Further state is maintained in a 1L_a program in an _instruction pointer_.
+The instruction pointer consists of a location within the source code
+array, as well as a direction of travel: up, left, right, or down.
+
+Initially, the instruction pointer refers to the instruction in the
+upper left corner of the source code array, and its direction is down.
+
+!! Section 3.2: Movement
+
+Execution proceeds as follows: first the instruction under the
+instruction pointer is executed, then the instruction pointer moves
+forward one cell in the code array.
+
+!! Section 3.3: Instructions
+
+!!! Section 3.3.1: GO
+
+The GO instruction performs a different action depending on the
+instruction pointer's direction:
+
+- *Up*: The data pointer is moved one bit to the right.
+- *Down*: No action is taken.
+- *Left*: The data pointer is moved one bit to the left, and then the
+  bit at the data pointer is flipped.
+- *Right*: No action is taken.
+
+!!! Section 3.3.2: STOP
+
+The STOP instruction causes the instruction pointer to move backwards
+one cell in the code array. Then the bit under the data pointer is
+examined. If it is 0, the instruction pointer turns 90 degrees to the
+left. Otherwise, the instruction pointer turns 90 degrees to the right.
+
+!! Section 3.4: Termination
+
+If at any time the instruction pointer attempts to move up beyond the
+topmost row of the code array or left beyond its leftmost column, the
+program terminates.
+
+Attempting to move the instruction pointer outside the bounds of the
+code array on the right or bottom does not necessarily terminate the
+program, but rather results in undefined behavior.
+
+! Section 4: Input and Output
+
+!! Section 4.1: Memory-Mapped I/O
+
+Input and output are memory-mapped. Flipping the bit at TL0 thus has
+the side effect of an input or output operation, as follows: If TL1 is
+1, then a bit corresponding to the value of TL2 is output. Otherwise, a
+bit is input and its value saved in TL2.
+
+!! Section 4.2: Buffering
+
+1L_a is often implemented for machines on which input and output are in
+terms of bytes, not bits. On such machines, bytes shall be converted to
+series of 8 bits and vice versa using the convention that the most
+significant bit appears first.
+
+Additionally, on such machines, input and output shall be buffered with
+a buffer size of at least one byte. The output buffer is not flushed at
+program termination, so any bits waiting to be output at that point,
+but which have not been output because they do not comprise a full
+byte, shall be lost.

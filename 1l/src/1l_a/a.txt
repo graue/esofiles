@@ -1,0 +1,119 @@
+What follows was the result of my planning in order to implement "a.1l",
+a 1L_a program that prints an A (ASCII 65) and quits.
+
+The junk in a.1l is only for visual clarity; any printing character could be
+used as well as any other. Also, many of the printing characters are not
+reached and could be made spaces, but the program flow would not be as
+obvious.
+    -- Catatonic Porpoise <graue@oceanbase.org>
+
+ 0 0 0 0
+    ^^^
+L<@:
+ 0 1 0 0
+  ^^^
+
+L<@:
+ 1 1 0 0    output: 0
+^^^
+
+U>:
+ 1 1 0 0    output: 0
+  ^^^
+
+U>:
+ 1 1 0 0    output: 0
+    ^^^
+
+U>:
+ 1 1 0 0    output: 0
+      ^^^
+
+L<@:
+ 1 1 1 0    output: 0
+    ^^^
+
+L<@:
+ 1 0 1 0    output: 0
+  ^^^
+
+U>:
+ 1 0 1 0    output: 0
+    ^^^
+
+L<@:
+ 1 1 1 0    output: 0
+  ^^^
+
+L<@:
+ 0 1 1 0    output: 01
+^^^
+
+U>:
+ 0 1 1 0    output: 01
+  ^^^
+
+U>:
+ 0 1 1 0    output: 01
+    ^^^
+
+U>:
+ 0 1 1 0    output: 01
+      ^^^
+
+L<@:
+ 0 1 0 0    output: 01
+    ^^^
+
+L<@:
+ 0 0 0 0    output: 01
+  ^^^
+
+U>:
+ 0 0 0 0    output: 01
+    ^^^
+
+L<@:
+ 0 1 0 0    output: 01
+  ^^^
+
+L<@:
+ 1 1 0 0    output: 010
+^^^
+
+U>, L<@:
+ 0 1 0 0    output: 0100
+^^^
+
+U>, L<@:
+ 1 1 0 0    output: 01000
+^^^
+
+U>, L<@:
+ 0 1 0 0    output: 010000
+^^^
+
+U>, L<@:
+ 1 1 0 0    output: 0100000
+^^^
+
+U>, U>, U>:
+ 1 1 0 0    output: 0100000
+      ^^^
+
+L<@:
+ 1 1 1 0    output: 0100000
+    ^^^
+
+L<@, U>, L<@:
+ 1 1 1 0    output: 0100000
+  ^^^
+-
+L<@:
+ 0 1 1 0    output: 01000001 A
+^^^
+
+final pattern: LLUUULLULLUUULLULLULULULULUUULLULL
+
+<- LL -> UUU <- LL <- U -> LL <- UUU <- LL <- U <- LL -> U -> L
+<- U -> L -> U -> L <- U -> L -> UUU <- LL <- U -> LL <-

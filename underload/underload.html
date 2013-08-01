@@ -1,0 +1,226 @@
+<HTML>
+<HEAD>
+<TITLE>Underload</TITLE>
+<SCRIPT>
+// Released to the public domain.
+function pop(s)
+{
+  if(s.value.indexOf("<>")==-1) {throw("ERROR: Empty stack");}
+  var t=s.value.substr(0,s.value.indexOf("<>"));
+  s.value=s.value.substr(s.value.indexOf("<>")+2);
+  return t;
+}
+function push(s,t)
+{
+  s.value=t+"<>"+s.value;
+}
+function step(lp)
+{
+try
+{
+  if(lp)
+  {
+    document.getElementById('startrun').style.display="none";
+    document.getElementById('stoprun').style.display="block";
+  }
+  var s=document.getElementById('stack');
+  var p=document.getElementById('prog');
+  var o=document.getElementById('op');
+  var c=p.value.substr(0,1);
+  if(p.value=="") throw("Program terminated normally.");
+  p.value=p.value.substr(1);
+  if(c=='S') o.value+=pop(s);
+  else if(c=='~') {var t1, t2; t1=pop(s); t2=pop(s); push(s,t1); push(s,t2);}
+  else if(c==':') {var t1; t1=pop(s); push(s,t1); push(s,t1);}
+  else if(c=='!') pop(s);
+  else if(c=='*') {var t1, t2; t1=pop(s); t2=pop(s); push(s,t2+t1);}
+  else if(c=='a') {var t1; t1=pop(s); push(s,"("+t1+")");}
+  else if(c=='^') p.value=pop(s)+p.value;
+  else if(c==')') throw("ERROR: Unmatched )");
+  else if(c=='(')
+  {
+    var t1,i,n;
+    i=0; n=1;
+    while(n)
+    {
+      if(p.value.substr(i,1)==')') n--;
+      if(p.value.substr(i,1)=='(') n++;
+      i++;
+      if(i>p.value.length) throw("ERROR: Unmatched (");
+    }
+    t1=p.value.substr(0,i-1);
+    p.value=p.value.substr(i);
+    push(s,t1);
+  }
+  else if(c=='<') throw("Program stopped by user."); // abort of program
+  else throw("ERROR: Unrecognized command");
+  if(lp) window.setTimeout("step("+lp+")",lp);
+}
+catch(s)
+{
+  alert(s);
+  document.getElementById('startrun').style.display="block";
+  document.getElementById('stoprun').style.display="none";
+}
+}
+function abortrun()
+{
+  var p=document.getElementById('prog');
+  p.value='<'+p.value;
+}
+function unl2ul()
+{
+  var p=document.getElementById('prog');
+  var v=new Array();
+  var vi=0;
+  var o="";
+  var c;
+  while(p.value!="")
+  {
+    c=p.value.substr(0,1);
+    p.value=p.value.substr(1);
+    if(c=='`') v[vi++]=0;
+    if(c=='.') {o+='.'; c=p.value.substr(0,1); p.value=p.value.substr(1);}
+    else if(c=='`') continue;
+    o+=c;
+    while(1)
+    {
+      if(v[vi-1]) {o+='`'; vi--;}
+      else {v[vi-1]=1; break;}
+    }
+  }
+  while(vi>0) {o+='`'; vi--;}
+  while(o!="")
+  {
+    c=o.substr(0,1);
+    o=o.substr(1);
+    if(c=='`') p.value+='~^';
+    if(c=='s') p.value+='((:)~*(~)*a(~*(~^)*)*)';
+    if(c=='k') p.value+='(a(!)~*)';
+    if(c=='i') p.value+='()';
+    if(c=='.')
+    {
+      c=o.substr(0,1);
+      o=o.substr(1);
+      p.value+='(('+c+')S)';
+    }
+  }
+}
+</SCRIPT>
+<STYLE>
+TT.examplett
+{
+  cursor:hand;
+  color:blue;
+}
+</STYLE>
+</HEAD>
+<BODY>
+<H1>Underload</H1>
+<H2>Basics</H2>
+Underload is a stack-based programming language that works along similar lines to
+Muriel. Although not technically speaking a functional language, its evaluation
+operator <TT>^</TT> (which is the only form of flow control) makes programming in
+it functional in practice.
+<H2>Reserved characters</H2>
+The bracket and angle bracket characters <TT>[]&lt;&gt;</TT> are reserved; if these are
+to appear anywhere in the program, they must be quoted by placing <TT>"</TT> before them.
+This also applies to the <TT>"</TT> character itself. Other characters must <I>not</I> be
+quoted with <TT>"</TT> (in particular, this means that Underload programs cannot output
+strings containing unmatched parentheses). Parentheses are moderately reserved, in that
+any Underload program must have matched parentheses to be legal.
+<H2>Commands</H2>
+<UL>
+<LI><TT>~</TT>&nbsp;Swap the top two elements of the stack.</LI>
+<LI><TT>:</TT>&nbsp;Duplicate the top element of the stack.</LI>
+<LI><TT>!</TT>&nbsp;Discard the top element of the stack.</LI>
+<LI><TT>*</TT>&nbsp;Concatenate the top element of the stack to the end of
+the second element of the stack.</LI>
+<LI><TT>(</TT>&nbsp;Push everything between the <TT>(</TT> and the matching
+<TT>)</TT> on top of the stack.</LI>
+<LI><TT>)</TT>&nbsp;Closes a <TT>(</TT> command.</LI>
+<LI><TT>a</TT>&nbsp;Encloses the top element of the stack in a pair of
+parentheses.</LI>
+<LI><TT>^</TT>&nbsp;When the <TT>^</TT> command is called, it includes the top element
+of the stack into the program, immediately after the <TT>^</TT> command, ready to be run
+next.</LI>
+<LI><TT>S</TT>&nbsp;Output the top element of the stack, popping it.</LI>
+</UL>
+<H2>Exceptional circumstances</H2>
+Pretty much anything whose behaviour isn't specifically given here (for instance, running
+<TT>*</TT> on an empty stack) is an error.
+<H2>Unlambda to Underload</H2>
+The <TT>s</TT>, <TT>k</TT>, and <TT>i</TT> characters in Unlambda can all be
+translated directly into Underload. Also, the <TT>`</TT> character can be
+translated, but it has to be moved to a postfix rather than prefix position, and
+<TT>.<I>x</I></TT> can be translated for most values of <I>x</I>.
+<UL>
+<LI><TT>s</TT> translates to <TT>((:)~*(~)*a(~*(~^)*))</TT>:
+<DL><DD>
+<TT>sx`y`z`&nbsp;=&nbsp;xz`yz``</TT> (postfix notation)<BR />
+<TT>sx`y`&nbsp;&nbsp;&nbsp;=&nbsp;(:x~y~^)</TT><BR />
+<TT>sx`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;((:x~)~*(~^)*)</TT><BR />
+<TT>s&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;((:)~*(~)*a(~*(~^)*)*)</TT>
+</DD></DL></LI>
+<LI><TT>k</TT> translates to <TT>(a(!)~*)</TT></LI>
+<LI><TT>i</TT> translates to <TT>()</TT></LI>
+<LI><TT>`</TT> translates to <TT>~^</TT></LI>
+<LI><TT>.<I>x</I></TT> translates to <TT>((<I>x</I>)S)</TT></LI>
+</UL>
+These translations prove that Underload is Turing-complete, because it can be compiled into
+from the Turing-complete `sk Unlambda.
+<H2>Example programs</H2>
+Click on any of these programs to load them in the interpreter below.
+<H3>Hello, world!</H3>
+<TT CLASS="examplett" ONCLICK="document.getElementById('prog').value=
+'(Hello, world!)S';void(0);">
+(Hello, world!)S</TT>
+<H3>Fibonacci sequence</H3>
+<TT CLASS="examplett" ONCLICK="document.getElementById('prog').value=
+'(()(*))(~:^:S*a~^a~!~*~:(/)S^):^';void(0);">
+(()(*))(~:^:S*a~^a~!~*~:(/)S^):^</TT><BR/>
+(An ski`. Unlambda version is
+<TT CLASS="examplett" ONCLICK="document.getElementById('prog').value=
+'```s``s``sii`ki`k.*``s``s`ks``s`k`s`ks``s``s`ks``s`k`s`k./``s`k`sikk`k``s`ksk';void(0);">
+```s``s``sii`ki`k.*``s``s`ks``s`k`s`ks``s``s`ks``s`k`s`k./``s`k`sikk`k``s`ksk</TT>,
+which can also be loaded up in the interpreter below by clicking on it; you can automatically
+convert it to Underload if you wish to run it.)
+<H3>Infinite loop</H3>
+<TT CLASS="examplett" ONCLICK="document.getElementById('prog').value=
+'(:^):^';void(0);">
+(:^):^</TT><BR/>
+(This is exactly equivalent to the ski`. Unlambda program
+<TT CLASS="examplett" ONCLICK="document.getElementById('prog').value=
+'```sii``sii';void(0);">
+```sii``sii</TT>;
+if the Unlambda program is converted to Underload using the compiler below and run for a while,
+it eventually ends up in the same state as the previous Underload program (the only difference
+being <TT>~~</TT>, which has no effect, in the code derived from the Unlambda).
+<H3>Quine</H3>
+<TT CLASS="examplett" ONCLICK="document.getElementById('prog').value=
+'(:aSS):aSS';void(0);">
+(:aSS):aSS</TT><BR/>
+(The null program is also a quine. This program is more stack-based than functional.)
+<H2>Online interpreter</H2>
+When using this interpreter, note that newlines and spaces in code will cause errors unless they
+are inside () quoting; also, avoid newlines in Unlambda input, as different browers
+will interpret them in different manners, and some may crash as a result. The ski`. Unlambda
+to Underload compiler only supports the s, k, i, `, and .<I>x</I> commands; it doesn't even
+allow comments or spaces.<BR />
+Program:<BR />
+<TEXTAREA ROWS=10 COLS=80 ID='prog'></TEXTAREA><BR />
+Stack:<BR />
+<TEXTAREA ROWS=10 COLS=80 ID='stack'></TEXTAREA><BR />
+Output:<BR />
+<TEXTAREA ROWS=10 COLS=80 ID='op'></TEXTAREA><BR />
+<DIV ID='startrun'>
+<A HREF="javascript:step(0)">Single-step through program</A><BR />
+<A HREF="javascript:step(500)">Run program (500ms delay)</A>
+<A HREF="javascript:step(100)">(100ms delay)</A>
+<A HREF="javascript:step(10)">(10ms delay)</A><BR />
+<A HREF="javascript:unl2ul()">Convert ski`. Unlambda to Underload</A>
+</DIV>
+<A ID='stoprun' STYLE='display:none' HREF="javascript:abortrun()">Stop running program</A>
+<I>This HTML file has been released to the public domain by its previous copyright holder.</I>
+</BODY>
+</HTML>

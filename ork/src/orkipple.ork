@@ -1,0 +1,1239 @@
+# Copyright (c) 2005 Gregor Richards
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+# OrKipple.  A Kipple interpreter in ORK.
+
+There is such a thing as a stack.
+Every stack is a number array.
+A stack can push a number.
+A stack can pop a number.
+
+When a stack is to push a number:
+There is a mathematician called Fibonacci.
+I am to set the number.
+Fibonacci's first operand is my current.
+Fibonacci's second operand is 1.
+Fibonacci is to add.
+My current is Fibonacci's result.
+
+When a stack is to pop a number:
+There is a mathematician called Fibonacci.
+Fibonacci's first operand is my current.
+Fibonacci's second operand is 1.
+Fibonacci is to subtract.
+My current is Fibonacci's result.
+I am to get the number.
+
+There is such a thing as a kipple element.
+A kipple element can read a number array.
+A kipple element can subNumCheck a number array.
+A kipple element can subReadNum a number array.
+A kipple element can subReadNumCheck a number array.
+A kipple element can subRead a number array.
+A kipple element has a result which is a number.
+
+When a kipple element is to read a number array:
+# First skip any non-program elements
+There is a mathematician called Fibonacci.
+The number array is to get Fibonacci's first operand.
+My result is 0.
+# Check its value
+# numbers
+Fibonacci's second operand is 47.
+#  48 is 0
+Fibonacci is to compare.
+If Fibonacci says it's greater then I am to subNumCheck the number array.
+If Fibonacci says it's equal then I am to subRead the number array.
+If Fibonacci says it's less then I am to subRead the number array.
+
+When a kipple element is to subRead a number array:
+There is a mathematician called Fibonacci.
+My result is -1.
+The number array is to get Fibonacci's first operand.
+# < lpush
+Fibonacci's second operand is 60.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 0.1.
+# > rpush
+Fibonacci's second operand is 62.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 0.2.
+# - subtract
+Fibonacci's second operand is 45.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 0.3.
+# + add
+Fibonacci's second operand is 43.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 0.4.
+# ? clear-if-0
+Fibonacci's second operand is 63.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 0.5.
+# ( loop begin
+Fibonacci's second operand is 40.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 0.6.
+# ) loop end
+Fibonacci's second operand is 41.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 0.7.
+# a
+Fibonacci's second operand is 97.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 1.01.
+# b
+Fibonacci's second operand is 98.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 1.02.
+# c
+Fibonacci's second operand is 99.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 1.03.
+# d
+Fibonacci's second operand is 100.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 1.04.
+# e
+Fibonacci's second operand is 101.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 1.05.
+# f
+Fibonacci's second operand is 102.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 1.06.
+# g
+Fibonacci's second operand is 103.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 1.07.
+# h
+Fibonacci's second operand is 104.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 1.08.
+# i
+Fibonacci's second operand is 105.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 1.09.
+# j
+Fibonacci's second operand is 106.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 1.10.
+# k
+Fibonacci's second operand is 107.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 1.11.
+# l
+Fibonacci's second operand is 108.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 1.12.
+# m
+Fibonacci's second operand is 109.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 1.13.
+# n
+Fibonacci's second operand is 110.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 1.14.
+# o
+Fibonacci's second operand is 111.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 1.15.
+# p
+Fibonacci's second operand is 112.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 1.16.
+# q
+Fibonacci's second operand is 113.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 1.17.
+# r
+Fibonacci's second operand is 114.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 1.18.
+# s
+Fibonacci's second operand is 115.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 1.19.
+# t
+Fibonacci's second operand is 116.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 1.20.
+# u
+Fibonacci's second operand is 117.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 1.21.
+# v
+Fibonacci's second operand is 118.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 1.22.
+# w
+Fibonacci's second operand is 119.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 1.23.
+# x
+Fibonacci's second operand is 120.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 1.24.
+# y
+Fibonacci's second operand is 121.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 1.25.
+# z
+Fibonacci's second operand is 122.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 1.26.
+# at
+Fibonacci's second operand is 64.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my result is 1.27.
+
+When a kipple element is to subNumCheck a number array:
+There is a mathematician called Fibonacci.
+The number array is to get Fibonacci's first operand.
+Fibonacci's second operand is 58.
+Fibonacci is to compare.
+If Fibonacci says it's less then I am to subReadNum the number array.
+If Fibonacci says it's equal then I am to subRead the number array.
+If Fibonacci says it's greater then I am to subRead the number array.
+
+When a kipple element is to subReadNumCheck a number array:
+There is a mathematician called Fibonacci.
+I have a number called previous.
+Fibonacci's first operand is the number array's current.
+Fibonacci's second operand is 1.
+Fibonacci is to subtract.
+My previous is Fibonacci's result.
+The number array is to get Fibonacci's first operand.
+Fibonacci's second operand is 58.
+Fibonacci is to compare.
+If Fibonacci says it's less then I am to subReadNum the number array.
+If Fibonacci says it's equal then the number array's current is my previous.
+If Fibonacci says it's greater then the number array's current is my previous.
+
+When a kipple element is to subReadNum a number array:
+There is a scribe called Will.
+# result stores our number across recursions
+# first multiply result by 10
+There is a mathematician called Fibonacci.
+I have a number called previous.
+Fibonacci's first operand is my result.
+Fibonacci's second operand is 10.
+Fibonacci is to multiply.
+My result is Fibonacci's result.
+# Then add our own.
+The number array is to get Fibonacci's first operand.
+Fibonacci's second operand is 48.
+# 48 is 0, so ascii num - 48 = real num
+Fibonacci is to subtract.
+Fibonacci's first operand is Fibonacci's result.
+Fibonacci's second operand is my result.
+Fibonacci is to add.
+My result is Fibonacci's result.
+# Increase the number array's current by 1
+My previous is the number array's current.
+Fibonacci's first operand is the number array's current.
+Fibonacci's second operand is 1.
+Fibonacci is to add.
+The number array's current is Fibonacci's result.
+# And recurse
+The number array is to get Fibonacci's first operand.
+Fibonacci's second operand is 47.
+Fibonacci is to compare.
+If Fibonacci says it's greater then I am to subReadNumCheck the number array.
+If Fibonacci says it's equal then the number array's current is my previous.
+If Fibonacci says it's less then the number array's current is my previous.
+
+
+There is such a thing as a kipple interpreter.
+A kipple interpreter can instanciate.
+A kipple interpreter can subinstanciateData a number.
+A kipple interpreter can subinstanciateProgram a number.
+A kipple interpreter can read.
+A kipple interpreter can tokenize.
+A kipple interpreter can subTokenize.
+A kipple interpreter can matchLoops.
+A kipple interpreter can pushLoop.
+A kipple interpreter can popLoop.
+A kipple interpreter can interpret.
+A kipple interpreter can evaluate a number.
+A kipple interpreter can pushstack a number.
+A kipple interpreter can atstack a number:
+A kipple interpreter can clearstack a number.
+A kipple interpreter can getstack a number.
+A kipple interpreter can lpush.
+A kipple interpreter can rpush.
+A kipple interpreter can subtract.
+A kipple interpreter can add.
+A kipple interpreter can ciz.
+A kipple interpreter can startloop.
+A kipple interpreter can endloop.
+A kipple interpreter can getinput.
+A kipple interpreter can putoutput.
+A kipple interpreter has a stack a which is a stack.
+A kipple interpreter has a stack b which is a stack.
+A kipple interpreter has a stack c which is a stack.
+A kipple interpreter has a stack d which is a stack.
+A kipple interpreter has a stack e which is a stack.
+A kipple interpreter has a stack f which is a stack.
+A kipple interpreter has a stack g which is a stack.
+A kipple interpreter has a stack h which is a stack.
+A kipple interpreter has a stack i which is a stack.
+A kipple interpreter has a stack j which is a stack.
+A kipple interpreter has a stack k which is a stack.
+A kipple interpreter has a stack l which is a stack.
+A kipple interpreter has a stack m which is a stack.
+A kipple interpreter has a stack n which is a stack.
+A kipple interpreter has a stack o which is a stack.
+A kipple interpreter has a stack p which is a stack.
+A kipple interpreter has a stack q which is a stack.
+A kipple interpreter has a stack r which is a stack.
+A kipple interpreter has a stack s which is a stack.
+A kipple interpreter has a stack t which is a stack.
+A kipple interpreter has a stack u which is a stack.
+A kipple interpreter has a stack v which is a stack.
+A kipple interpreter has a stack w which is a stack.
+A kipple interpreter has a stack x which is a stack.
+A kipple interpreter has a stack y which is a stack.
+A kipple interpreter has a stack z which is a stack.
+A kipple interpreter has a stack at which is a stack.
+A kipple interpreter has a program buffer which is a number array.
+A kipple interpreter has a token buffer which is a number array.
+A kipple interpreter has a loop buffer which is a number array.
+A kipple interpreter has a loop stack which is a number array.
+A kipple interpreter has a program phrase which is a phrase.
+A kipple interpreter has a current stack which is a number.
+
+When this program starts:
+I have a kipple interpreter called Kipplomaniac.
+Kipplomaniac is to instanciate.
+Kipplomaniac is to read.
+Kipplomaniac is to tokenize.
+Kipplomaniac's token buffer's current is 0.
+Kipplomaniac is to matchLoops.
+Kipplomaniac's token buffer's current is 0.
+Kipplomaniac is to getinput.
+Kipplomaniac is to interpret.
+Kipplomaniac is to putoutput.
+
+When a kipple interpreter is to instanciate:
+I have a number called length.
+My length is 32256.
+My stack a is to instanciate length.
+My stack b is to instanciate length.
+My stack c is to instanciate length.
+My stack d is to instanciate length.
+My stack e is to instanciate length.
+My stack f is to instanciate length.
+My stack g is to instanciate length.
+My stack h is to instanciate length.
+My stack i is to instanciate length.
+My stack j is to instanciate length.
+My stack k is to instanciate length.
+My stack l is to instanciate length.
+My stack m is to instanciate length.
+My stack n is to instanciate length.
+My stack o is to instanciate length.
+My stack p is to instanciate length.
+My stack q is to instanciate length.
+My stack r is to instanciate length.
+My stack s is to instanciate length.
+My stack t is to instanciate length.
+My stack u is to instanciate length.
+My stack v is to instanciate length.
+My stack w is to instanciate length.
+My stack x is to instanciate length.
+My stack y is to instanciate length.
+My stack z is to instanciate length.
+My stack at is to instanciate length.
+My program buffer is to instanciate length.
+My loop buffer is to instanciate length.
+My loop stack is to instanciate length.
+My program phrase is ""
+My length is 32255.
+I am to subinstanciateData length.
+I am to subinstanciateProgram length.
+
+When a kipple interpreter is to subinstanciateData a number:
+There is a mathematician called Muller.
+I have a number called data.
+My data is 0.
+My stack a's current is the number.
+My stack a is to set data.
+My stack b's current is the number.
+My stack b is to set data.
+My stack c's current is the number.
+My stack c is to set data.
+My stack d's current is the number.
+My stack d is to set data.
+My stack e's current is the number.
+My stack e is to set data.
+My stack f's current is the number.
+My stack f is to set data.
+My stack g's current is the number.
+My stack g is to set data.
+My stack h's current is the number.
+My stack h is to set data.
+My stack i's current is the number.
+My stack i is to set data.
+My stack j's current is the number.
+My stack j is to set data.
+My stack k's current is the number.
+My stack k is to set data.
+My stack l's current is the number.
+My stack l is to set data.
+My stack m's current is the number.
+My stack m is to set data.
+My stack n's current is the number.
+My stack n is to set data.
+My stack o's current is the number.
+My stack o is to set data.
+My stack p's current is the number.
+My stack p is to set data.
+My stack q's current is the number.
+My stack q is to set data.
+My stack r's current is the number.
+My stack r is to set data.
+My stack s's current is the number.
+My stack s is to set data.
+My stack t's current is the number.
+My stack t is to set data.
+My stack u's current is the number.
+My stack u is to set data.
+My stack v's current is the number.
+My stack v is to set data.
+My stack w's current is the number.
+My stack w is to set data.
+My stack x's current is the number.
+My stack x is to set data.
+My stack y's current is the number.
+My stack y is to set data.
+My stack z's current is the number.
+My stack z is to set data.
+My stack at's current is the number.
+My stack at is to set data.
+Muller's first operand is the number.
+Muller's second operand is 1.
+Muller is to subtract.
+Muller's first operand is Muller's result.
+Muller's second operand is -1.
+Muller is to compare.
+If Muller says it's greater then I am to subinstanciateData Muller's first operand.
+
+When a kipple interpreter is to subinstanciateProgram a number:
+There is a mathematician called Muller.
+I have a number called data.
+My data is 0.
+My program buffer's current is the number.
+My program buffer is to set data.
+Muller's first operand is the number.
+Muller's second operand is 1.
+Muller is to subtract.
+Muller's first operand is Muller's result.
+Muller's second operand is -1.
+Muller is to compare.
+If Muller says it's greater then I am to subinstanciateProgram Muller's first operand.
+
+When a kipple interpreter is to read:
+There is a linguist called Harry.
+I have a number called current.
+I have a phrase called input.
+I have an inputter called Bob.
+Bob is to readOne input.
+Harry's first operand is my program phrase.
+Harry's second operand is input.
+Harry is to concatenate.
+My program phrase is Harry's result.
+Harry's first operand is input.
+Harry's second operand is "!"
+Harry is to compare.
+# Trick it into ending on EOF
+Harry's first operand is "!"
+If Bob says it's done then Harry is to compare.
+If Harry says it's not equal then I am to loop.
+My program buffer is to import my program phrase.
+
+When a kipple interpreter is to tokenize:
+My token buffer is to instanciate my program buffer's length.
+My program buffer's current is 0.
+I am to subTokenize.
+
+When a kipple interpreter is to subTokenize:
+There is a kipple element called current.
+There is a mathematician called Fibonacci.
+My current is to read my program buffer.
+My token buffer is to set my current's result.
+Fibonacci's first operand is my token buffer's current.
+Fibonacci's second operand is 1.
+Fibonacci is to add.
+My token buffer's current is Fibonacci's result.
+Fibonacci's first operand is my program buffer's current.
+Fibonacci's second operand is 1.
+Fibonacci is to add.
+My program buffer's current is Fibonacci's result.
+Fibonacci's first operand is my program buffer's current.
+Fibonacci's second operand is my program buffer's length.
+Fibonacci is to compare.
+If Fibonacci says it's less then I am to loop.
+
+When a kipple interpreter is to matchLoops:
+There is a mathematician called Fibonacci.
+My token buffer is to get Fibonacci's first operand.
+# (
+Fibonacci's second operand is 0.6.
+Fibonacci is to compare.
+If Fibonacci says it's equal then I am to pushLoop.
+# )
+Fibonacci's second operand is 0.7.
+Fibonacci is to compare.
+If Fibonacci says it's equal then I am to popLoop.
+# Calculate the next one
+Fibonacci's first operand is my token buffer's current.
+Fibonacci's second operand is 1.
+Fibonacci is to add.
+My token buffer's current is Fibonacci's result.
+# See if the next one is too far.
+Fibonacci's first operand is my token buffer's current.
+Fibonacci's second operand is my token buffer's length.
+Fibonacci is to compare.
+If Fibonacci says it's less then I am to loop.
+
+When a kipple interpreter is to pushLoop:
+There is a mathematician called Fibonacci.
+My loop stack is to set my token buffer's current.
+Fibonacci's first operand is my loop stack's current.
+Fibonacci's second operand is 1.
+Fibonacci is to add.
+My loop stack's current is Fibonacci's result.
+
+When a kipple interpreter is to popLoop:
+There is a mathematician called Fibonacci.
+I have a number called location.
+Fibonacci's first operand is my loop stack's current.
+Fibonacci's second operand is 1.
+Fibonacci is to subtract.
+My loop stack's current is Fibonacci's result.
+My loop stack is to get my location.
+My loop buffer's current is my token buffer's current.
+Fibonacci's first operand is my location.
+Fibonacci's second operand is 1.
+Fibonacci is to subtract.
+My loop buffer is to set Fibonacci's result.
+My loop buffer's current is my location.
+My loop buffer is to set my token buffer's current.
+
+When a kipple interpreter is to interpret:
+There is a mathematician called Fibonacci.
+My token buffer is to get Fibonacci's first operand.
+# Check every command
+# < lpush
+Fibonacci's second operand is 0.1.
+Fibonacci is to compare.
+If Fibonacci says it's equal then I am to lpush.
+# > rpush
+Fibonacci's second operand is 0.2.
+Fibonacci is to compare.
+If Fibonacci says it's equal then I am to rpush.
+# - subtract
+Fibonacci's second operand is 0.3.
+Fibonacci is to compare.
+If Fibonacci says it's equal then I am to subtract.
+# + add
+Fibonacci's second operand is 0.4.
+Fibonacci is to compare.
+If Fibonacci says it's equal then I am to add.
+# ? clear-if-0
+Fibonacci's second operand is 0.5.
+Fibonacci is to compare.
+If Fibonacci says it's equal then I am to ciz.
+# ( start loop
+Fibonacci's second operand is 0.6.
+Fibonacci is to compare.
+If Fibonacci says it's equal then I am to startloop.
+# ) end loop
+Fibonacci's second operand is 0.7.
+Fibonacci is to compare.
+If Fibonacci says it's equal then I am to endloop.
+# then go on to the next instruction
+Fibonacci's first operand is my token buffer's current.
+Fibonacci's second operand is 1.
+Fibonacci is to add.
+My token buffer's current is Fibonacci's result.
+Fibonacci's first operand is Fibonacci's result.
+Fibonacci's second operand is my token buffer's length.
+Fibonacci is to compare.
+If Fibonacci says it's less then I am to loop.
+
+When a kipple interpreter is to evaluate a number:
+There is a mathematician called Fibonacci.
+Fibonacci's first operand is the number.
+# Go value by value converting
+# a
+Fibonacci's second operand is 1.01.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack a is to pop the number.
+# b
+Fibonacci's second operand is 1.02.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack b is to pop the number.
+# c
+Fibonacci's second operand is 1.03.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack c is to pop the number.
+# d
+Fibonacci's second operand is 1.04.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack d is to pop the number.
+# e
+Fibonacci's second operand is 1.05.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack e is to pop the number.
+# f
+Fibonacci's second operand is 1.06.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack f is to pop the number.
+# g
+Fibonacci's second operand is 1.07.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack g is to pop the number.
+# h
+Fibonacci's second operand is 1.08.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack h is to pop the number.
+# i
+Fibonacci's second operand is 1.09.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack i is to pop the number.
+# j
+Fibonacci's second operand is 1.10.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack j is to pop the number.
+# k
+Fibonacci's second operand is 1.11.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack k is to pop the number.
+# l
+Fibonacci's second operand is 1.12.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack l is to pop the number.
+# m
+Fibonacci's second operand is 1.13.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack m is to pop the number.
+# n
+Fibonacci's second operand is 1.14.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack n is to pop the number.
+# o
+Fibonacci's second operand is 1.15.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack o is to pop the number.
+# p
+Fibonacci's second operand is 1.16.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack p is to pop the number.
+# q
+Fibonacci's second operand is 1.17.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack q is to pop the number.
+# r
+Fibonacci's second operand is 1.18.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack r is to pop the number.
+# s
+Fibonacci's second operand is 1.19.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack s is to pop the number.
+# t
+Fibonacci's second operand is 1.20.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack t is to pop the number.
+# u
+Fibonacci's second operand is 1.21.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack u is to pop the number.
+# v
+Fibonacci's second operand is 1.22.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack v is to pop the number.
+# w
+Fibonacci's second operand is 1.23.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack w is to pop the number.
+# x
+Fibonacci's second operand is 1.24.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack x is to pop the number.
+# y
+Fibonacci's second operand is 1.25.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack y is to pop the number.
+# z
+Fibonacci's second operand is 1.26.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack z is to pop the number.
+# at
+Fibonacci's second operand is 1.27.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack at is to pop the number.
+
+When a kipple interpreter is to pushstack a number:
+There is a mathematician called Fibonacci.
+Fibonacci's first operand is my current stack.
+# Go value by value converting
+# a
+Fibonacci's second operand is 1.01.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack a is to push the number.
+# b
+Fibonacci's second operand is 1.02.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack b is to push the number.
+# c
+Fibonacci's second operand is 1.03.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack c is to push the number.
+# d
+Fibonacci's second operand is 1.04.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack d is to push the number.
+# e
+Fibonacci's second operand is 1.05.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack e is to push the number.
+# f
+Fibonacci's second operand is 1.06.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack f is to push the number.
+# g
+Fibonacci's second operand is 1.07.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack g is to push the number.
+# h
+Fibonacci's second operand is 1.08.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack h is to push the number.
+# i
+Fibonacci's second operand is 1.09.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack i is to push the number.
+# j
+Fibonacci's second operand is 1.10.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack j is to push the number.
+# k
+Fibonacci's second operand is 1.11.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack k is to push the number.
+# l
+Fibonacci's second operand is 1.12.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack l is to push the number.
+# m
+Fibonacci's second operand is 1.13.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack m is to push the number.
+# n
+Fibonacci's second operand is 1.14.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack n is to push the number.
+# o
+Fibonacci's second operand is 1.15.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack o is to push the number.
+# p
+Fibonacci's second operand is 1.16.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack p is to push the number.
+# q
+Fibonacci's second operand is 1.17.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack q is to push the number.
+# r
+Fibonacci's second operand is 1.18.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack r is to push the number.
+# s
+Fibonacci's second operand is 1.19.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack s is to push the number.
+# t
+Fibonacci's second operand is 1.20.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack t is to push the number.
+# u
+Fibonacci's second operand is 1.21.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack u is to push the number.
+# v
+Fibonacci's second operand is 1.22.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack v is to push the number.
+# w
+Fibonacci's second operand is 1.23.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack w is to push the number.
+# x
+Fibonacci's second operand is 1.24.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack x is to push the number.
+# y
+Fibonacci's second operand is 1.25.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack y is to push the number.
+# z
+Fibonacci's second operand is 1.26.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack z is to push the number.
+# at
+Fibonacci's second operand is 1.27.
+Fibonacci is to compare.
+If Fibonacci says it's equal then I am to atstack the number.
+
+When a kipple interpreter is to atstack a number:
+There is a mathematician called Fibonacci.
+# 100000s (if it's greater than 999999 it won't work 8-D)
+Fibonacci's first operand is the number.
+Fibonacci's second operand is 100000.
+Fibonacci is to divide.
+Fibonacci is to floor Fibonacci's result.
+Fibonacci's first operand is Fibonacci's result.
+Fibonacci's second operand is 48.
+# 48 is ASCII 0
+Fibonacci is to add.
+My stack at is to push Fibonacci's result.
+# 10000s
+Fibonacci's first operand is the number.
+Fibonacci's second operand is 100000.
+Fibonacci is to modulo.
+Fibonacci's first operand is Fibonacci's result.
+Fibonacci's second operand is 10000.
+Fibonacci is to divide.
+Fibonacci is to floor Fibonacci's result.
+Fibonacci's first operand is Fibonacci's result.
+Fibonacci's second operand is 48.
+Fibonacci is to add.
+My stack at is to push Fibonacci's result.
+# 1000s
+Fibonacci's first operand is the number.
+Fibonacci's second operand is 10000.
+Fibonacci is to modulo.
+Fibonacci's first operand is Fibonacci's result.
+Fibonacci's second operand is 1000.
+Fibonacci is to divide.
+Fibonacci is to floor Fibonacci's result.
+Fibonacci's first operand is Fibonacci's result.
+Fibonacci's second operand is 48.
+Fibonacci is to add.
+My stack at is to push Fibonacci's result.
+# 100s
+Fibonacci's first operand is the number.
+Fibonacci's second operand is 1000.
+Fibonacci is to modulo.
+Fibonacci's first operand is Fibonacci's result.
+Fibonacci's second operand is 100.
+Fibonacci is to divide.
+Fibonacci is to floor Fibonacci's result.
+Fibonacci's first operand is Fibonacci's result.
+Fibonacci's second operand is 48.
+Fibonacci is to add.
+My stack at is to push Fibonacci's result.
+# 10s
+Fibonacci's first operand is the number.
+Fibonacci's second operand is 100.
+Fibonacci is to modulo.
+Fibonacci's first operand is Fibonacci's result.
+Fibonacci's second operand is 10.
+Fibonacci is to divide.
+Fibonacci is to floor Fibonacci's result.
+Fibonacci's first operand is Fibonacci's result.
+Fibonacci's second operand is 48.
+Fibonacci is to add.
+My stack at is to push Fibonacci's result.
+# 1s
+Fibonacci's first operand is the number.
+Fibonacci's second operand is 10.
+Fibonacci is to modulo.
+Fibonacci's first operand is Fibonacci's result.
+Fibonacci's second operand is 48.
+Fibonacci is to add.
+My stack at is to push Fibonacci's result.
+
+When a kipple interpreter is to clearstack a number:
+There is a mathematician called Fibonacci.
+Fibonacci's first operand is the number.
+# Go value by value converting
+# a
+Fibonacci's second operand is 1.01.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack a's current is 0.
+# b
+Fibonacci's second operand is 1.02.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack b's current is 0.
+# c
+Fibonacci's second operand is 1.03.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack c's current is 0.
+# d
+Fibonacci's second operand is 1.04.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack d's current is 0.
+# e
+Fibonacci's second operand is 1.05.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack e's current is 0.
+# f
+Fibonacci's second operand is 1.06.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack f's current is 0.
+# g
+Fibonacci's second operand is 1.07.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack g's current is 0.
+# h
+Fibonacci's second operand is 1.08.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack h's current is 0.
+# i
+Fibonacci's second operand is 1.09.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack i's current is 0.
+# j
+Fibonacci's second operand is 1.10.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack j's current is 0.
+# k
+Fibonacci's second operand is 1.11.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack k's current is 0.
+# l
+Fibonacci's second operand is 1.12.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack l's current is 0.
+# m
+Fibonacci's second operand is 1.13.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack m's current is 0.
+# n
+Fibonacci's second operand is 1.14.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack n's current is 0.
+# o
+Fibonacci's second operand is 1.15.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack o's current is 0.
+# p
+Fibonacci's second operand is 1.16.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack p's current is 0.
+# q
+Fibonacci's second operand is 1.17.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack q's current is 0.
+# r
+Fibonacci's second operand is 1.18.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack r's current is 0.
+# s
+Fibonacci's second operand is 1.19.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack s's current is 0.
+# t
+Fibonacci's second operand is 1.20.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack t's current is 0.
+# u
+Fibonacci's second operand is 1.21.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack u's current is 0.
+# v
+Fibonacci's second operand is 1.22.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack v's current is 0.
+# w
+Fibonacci's second operand is 1.23.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack w's current is 0.
+# x
+Fibonacci's second operand is 1.24.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack x's current is 0.
+# y
+Fibonacci's second operand is 1.25.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack y's current is 0.
+# z
+Fibonacci's second operand is 1.26.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack z's current is 0.
+# at
+Fibonacci's second operand is 1.27.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my stack at's current is 0.
+
+When a kipple interpreter is to getstack a number:
+There is a mathematician called Fibonacci.
+Fibonacci's first operand is the number.
+# Go value by value converting
+# a
+Fibonacci's second operand is 1.01.
+Fibonacci is to compare.
+If Fibonacci says it's equal then the number is my stack a's current.
+# b
+Fibonacci's second operand is 1.02.
+Fibonacci is to compare.
+If Fibonacci says it's equal then the number is my stack b's current.
+# c
+Fibonacci's second operand is 1.03.
+Fibonacci is to compare.
+If Fibonacci says it's equal then the number is my stack c's current.
+# d
+Fibonacci's second operand is 1.04.
+Fibonacci is to compare.
+If Fibonacci says it's equal then the number is my stack d's current.
+# e
+Fibonacci's second operand is 1.05.
+Fibonacci is to compare.
+If Fibonacci says it's equal then the number is my stack e's current.
+# f
+Fibonacci's second operand is 1.06.
+Fibonacci is to compare.
+If Fibonacci says it's equal then the number is my stack f's current.
+# g
+Fibonacci's second operand is 1.07.
+Fibonacci is to compare.
+If Fibonacci says it's equal then the number is my stack g's current.
+# h
+Fibonacci's second operand is 1.08.
+Fibonacci is to compare.
+If Fibonacci says it's equal then the number is my stack h's current.
+# i
+Fibonacci's second operand is 1.09.
+Fibonacci is to compare.
+If Fibonacci says it's equal then the number is my stack i's current.
+# j
+Fibonacci's second operand is 1.10.
+Fibonacci is to compare.
+If Fibonacci says it's equal then the number is my stack j's current.
+# k
+Fibonacci's second operand is 1.11.
+Fibonacci is to compare.
+If Fibonacci says it's equal then the number is my stack k's current.
+# l
+Fibonacci's second operand is 1.12.
+Fibonacci is to compare.
+If Fibonacci says it's equal then the number is my stack l's current.
+# m
+Fibonacci's second operand is 1.13.
+Fibonacci is to compare.
+If Fibonacci says it's equal then the number is my stack m's current.
+# n
+Fibonacci's second operand is 1.14.
+Fibonacci is to compare.
+If Fibonacci says it's equal then the number is my stack n's current.
+# o
+Fibonacci's second operand is 1.15.
+Fibonacci is to compare.
+If Fibonacci says it's equal then the number is my stack o's current.
+# p
+Fibonacci's second operand is 1.16.
+Fibonacci is to compare.
+If Fibonacci says it's equal then the number is my stack p's current.
+# q
+Fibonacci's second operand is 1.17.
+Fibonacci is to compare.
+If Fibonacci says it's equal then the number is my stack q's current.
+# r
+Fibonacci's second operand is 1.18.
+Fibonacci is to compare.
+If Fibonacci says it's equal then the number is my stack r's current.
+# s
+Fibonacci's second operand is 1.19.
+Fibonacci is to compare.
+If Fibonacci says it's equal then the number is my stack s's current.
+# t
+Fibonacci's second operand is 1.20.
+Fibonacci is to compare.
+If Fibonacci says it's equal then the number is my stack t's current.
+# u
+Fibonacci's second operand is 1.21.
+Fibonacci is to compare.
+If Fibonacci says it's equal then the number is my stack u's current.
+# v
+Fibonacci's second operand is 1.22.
+Fibonacci is to compare.
+If Fibonacci says it's equal then the number is my stack v's current.
+# w
+Fibonacci's second operand is 1.23.
+Fibonacci is to compare.
+If Fibonacci says it's equal then the number is my stack w's current.
+# x
+Fibonacci's second operand is 1.24.
+Fibonacci is to compare.
+If Fibonacci says it's equal then the number is my stack x's current.
+# y
+Fibonacci's second operand is 1.25.
+Fibonacci is to compare.
+If Fibonacci says it's equal then the number is my stack y's current.
+# z
+Fibonacci's second operand is 1.26.
+Fibonacci is to compare.
+If Fibonacci says it's equal then the number is my stack z's current.
+# at
+Fibonacci's second operand is 1.27.
+Fibonacci is to compare.
+If Fibonacci says it's equal then the number is my stack at's current.
+
+When a kipple interpreter is to lpush:
+There is a mathematician called Fibonacci.
+I have a number called lval.
+I have a number called rval.
+Fibonacci's first operand is my token buffer's current.
+Fibonacci's second operand is 1.
+Fibonacci is to subtract.
+My token buffer's current is Fibonacci's result.
+My token buffer is to get lval.
+Fibonacci is to add.
+My token buffer's current is Fibonacci's result.
+My token buffer is to get rval.
+My token buffer's current is Fibonacci's first operand.
+I am to evaluate rval.
+My current stack is lval.
+I am to pushstack rval.
+
+When a kipple interpreter is to rpush:
+There is a mathematician called Fibonacci.
+I have a number called lval.
+I have a number called rval.
+Fibonacci's first operand is my token buffer's current.
+Fibonacci's second operand is 1.
+Fibonacci is to subtract.
+My token buffer's current is Fibonacci's result.
+My token buffer is to get lval.
+Fibonacci is to add.
+My token buffer's current is Fibonacci's result.
+My token buffer is to get rval.
+My token buffer's current is Fibonacci's first operand.
+I am to evaluate lval.
+My current stack is rval.
+I am to pushstack lval.
+
+When a kipple interpreter is to subtract:
+There is a mathematician called Fibonacci.
+I have a number called nval.
+# nval is for popping the now-junk value off of the left stack
+I have a number called lval.
+I have a number called rval.
+Fibonacci's first operand is my token buffer's current.
+Fibonacci's second operand is 1.
+Fibonacci is to subtract.
+My token buffer's current is Fibonacci's result.
+My token buffer is to get lval.
+Fibonacci is to add.
+My token buffer's current is Fibonacci's result.
+My token buffer is to get rval.
+My token buffer's current is Fibonacci's first operand.
+I am to evaluate rval.
+My current stack is lval.
+I am to evaluate lval.
+I am to pushstack lval.
+Fibonacci's first operand is lval.
+Fibonacci's second operand is rval.
+Fibonacci is to subtract.
+I am to pushstack Fibonacci's result.
+
+When a kipple interpreter is to add:
+There is a mathematician called Fibonacci.
+I have a number called nval.
+# nval is for popping the now-junk value off of the left stack
+I have a number called lval.
+I have a number called rval.
+Fibonacci's first operand is my token buffer's current.
+Fibonacci's second operand is 1.
+Fibonacci is to subtract.
+My token buffer's current is Fibonacci's result.
+My token buffer is to get lval.
+Fibonacci is to add.
+My token buffer's current is Fibonacci's result.
+My token buffer is to get rval.
+My token buffer's current is Fibonacci's first operand.
+I am to evaluate rval.
+My current stack is lval.
+I am to evaluate lval.
+I am to pushstack lval.
+Fibonacci's first operand is lval.
+Fibonacci's second operand is rval.
+Fibonacci is to add.
+I am to pushstack Fibonacci's result.
+
+When a kipple interpreter is to ciz:
+There is a mathematician called Fibonacci.
+I have a number called lval.
+Fibonacci's first operand is my token buffer's current.
+Fibonacci's second operand is 1.
+Fibonacci is to subtract.
+My token buffer's current is Fibonacci's result.
+My token buffer is to get lval.
+My token buffer's current is Fibonacci's first operand.
+My current stack is lval.
+# Get the top element of lval without losing it.
+I am to evaluate lval.
+I am to pushstack lval.
+Fibonacci's first operand is lval.
+Fibonacci's second operand is 0.
+Fibonacci is to compare.
+If Fibonacci says it's equal then I am to clearstack my current stack.
+
+When a kipple interpreter is to startloop:
+There is a mathematician called Fibonacci.
+I have a number called rval.
+My loop buffer's current is my token buffer's current.
+Fibonacci's first operand is my token buffer's current.
+Fibonacci's second operand is 1.
+Fibonacci is to add.
+My token buffer's current is Fibonacci's result.
+My token buffer is to get rval.
+My token buffer's current is Fibonacci's first operand.
+I am to getstack rval.
+Fibonacci's first operand is rval.
+Fibonacci's second operand is 0.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my loop buffer is to get my token buffer's current.
+
+When a kipple interpreter is to endloop:
+My loop buffer's current is my token buffer's current.
+My loop buffer is to get my token buffer's current.
+
+When a kipple interpreter is to getinput:
+# push the remainder of my input on to stack i
+There is an inputter called Bob.
+I have a number called data.
+Bob is to readOne data.
+If Bob says it's not done then my stack i is to push data.
+If Bob says it's not done then I am to loop.
+
+When a kipple interpreter is to putoutput.
+# pop the o stack to output
+There is a mathematician called Fibonacci.
+There is a scribe called Will.
+I have a number called data.
+Fibonacci's first operand is my stack o's current.
+Fibonacci's second operand is 0.
+Fibonacci is to compare.
+My stack o is to pop data.
+If Fibonacci says it's greater then Will is to asciiWrite data.
+If Fibonacci says it's greater then I am to loop.

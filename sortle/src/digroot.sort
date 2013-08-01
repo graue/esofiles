@@ -1,0 +1,14 @@
+# Digital root calculator in Sortle
+# Written by Graue in 2012, public domain, no warranty.
+
+# Replace the number on the next line with input. (234567->any positive int)
+a := "+bca 234567" \
+     "+bc" "(b).!" "" ? ~ \
+       "b(c)0.!" "" ? "bc0(.)!" "" ? ~ \
+       "b(c).0.!" "" ? "bc(.)0.!" "" ? ~ "bc.0(.)!" "" ? ~ \
+       "(b)c...!" "" ? 9 "bc(.)..!" "" ? "bc.(.).!" "" ? + 8 + % 1 + ~ \
+         "bc..(.)!" "" ? ~ \
+       "(b)c.." "" ? 9 "bc(.)." "" ? "bc.(.)" "" ? + 8 + % 1 + ~ \
+       ^ ^ ^ ~ \
+     "bc(.)" "" ? ^ ^
+b := "+(bc)...!" "" ? "+bc..(.)!" "" ? ~

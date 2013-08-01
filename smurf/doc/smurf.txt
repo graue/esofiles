@@ -1,0 +1,111 @@
+------------------------------
+Smurf - Language Specification
+------------------------------
+
+Smurf = String-based MURiel Forthoid
+
+Smurf is a tarpit based on the self-propagation paradigm featured in Muriel.
+The only native data type is the string, and operations are carried out on
+strings in a forty manner.
+
+(At first I was reluctant to call the language Smurf after I found that there
+was already a humourous email in circulation regarding a fictional (I hope
+so, anyway...) language called Smurf. However, a Google search for "smurf
+programming language" revealed this link:
+http://www.google.com/search?q=cache:everything2.com/index.pl%3Fnode%3DForth+smurf+programming+language
+I can only assume that this is a sign from a divine entity that there is
+indeed a connection between Smurfs and the Forth programming language, so I'm
+certainly not going to argue.)
+
+The Smurf environment consists of a program (a string of characters), a stack
+on which strings are stored, and a variable store which behaves as in a
+standard imperative language - string values are labelled with a name, which
+is also a string. Any string can be used as a variable name, including the
+empty string. All variable values are initially set to the empty string.
+
+The program consists of a sequence of instructions, which may be separated
+with whitespace. Whenever an instruction takes a parameter from the stack,
+that parameter is removed from the stack.
+
+"insert some profound text here"
+  - Places the string on top of the stack (without the quotes). The string
+    may include the following escape sequences:
+    \n = newline
+    \" = the " character
+    \\ = the \ character
+
++ - concatenates the top two strings on the stack. The string pushed earlier
+    appears earlier in the resulting string, eg
+    "Zork" "mid" +
+    would result in the string "Zorkmid" being placed on the stack.
+
+i - takes a string from user input, and places it on the stack.
+
+o - outputs the topmost string on the stack.
+
+p - Pops a variable name from the stack, pops a value from the stack, and
+    assigns that value to the variable name.
+
+g - Pops a variable name from the stack, and pushes the value of the
+    variable.
+
+h - Pops a string from the stack, and pushes its head, ie the first
+    character. This causes an error if used on the empty string.
+
+t - Pops a string from the stack, and pushes its tail, ie all but the first
+    character. This causes an error if used on the empty string.
+
+q - "Quotifies" the string on top of the stack, so that it can be placed
+    into a Smurf program as a literal string, eg
+    Arthur "two-sheds" Jackson
+    becomes
+    "Arthur \"two-sheds\" Jackson"
+    NOTE: This differs from the quotify operator in Muriel, because it adds
+    the surrounding quotes as well.
+
+x - Executes the string on top of the stack as a Smurf program. The stack
+    and variable store are cleared before it is executed.
+
+--------------------------------
+smurf.pl - the Smurf interpreter
+--------------------------------
+Usage:
+smurf.pl <smurf program file>
+
+Error messages are in the form of They Might Be Giants quotes. (I apologise
+for my lack of knowledge of the works of Bjork, but if anyone would care to
+provide me with appropriate quotes, I'll happily incorporate a command line
+option to enable Icelandic Pop Diva Mode in the next version.)
+
+"It's hard to understand me from the language I use
+There's no word in English for my style":
+The interpreter encountered an unrecognised program instruction.
+
+"When the indicator says you're out of gas
+Should you continue driving anyway?":
+The program attempted to pop a value from the stack when it was empty.
+
+"Roll out that special head
+This is our favourite one":
+The h instruction was used on the empty string.
+
+"I'm not done
+And I won't be till my head falls off":
+The t instruction was used on the empty string.
+
+"I was just talking and someone interrupted
+Or was it a loud explosion?":
+
+The terminating " of a string expression was missing.
+
+----------------------
+Example Smurf programs
+----------------------
+1. HelloWorld.smu
+"Hello World!"o
+
+2. Quine.smu
+"\"\"p\"\"gqo\"\"go"""p""gqo""go
+
+3. Echo.smu
+io "\"a\"p \"io\" \"a\"gq+ \"a\"g+ x" "a"p "io" "a"gq+ "a"g+ x

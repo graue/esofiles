@@ -1,0 +1,44 @@
+The Archway2 Programming Language
+
+Operates on a tape of byte cells, unbounded to the right, starting at 
+the left, all initialized to 0. The code is two-dimensional, and the 
+memory pointer starts out at the bottom left going right.
+
+The LURD and RULD commands are searched for in front of the code pointer
+and if found executed, before the code pointer advances.
+
+Commands are:
+
+< LEFT  Move the memory pointer to the left
+> RIGHT Move the memory pointer to the right
++ INCR  Increment current memory cell
+- DECR  Decrement current memory cell
+, READ  Read a byte into current memory cell
+. WRITE Write a byte from current memory cell
+\ LURD  If current memory cell is 0, ignore
+        Otherwise, if going
+            left, go up
+            up, go left
+            right, go down
+            down, go right
+/ RULD  If current memory cell is 0, ignore
+        Otherwise, if going
+            right, go up
+            up, go right
+            left, go down
+            down, go left
+
+Any other characters carry out the NOOP instruction, which does nothing. 
+Execution ends when the instruction pointer tries to move outside of 
+code space.
+
+This language should be Turing-complete because it is possible to translate
+Brainfuck programs to it. The key difference from Archway lies in how / and \
+are handled specially.
+
+This language is hereby placed in the public domain. It may be used,
+modified, copied, distributed, sold, and otherwise exploited without
+restriction.
+
+graue@oceanbase.org
+http://www.oceanbase.org/graue/archway/

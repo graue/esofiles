@@ -1,0 +1,59 @@
+<html><head><title>brainfuck interpreter</title><style><!--
+body,td,caption{background:#cccccc;color:#000000;font-family:monospace;font-size:12px}
+a:link,a:visited{color:#330099}a:hover,a:active{color:#ffffff}.t{border-bottom:1px dashed}
+--></style><script>
+function x(c){
+var y=document.f.i,z=c.length,v=32768,a=new Array(v),p=0,k=-1,e=new Array(z),l=new Array(z),s=new Array(z),m=127,n=-128
+if(document.f.q.checked){m=Number.MAX_VALUE;n=-(Number.MAX_VALUE)}
+for(j=0;j<v;j++){a[j]=0}
+for(j=0;j<z&&p>=0;j++){if(c.charAt(j)=='[')l[++p]=j;if(c.charAt(j)==']'){s[j]=l[p];e[l[p]]=j;p--}}
+if(p!=0){alert("Unbalanced brackets!");return}
+for(j=0;j<z;j++){switch(c.charAt(j)){
+case'#':if(document.f.d.checked){window.alert('Position within code: '+j+'\nPointer: '+p+'\nValue at pointer: '+a[p])};break
+case'<':p--;if(p<0)p=v-1;break
+case'>':p++;if(p>=v)p=0;break
+case'+':if((a[p]+1)>m)a[p]=n;else{a[p]++};break
+case'-':if((a[p]-1)<n)a[p]=m;else{a[p]--};break
+case']':j=s[j]
+case'[':if(a[p]==0)j=e[j];break
+case',':if(k+1>=y.value.length){if(!document.f.r.checked){a[p]=0;break}
+u=prompt("Input required. Press Cancel to halt program execution.","")
+if(u==''||u==null){j=z;break}
+else{y.value+=u}}a[p]=y.value.charCodeAt(++k);break
+case'.':document.f.o.value+=String.fromCharCode(a[p])}}
+if(document.f.w.checked){window.alert("Execution completed.")}
+}//</script></head><body><form name=f><table width="100%" border=0><tr><td width="40%" align=left valign=top>
+<table border=1 cellspacing=0 cellpadding=5><caption><b>brainfuck commands</b>
+<tr><td>&gt;</td><td>increment pointer
+<tr><td>&lt;</td><td>decrement pointer
+<tr><td>+</td><td>increment value at pointer
+<tr><td>-</td><td>decrement value at pointer
+<tr><td>[</td><td>begin loop (continues while value at pointer is non-zero)
+<tr><td>]</td><td>end loop
+<tr><td>,</td><td>read one character from input into value at pointer
+<tr><td>.</td><td>print value at pointer to output as a character
+<tr><td>#</td><td>display debugging info (in debug mode)
+<tr><td colspan=2 align=center>Any other characters are ignored.</table>
+<p>Learn more about the Brainfuck programming language:<br>&nbsp;
+<a href="http://www.catseye.mb.ca/esoteric/bf/">Source</a> |
+<a href="http://www.muppetlabs.com/~breadbox/bf/">@ Muppetlabs</a> |
+<a href="http://esoteric.sange.fi/brainfuck/">Code archive</a>
+<td width="60%" align=center valign=top><table width="1%" border=0><tr><td align=left valign=bottom>
+<b><span class=t title="Warning: clicking these links will replace the existing code with a new program.">programs:</span></b>
+<a href="javascript:void(0)" onClick="b.value='+++++++++[>++++++++<-]>.  H\n<+++[>+++++++++++<-]>.    i\n[-]<+++[>+++++++++++<-]>. !'">hello</a>
+<a href="javascript:void(0)" onClick="b.value='+[,.]'">echo</a>
+<a href="javascript:void(0)" onClick="b.value='+[>,]<-[+.<-]'">rev</a>
+<a href="javascript:void(0)" onClick="b.value='->+>+++>>+>++>+>+++>>+>++>>>+>+>+>++>+>>>>+++>+>>++>+>+++>>++>++>>+>>+>++>++>+>>>>+++>+>>>>++>++>>>>+>>++>+>+++>>>++>>++++++>>+>>++>+>>>>+++>>+++++>>+>+++>>>++>>++>>+>>++>+>+++>>>++>>+++++++++++++>>+>>++>+>+++>+>+++>>>++>>++++>>+>>++>+>>>>+++>>+++++>>>>++>>>>+>+>++>>+++>+>>>>+++>+>>>>+++>+>>>>+++>>++>++>+>+++>+>++>++>>>>>>++>+>+++>>>>>+++>>>++>+>+++>+>+>++>>>>>>++>>>+>>>++>+>>>>+++>+>>>+>>++>+>++++++++++++++++++>>>>+>+>>>+>>++>+>+++>>>++>>++++++++>>+>>++>+>>>>+++>>++++++>>>+>++>>+++>+>+>++>+>+++>>>>>+++>>>+>+>>++>+>+++>>>++>>++++++++>>+>>++>+>>>>+++>>++++>>+>+++>>>>>>++>+>+++>>+>++>>>>+>+>++>+>>>>+++>>+++>>>+[[->>+<<]<+]+++++[->+++++++++<]>.[+]>>[<<+++++++[->+++++++++<]>-.------------------->-[-<.<+>>]<[+]<+>>>]<<<[-[-[-[>>+<++++++[->+++++<]]>++++++++++++++<]>+++<]++++++[->+++++++<]>+<<<-[->>>++<<<]>[->>.<<]<<]'">quine</a>
+<p><b><span class=t title="Click to append code to your program. Review the code before you use it! It may make assumptions about the values at or near the pointer.">functions:</span></b>
+<a href="javascript:void(0)" onClick="b.value+=' ([<+>-]<) '">add</a>
+<a href="javascript:void(0)" onClick="b.value+=' ([>+>+<<-]>>[<<+>>-]) '">dup</a>
+<a href="javascript:void(0)" onClick="b.value+=' ([>+<-]<[>+<-]>>[<<+>>-]<) '">swap</a>
+<a href="javascript:void(0)" onClick="b.value+=' (>[-]>[-]<< <[>[>+>+<<-] >[<+>-] <<-] >>>[<<<+>>>-]<<<) '">mul</a>
+<a href="javascript:void(0)" onClick="b.value+=' ({condition}[{conditional code}[-]]) '">if</a>
+</td><td align=right>Debug&nbsp;mode:<input type=checkbox name=d><br>Large variables:<input type=checkbox name=q><br>
+Prompt for input:<input type=checkbox name=r><br>Alert when finished:<input type=checkbox name=w><tr><td colspan=3>
+<textarea name=b cols=50 rows=9></textarea><tr><td><b>code ^</b></td>
+<td align=right><input type=button value=execute onClick="x(b.value)"> <input type=button value=clear onClick="b.value=''"></table>
+<br><b>input:</b><input type=text name=i size=44> <input type=button value=clear onClick="i.value=''">
+<table width="1%" border=0><tr><td colspan=2><textarea name=o cols=50 rows=4></textarea><tr><td><b>output ^</b></td>
+<td align=right><input type=button value=clear onClick="o.value=''"></table></table></form></body></html>

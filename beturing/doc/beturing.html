@@ -1,0 +1,186 @@
+<html>
+<head><title>Beturing - a Befunge-flavoured Turing machine</title></head>
+<body>
+<h1>Beturing</h1>
+<h2>a Befunge-flavoured Turing machine</h2>
+
+<p><i>v1.1, Chris Pressey, June 8 2005</i></p>
+<!--
+$Id$
+-->
+
+<h3>Introduction</h3>
+
+<p>Beturing is a programming language based on a "universal" Turing machine
+with an unbounded, 2-dimensional "tape".  (The Turing machine on which it is
+based is "universal" in the sense that the machine's state transition diagram is
+stored on the "tape" along with the data.)</p>
+
+<h3>General Layout</h3>
+
+<p>This 2-dimensional "tape" is where all the action happens; it is
+called the <i>playfield</i> and is divided into discrete units called <i>cells</i>.
+Each cell may store exactly one of a number of <i>symbols</i> drawn from
+a finite alphabet.</p>
+
+<p>There are two "heads" that access the playfield, one of which
+(the <i>data head</i>) reads and alters the data (like in a common Turing machine,)
+the other of which (the <i>code head</i>) reads the state transition diagram.</p>
+
+<p>The state transition diagram is made up of <i>codes</i>.  Each code is a
+2x2 block of cells in the following form:</p>
+
+<center><table border=0 bgcolor=#e0e0e0>
+<tr><td><tt>a</tt></td><td><tt>b</tt></td></tr>
+<tr><td><tt>&gt;</tt></td><td><tt>/</tt></td></tr>
+</table></center>
+
+<p>The code head is considered to be over a code when it is over the upper-left cell of it.
+The names and meanings of the four parts of the code are as follows:</p>
+
+<ul>
+<li>The upper-left cell of a code contains a symbol to look for, called the <i>seek symbol</i>.
+All symbols are valid seek symbols.</li>
+<li>The upper-right cell of the code contains a symbol to replace it with, called the <i>replacement symbol</i>.
+All symbols are valid replacement symbols.</li>
+<li>The lower-left cell of the code contains an indication of how to move the data head, called
+the <i>data head movement operator</i>.
+The set of valid data head movement operators is
+{<tt>&gt;</tt>, <tt>&lt;</tt>, <tt>^</tt>, <tt>v</tt>, <tt>.</tt>, <tt>*</tt>}.</li>
+<li>The lower-right cell of the code contains an indication of what to do with the code head, called
+the <i>state transition operator</i>.
+The set of valid state transition operators is
+{<tt>&gt;</tt>, <tt>&lt;</tt>, <tt>^</tt>, <tt>v</tt>,  <tt>/</tt>, <tt>@</tt>}.</li>
+</ul>
+
+<h3>Syntax</h3>
+
+<p>When a Beturing playfield is loaded from source such as a text file, lines are
+translated to rows in the playfield.  The first line is loaded at (0, 0), and subsequent
+lines are loaded at (0, 1), (0, 2), etc.  Lines which begin with a <tt>#</tt> are not
+loaded into the playfield.  Certain lines that begin with <tt>#</tt>, listed below,
+are directives meaningful to any Beturing interpreter.
+The rest may have a local interpretation (such as the <tt>#!</tt> convention
+on Unix systems,) or be ignored.  A line which begins with <tt>##</tt> is
+guaranteed to be ignored.</p>
+
+<ul>
+<li>Lines of the form <tt># @(<i>x</i>, <i>y</i>)</tt> where <i>x</i> and <i>y</i>
+are integers reposition the loading of the text file; subsequent lines will be loaded into the playfield
+at the given position.</li>
+<li>Lines of the form <tt># C(<i>x</i>, <i>y</i>)</tt> specify the initial position of
+the code head.  The last such line is the one that takes effect.</li>
+<li>Lines of the form <tt># D(<i>x</i>, <i>y</i>)</tt> specify the initial position of
+the data head.  The last such line is the one that takes effect.</li>
+</ul>
+
+<h3>Semantics</h3>
+
+<p>When a Beturing machine is set in motion, it <i>interprets</i> the code under the code head,
+transitions to a new state by moving the code head, then
+repeats indefinitely until the machine enters the <i>halt</i> state.</p>
+
+<p>Here is how each code is interpreted:</p>
+
+<ul>
+<li>If the data head movement operator is the special symbol <tt>*</tt>, the following things happen:
+  <ul>
+  <li>The data head is moved by the positive interpretation of the replacement symbol.  (Note that this
+  behaviour is new in version 1.1; no data head movement would occur in the <tt>*</tt> case in v1.0.)</li>
+  <li>The code head is moved by the positive interpretation (x2) of the state transition operator.</li>
+  </ul>
+</li>
+<li>Otherwise, if the symbol under the data head matches the seek symbol, the following things
+happen:
+  <ul>
+  <li>The replacement symbol is written to the cell under the data head.</li>
+  <li>The data head is moved by the positive interpretation of the data head movement operator.</li>
+  <li>The code head is moved by the positive interpretation (x2) of the state transition operator.</li>
+  </ul>
+</li>
+<li>Otherwise the symbol under the data head does <b>not</b> match the
+seek symbol, and the following things happen:
+  <ul>
+  <li>The code head is moved by the negative interpretation (x2) of the state transition operator.</li>
+  </ul>
+</li>
+</ul>
+
+<p>The positive and negative interpretations of the data head movement and state transition
+operators are given below:</p>
+
+<center><table border=1>
+<tr><th>Symbol</th><th>Positive interpretation</th><th>Negative interpretation</th></tr>
+<tr><td><tt>&gt;</tt></td><td>Move right</td><td>Move right</td></tr>
+<tr><td><tt>&lt;</tt></td><td>Move left</td><td>Move left</td></tr>
+<tr><td><tt>^</tt></td><td>Move up</td><td>Move up</td></tr>
+<tr><td><tt>v</tt></td><td>Move down</td><td>Move down</td></tr>
+<tr><td><tt>.</tt></td><td>Don't move</td><td>Don't move</td></tr>
+<tr><td><tt>/</tt></td><td>Move right</td><td>Move down</td></tr>
+<tr><td bgcolor=#d0d0d0><tt>\</tt></td><td>Move left</td><td>Move down</td></tr>
+<tr><td bgcolor=#d0d0d0><tt>|</tt></td><td>Move up</td><td>Move down</td></tr>
+<tr><td bgcolor=#d0d0d0><tt>-</tt></td><td>Move left</td><td>Move right</td></tr>
+<tr><td bgcolor=#d0d0d0><tt>`</tt></td><td>Move right</td><td>Move up</td></tr>
+<tr><td bgcolor=#d0d0d0><tt>'</tt></td><td>Move left</td><td>Move up</td></tr>
+<tr><td><tt>@</tt></td><td>Halt</td><td>Halt</td></tr>
+</table></center>
+
+<p>Note that "x2" in the rules given above means to advance two cells in the given direction;
+this is used everywhere for moving the code head because codes are 2x2 cell blocks.</p>
+
+<h3>Discussion</h3>
+
+<p>The Beturing language was designed (in part) as a test of the wire-crossing problem,
+in the following manner.  Note these things about Beturing:</p>
+
+<ul>
+<li>Unlike Befunge's instruction pointer, the code head does not have "direction" or
+"delta" state; it has only "position" state.  Its next position (and thus the machine's
+next state) is determined entirely by the state transition operator of the current code.</li>
+
+<li>Also unlike Befunge and its <tt>#</tt> instruction,
+there is no "leap over" state transition operator.
+Therefore the next state must always be reachable by a continuous, unbroken
+path through the playfield.</li>
+
+<li>Lastly, unlike Befunge and its torus, the Beturing playfield is really unbounded in all
+four directions - there is no wrapping around, making it a true plane.</li>
+</ul>
+
+<p>All this added together means that a Beturing machine is incapable of having
+a state transition diagram that is not a
+<a href="http://planetmath.org/?op=getobj&from=objects&name=PlanarGraph">planar graph</a>.
+A state transition diagram which is a complete 5-vertex graph, for example, is not planar.</p>
+
+<p>This <b>might</b> mean that it is impossible to construct a
+true universal Turing machine in Beturing, <i>if</i> a universal Turing machine
+requires a state diagram that is not a planar graph.</p>
+
+<p>If this were the case then Beturing would not be Turing-complete,
+and in fact its level of computational power would probably be difficult to determine.</p>
+
+<h3>Update</h3>
+
+<p>Version 1.0 of the Beturing language, and an interpreter for it written in Lua 5,
+was released June 6th 2005.</p>
+
+<p>On June 7th, graue's development of the Archway language, and my
+sketches for a Smallfuck interpreter in Beturing have both strongly suggested that a
+universal Turing machine's state diagram can indeed be a planar graph.  I'd still
+like to go ahead and implement the Smallfuck interpreter, though, since (even if it's
+a foregone conclusion) it would be pretty impressive to see in action.</p>
+
+<p>On June 8th I added the "data head can move on <tt>*</tt>" semantics for v1.1,
+in preparation for implementing a Smallfuck interpreter from my sketches.  Note that
+this addition does not constitute an increase in Beturing's computational power, only
+its expressiveness.  It was possible to do the same thing in v1.0, but it required one
+code per symbol in the alphabet, which was a little excessive.</p>
+
+<p>On June 10th I added extra "decision" state transition operators (shown with
+a grey background in the above table) for extra flexibility; there are some planar
+graphs that can't be rendered in Beturing with just <tt>/</tt>: see the diagram of
+the Uhing 5-state Busy Beaver machine, for example.  As always, you can use the
+<tt>-o</tt> flag to the interpreter to enforce the v1.0 semantics where these
+aren't available, if you're a purist.</p>
+
+</body></html>

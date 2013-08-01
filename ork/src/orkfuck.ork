@@ -1,0 +1,255 @@
+# Copyright (c) 2005 Gregor Richards
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+# OrkFuck.  A BrainFuck interpreter in ORK.
+# This interpreter does no-change-on-EOF, and assumes a ! separating input code from input data.
+
+There is such a thing as a brainfuck interpreter.
+A brainfuck interpreter can instanciate.
+A brainfuck interpreter can subinstanciateData a number.
+A brainfuck interpreter can subinstanciateProgram a number.
+A brainfuck interpreter can pushLoop.
+A brainfuck interpreter can popLoop.
+A brainfuck interpreter can matchLoops.
+A brainfuck interpreter can read.
+A brainfuck interpreter can interpret.
+A brainfuck interpreter can left.
+A brainfuck interpreter can right.
+A brainfuck interpreter can add.
+A brainfuck interpreter can subtract.
+A brainfuck interpreter can inputchar.
+A brainfuck interpreter can outputchar.
+A brainfuck interpreter can startloop.
+A brainfuck interpreter can endloop.
+A brainfuck interpreter has a data buffer which is a number array.
+A brainfuck interpreter has a program buffer which is a number array.
+A brainfuck interpreter has a loop buffer which is a number array.
+A brainfuck interpreter has a loop stack which is a number array.
+A brainfuck interpreter has a program phrase which is a phrase.
+
+When this program starts:
+I have a brainfuck interpreter called Fuck My Brain.
+Fuck My Brain is to instanciate.
+Fuck My Brain is to read.
+Fuck My Brain is to matchLoops.
+Fuck My Brain's program buffer's current is 0.
+Fuck My Brain is to interpret.
+
+When a brainfuck interpreter is to instanciate:
+I have a number called length.
+My length is 32256.
+My data buffer is to instanciate length.
+My program buffer is to instanciate length.
+My loop buffer is to instanciate length.
+My loop stack is to instanciate length.
+My program phrase is ""
+My length is 32255.
+I am to subinstanciateData length.
+I am to subinstanciateProgram length.
+
+When a brainfuck interpreter is to subinstanciateData a number:
+There is a mathematician called Muller.
+I have a number called data.
+My data is 0.
+My data buffer's current is the number.
+My data buffer is to set data.
+Muller's first operand is the number.
+Muller's second operand is 1.
+Muller is to subtract.
+Muller's first operand is Muller's result.
+Muller's second operand is -1.
+Muller is to compare.
+If Muller says it's greater then I am to subinstanciateData Muller's first operand.
+
+When a brainfuck interpreter is to subinstanciateProgram a number:
+There is a mathematician called Muller.
+I have a number called data.
+My data is 0.
+My data buffer's current is the number.
+My data buffer is to set data.
+Muller's first operand is the number.
+Muller's second operand is 1.
+Muller is to subtract.
+Muller's first operand is Muller's result.
+Muller's second operand is -1.
+Muller is to compare.
+If Muller says it's greater then I am to subinstanciateProgram Muller's first operand.
+
+When a brainfuck interpreter is to read:
+There is a linguist called Harry.
+I have a number called current.
+I have a phrase called input.
+I have an inputter called Bob.
+Bob is to readOne input.
+Harry's first operand is my program phrase.
+Harry's second operand is input.
+Harry is to concatenate.
+My program phrase is Harry's result.
+Harry's first operand is input.
+Harry's second operand is "!"
+Harry is to compare.
+# Trick it into ending on EOF
+Harry's first operand is "!"
+If Bob says it's done then Harry is to compare.
+If Harry says it's not equal then I am to loop.
+My program buffer is to import my program phrase.
+
+When a brainfuck interpreter is to matchLoops:
+There is a mathematician called Fibonacci.
+My program buffer is to get Fibonacci's first operand.
+# [
+Fibonacci's second operand is 91.
+Fibonacci is to compare.
+If Fibonacci says it's equal then I am to pushLoop.
+# ]
+Fibonacci's second operand is 93.
+Fibonacci is to compare.
+If Fibonacci says it's equal then I am to popLoop.
+# Calculate the next one
+Fibonacci's first operand is my program buffer's current.
+Fibonacci's second operand is 1.
+Fibonacci is to add.
+My program buffer's current is Fibonacci's result.
+# See if the next one is too far.
+Fibonacci's first operand is my program buffer's current.
+Fibonacci's second operand is my program buffer's length.
+Fibonacci is to compare.
+If Fibonacci says it's less then I am to loop.
+
+When a brainfuck interpreter is to pushLoop:
+There is a mathematician called Fibonacci.
+My loop stack is to set my program buffer's current.
+Fibonacci's first operand is my loop stack's current.
+Fibonacci's second operand is 1.
+Fibonacci is to add.
+My loop stack's current is Fibonacci's result.
+
+When a brainfuck interpreter is to popLoop:
+There is a mathematician called Fibonacci.
+I have a number called location.
+Fibonacci's first operand is my loop stack's current.
+Fibonacci's second operand is 1.
+Fibonacci is to subtract.
+My loop stack's current is Fibonacci's result.
+My loop stack is to get my location.
+My loop buffer's current is my program buffer's current.
+Fibonacci's first operand is my location.
+Fibonacci's second operand is 1.
+Fibonacci is to subtract.
+My loop buffer is to set Fibonacci's result.
+My loop buffer's current is my location.
+My loop buffer is to set my program buffer's current.
+
+When a brainfuck interpreter is to interpret:
+There is a mathematician called Fibonacci.
+My program buffer is to get Fibonacci's first operand.
+# <
+Fibonacci's second operand is 60.
+Fibonacci is to compare.
+If Fibonacci says it's equal then I am to left.
+# >
+Fibonacci's second operand is 62.
+Fibonacci is to compare.
+If Fibonacci says it's equal then I am to right.
+# -
+Fibonacci's second operand is 45.
+Fibonacci is to compare.
+If Fibonacci says it's equal then I am to subtract.
+# +
+Fibonacci's second operand is 43.
+Fibonacci is to compare.
+If Fibonacci says it's equal then I am to add.
+# ,
+Fibonacci's second operand is 44.
+Fibonacci is to compare.
+If Fibonacci says it's equal then I am to inputchar.
+# .
+Fibonacci's second operand is 46.
+Fibonacci is to compare.
+If Fibonacci says it's equal then I am to outputchar.
+# [
+Fibonacci's second operand is 91.
+Fibonacci is to compare.
+If Fibonacci says it's equal then I am to startloop.
+# ]
+Fibonacci's second operand is 93.
+Fibonacci is to compare.
+If Fibonacci says it's equal then I am to endloop.
+# Calculate the next one
+Fibonacci's first operand is my program buffer's current.
+Fibonacci's second operand is 1.
+Fibonacci is to add.
+My program buffer's current is Fibonacci's result.
+# See if the next one is too far.
+Fibonacci's first operand is my program buffer's current.
+Fibonacci's second operand is my program buffer's length.
+Fibonacci is to compare.
+If Fibonacci says it's less then I am to loop.
+
+When a brainfuck interpreter is to left:
+There is a mathematician called Fibonacci.
+Fibonacci's first operand is my data buffer's current.
+Fibonacci's second operand is 1.
+Fibonacci is to subtract.
+My data buffer's current is Fibonacci's result.
+
+When a brainfuck interpreter is to right:
+There is a mathematician called Fibonacci.
+Fibonacci's first operand is my data buffer's current.
+Fibonacci's second operand is 1.
+Fibonacci is to add.
+My data buffer's current is Fibonacci's result.
+
+When a brainfuck interpreter is to add:
+There is a mathematician called Fibonacci.
+My data buffer is to get Fibonacci's first operand.
+Fibonacci's second operand is 1.
+Fibonacci is to add.
+My data buffer is to set Fibonacci's result.
+
+When a brainfuck interpreter is to subtract:
+There is a mathematician called Fibonacci.
+My data buffer is to get Fibonacci's first operand.
+Fibonacci's second operand is 1.
+Fibonacci is to subtract.
+My data buffer is to set Fibonacci's result.
+
+When a brainfuck interpreter is to inputchar:
+There is an inputter called Bob.
+I have a number called data.
+Bob is to readOne data.
+If Bob says it's not done then my data buffer is to set data.
+
+When a brainfuck interpreter is to outputchar:
+There is a scribe called Will.
+I have a number called data.
+My data buffer is to get data.
+Will is to asciiWrite data.
+
+When a brainfuck interpreter is to startloop:
+There is a mathematician called Fibonacci.
+I have a number called data.
+My loop buffer's current is my program buffer's current.
+My data buffer is to get my data.
+Fibonacci's first operand is my data.
+Fibonacci's second operand is 0.
+Fibonacci is to compare.
+If Fibonacci says it's equal then my loop buffer is to get my program buffer's current.
+
+When a brainfuck interpreter is to endloop:
+My loop buffer's current is my program buffer's current.
+My loop buffer is to get my program buffer's current.

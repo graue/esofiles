@@ -1,0 +1,11 @@
+# hello, world program
+# by Graue
+
+# This will delete itself when run
+world := ""
+
+# This will run first and rename itself to "hello, world"
+hello := "hello, " ".!" "" ? ~          # grabs "world" using a regex
+
+# First hello runs, then world. world deletes itself, and hello remains.
+# Since hello has renamed itself to "hello, world", that is what's displayed.

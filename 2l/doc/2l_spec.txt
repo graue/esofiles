@@ -1,0 +1,98 @@
+2L is a deceptively confusing but non-complex language.  Like PATH and Befunge, it's
+two-dimensional.  Like BrainFuck, it operates on a tape.  However, it only has two symbols.  It
+manages this by overloading the * symbol by direction.  Your data pointer starts at location 2,
+not 0 as in BrainFuck, because 0 and 1 are significant.  The tape is filled with 0s, as in BF.
+Your program pointer starts at 0,0 moving down, and ends when the program pointer goes below 0
+left or up.  Here are the symbols:
+
+   SYMBOL | FUNCTION
+----------+----------
+        * | All IO and tape operations.  This operation has a different function for all four
+          | cardinal directions:
+          | Up: Move the data pointer to the right (> in BF)
+          | Down: Move the data pointer to the left (< in BF)
+          | Left: Decrement the value at the data pointer (- in BF)
+          | Right: Increment the value at the data pointer (+ in BF)
+          |
+        + | if the value the data pointer points to is nonzero, turn right
+          |  otherwise turn left
+
+Tape locations 0 and 1 are significant.  1 doesn't actually hold a value, it mearly causes an IO
+operation if you attempt to increment or decrement it.  (I will from here on shorten "Tape
+location" to "TL")
+If the value at TL0 is 0, and you attempt to change the value of TL1, a character will be read from
+input into TL0.  If TL0 is not 0, and you attempt to change the value of TL1, a character will be
+outputted from the value of TL0.
+
+The + turn is not a simple turn.  Imagine the lines are your path:
+           |
+           |
+-----------/+
+
+Is the direction of your program pointer, rather than
+           |
+           |
+-----------+
+
+This is because the second method would make many types of loop impossible.  Trust me .... I spent
+way to long figuring that out.
+
+Here's a simple loop, that produces the value 9 by multiplying 5 by two then subtracting 1:
+
+  **  +
+    +               
+    * *****+
+   +
+     +    *
+   +     * 
+          +
+  <*       +
+    +
+
+The < is the direction that your program pointer will be going in when you're done producing the
+value.  Here's how it works:
+
+--**-\+
+    +|              
+    * *****+
+   +|/    |
+    |+    *
+   + ----*/
+     +    +
+  <*       +
+    +
+
+That's more helpful, right?  No?  OK, lesse...
+The first two * you hit increases your value to 2
+You then turn right, go down, turn left then up...
+
+Now you're here:
+/----\
+| +  |
+| * *|
+|+^  |
+|  + |
+\----/
+
+You'll hit that * going up, and hence shift your data pointer's location.
+Now you'll hit that series of five *s, which will increase your value by 5.
+Then you turn down, and hit that next * below there.  That makes you go back down to the cell with
+the value 2.  Then you turn right, and are going left.  You hit that *, and decrement.
+Still with me?  No?  Good.
+
+Now you're here:
+/----\
+|   +|
+| + <|
+|   +|
+| *  |
+\----/
+
+You'll hit that +.  The first time, you'll still have a value of 1, so you'll turn right and go
+into the loop again.  The second time, you'll have a value of 0, and will hence turn left.
+Then you'll go all the way to the right, and the two +s there will turn you around.  You hit that
+final * (next to the output <), and then your 10 (remember, you added 5 twice) is now 9!
+
+WOW!  That was simple!
+
+That's it!  That's the whole language!  Isn't that simple ... but not!

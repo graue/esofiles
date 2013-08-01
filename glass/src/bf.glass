@@ -1,0 +1,173 @@
+{(Arre)
+  [(c__)
+    v<0>=
+    n<0>=
+  ]
+  [s
+    v1=,
+  ]
+  [g
+    v*
+  ]
+  [(sn)
+    n1=,
+  ]
+  [(gn)
+    n*
+  ]
+}
+
+{(Arr)
+  [(c__)
+    (_v)V!
+    h(_v)n.?=
+    h*(Arre)!
+  ]
+  [l
+    (_a)A!
+    (_v)V!
+    '_n is the number to seek'
+    (_n)1=
+    ,
+    ch*= 'cur = head'
+    /(_n) 'while _n'
+      (_n)(_n)*<1>(_a)s.?= '_n = _n - 1'
+      (_nnxt)c*(gn).?<0>(_a)e.?= '_nnxt = !c->gn()'
+      /(_nnxt)
+        (_nnxt)<0>= '_nnxt = 0'
+        (_nxt)(_v)n.?= '_nxt = new variable'
+        (_nxt)*(Arre)! '*_nxt = new Arre'
+        (_nxt)*c*(sn).? 'c.sn(*_nxt)'
+      \
+      cc*(gn).?= 'c = c->gn()'
+    \
+  ]
+  [s
+    (_t)$
+    (_n)2=
+    (_val)1=
+    ,,
+    (_n)*(_t)l.? 'seek for _n'
+    (_val)*c*s.? 'c->s(_v)'
+  ]
+  [g
+    (_t)$
+    (_n)1=
+    ,
+    (_n)*(_t)l.? 'seek for _n'
+    c*g.? 'push c->g()'
+  ]
+}
+
+{(BF)
+  [(c__)
+    m(Arr)!
+    (mp)<0>=
+  ]
+  [(bf)
+    (_a)A!
+    (_o)O!
+    (_s)S!
+    (_t)$
+    
+    'get the program'
+    (_p)1=
+    ,
+    (_pp)<0>=
+    
+    (_pc)(_pp)*(_p)*(_s)l.?(_a)(le).?= '_pc = _pp <= _p.length()'
+    /(_pc)
+      (_pcur)(_p)*(_pp)*(_s)i.?(_s)(sn).?= '_pcur = (int) _p[_pp]'
+      
+      (_isc)(_pcur)*<43>(_a)e.?= '_isc = _pcur == 43 (+)'
+      /(_isc)
+        (_isc)<0>=
+        
+        (_c)(mp)*mg.?= '_c = m.g(mp)'
+        (_c)(_c)*<1>(_a)a.?= '_c += 1'
+        (mp)*(_c)*ms.? 'm.s(mp, _c)'
+      \
+      
+      (_isc)(_pcur)*<45>(_a)e.?= '_isc = _pcur == 45 (-)'
+      /(_isc)
+        (_isc)<0>=
+        
+        (_c)(mp)*mg.?= '_c = m.g(mp)'
+        (_c)(_c)*<1>(_a)s.?= '_c += 1'
+        (mp)*(_c)*ms.? 'm.s(mp, _c)'
+      \
+      
+      (_isc)(_pcur)*<60>(_a)e.?= '_isc = _pcur == 60 (<)'
+      /(_isc)
+        (_isc)<0>=
+        
+        (mp)(mp)*<1>(_a)s.?= 'mp -= 1'
+        (_b)(mp)*<0>(_a)(lt).?= '_b = mp < 0'
+        /(_b)^\
+      \
+      
+      (_isc)(_pcur)*<62>(_a)e.?= '_isc = _pcur == 62 (>)'
+      /(_isc)
+        (_isc)<0>=
+        
+        (mp)(mp)*<1>(_a)a.?= 'mp += 1'
+      \
+      
+      (_isc)(_pcur)*<46>(_a)e.?= '_isc = _pcur == 46 (.)'
+      /(_isc)
+        (_isc)<0>=
+        
+        (_c)(mp)*mg.?= '_c = m.g(mp)'
+        (_c)(_c)*(_s)(ns).?= '_c = string(_c)'
+        (_c)*(_o)o.? '_o.o(_c)'
+      \
+      
+      (_isc)(_pcur)*<91>(_a)e.?= '_isc = _pcur == 91 ([)'
+      /(_isc)
+        (_isc)<0>=
+
+        (_opp)(_pp)*= '_opp = _pp'
+        
+        (_dpth)<1>= '_dpth = 1'
+        (_neb)<1>=
+        /(_neb)
+          (_pp)(_pp)*<1>(_a)a.?= '_pp += 1'
+          (_pcur)(_p)*(_pp)*(_s)i.?(_s)(sn).?= '_pcur = (int) _p[_pp]'
+
+          (_ob)(_pcur)*<91>(_a)e.?= '_ob = _pcur == 91 ([)'
+          /(_ob) (_ob)<0>= (_dpth)(_dpth)*<1>(_a)a.?= \ 'if (_ob) _dpth++'
+          (_eb)(_pcur)*<93>(_a)e.?= '_eb = _pcur == 93 (])'
+          (_eb2)(_eb)*=
+          /(_eb2) (_eb2)<0>= (_dpth)(_dpth)*<1>(_a)s.?= \ 'if (_ob) _dpth--'
+
+          (_ndp)(_dpth)*<0>(_a)e.?= '_ndp = _dpth == 0'
+          
+          /(_eb)
+           (_eb)<0>=
+            /(_ndp)
+             (_ndp)<0>=
+              'if an ending bracket and not deep, we`re done'
+              (_neb)<0>=
+            \
+          \
+        \
+
+        'now we know the segment to cut out'
+        (_p)*(_opp)*<1>(_a)a.?(_s)d.? 'push _p divided after ['
+        (_pp)*(_opp)*(_a)s.?(_s)d.? 'push the second half of the divided _p divided before ]'
+        , 'pop the remainder'
+        (_subp)1= '_subp = the middle part'
+        , 'pop the beginning'
+        
+        (_c)(mp)*mg.?= '_c = m.g(mp)'
+        /(_c)
+          (_subp)*(_t)(bf).? 'this.bf(_subp)'
+          (_c)(mp)*mg.?= '_c = m.g(mp)'
+        \
+      \  
+
+      (_pp)(_pp)*<1>(_a)a.?= '_pp += 1'
+      (_pc)(_pp)*(_p)*(_s)l.?(_a)(le).?= '_pc = _pp <= _p.length()'
+    \
+  ]
+}

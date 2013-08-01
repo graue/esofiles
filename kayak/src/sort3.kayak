@@ -1,0 +1,56 @@
+compare (a|b|c|bb|alb) { c [ a [ b [ compare (a|b|c|bb|alb). ] b ] |
+                               [ b [ alb | alb ] |
+                                   [ compare (a|b|c|bb|alb). ] | b ] | a ] |
+                           [ bb alb ] | c } (a|b|c|bb|alb).
+
+split (l|a|b) { l [ l t l t l t l t   l t l t l t l t
+                    split (l|b|a).
+                    t a t a t a t a   t a t a t a t a ] a } (l|a|b).
+
+count (a|ac) { a [ a t a t a t a t   a t a t a t a t
+                   count (a|ac).
+                   t a t a t a t a   t a t a t a t a ] ac } (a|ac).
+
+div2 (a|b|c) { a [ div2(a|c|b). ] b } (a|b|c).
+
+merge (a|ac|b|bc|8|bb|l) { ac [ bc [ a u a u a u a u   a u a u a u a u 
+                                     b v b v b v b v   b v b v b v b v
+                                     compare (v|u|8|bb|ulv).
+                                     ulv [ u a u a u a u a   u a u a u a u a
+                                           z | ac
+                                           merge (a|ac|b|bc|8|bb|l).
+                                           ac | z
+                                           v l v l v l v l   v l v l v l v l ]
+                                         | [ v b v b v b v b   v b v b v b v b
+                                           z | bc
+                                           merge (a|ac|b|bc|8|bb|l).
+                                           bc | z
+                                           u l u l u l u l   u l u l u l u l ]
+                                   bb ] |
+                                   [ a u a u a u a u   a u a u a u a u 
+                                     merge (a|ac|b|bc|8|bb|l).
+                                     u l u l u l u l   u l u l u l u l ] | bc ]
+                              | [ bc [ b v b v b v b v   b v b v b v b v
+                                       merge (a|ac|b|bc|8|bb|l).
+                                       v l v l v l v l   v l v l v l v l ] bc ]
+                           | ac } (a|ac|b|bc|8|bb|l).
+
+sort (l|8|bb) { split (l|a|b).
+                a [ b [ z | a
+                        sort (a|8|bb).
+                        a b
+                        sort (b|8|bb).
+                        b | z ] b ] a
+                count (a|ac).
+                count (b|bc).
+                merge (a|ac|b|bc|8|bb|l).
+                .(bc|ac|lc) 2vid
+                .(lc|l) tnuoc } (l|8|bb).
+
+(bb|io) { z|8 z|8 z|8 z|8   z|8 z|8 z|8 z|8
+          sort (io|8|bb).
+          8|z 8|z 8|z 8|z   8|z 8|z 8|z 8|z } (io|bb)
+
+
+
+

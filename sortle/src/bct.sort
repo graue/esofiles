@@ -1,0 +1,49 @@
+# Implementation of Bitwise Cyclic Tag in Sortle
+# http://esolangs.org/wiki/Bitwise_Cyclic_Tag
+#
+# Change the BCT program string and data string below.
+# If the BCT program halts, this program halts and prints "dataBB".
+# Otherwise, you can show Sortle interpreter states and track the
+# data string's progress; it is stored in the name of the expression
+# that begins with "dataBB".
+#
+# Written by Graue in 2012, public domain, no warranty.
+
+ProgramString := "1011110111001110110"\
+                 "p" ~ "dataBB" "" ? ^
+DataString    := "1"\
+                 "d" ~ "dataBB" "" ? ^
+
+c := "codeCB" "A" "(.)!p" "" ? "(.)!p" "" ? "(.)!p" "" ? ~ ~ ~ \
+              "codeB(B).!" "" ? "codeBB(.)!" "" ? ~ ^ ~ \
+     "dataBB" "" ? ^
+d := "dataAB" "A" "(.)!d" "" ? ~ "dataB(B).!" "" ? "dataBB(.)!" "" ? ~ ^ ~ \
+     "dataBB" "" ? ^
+
+#update data string
+#if instr = 0 delete leftmost data bit
+#if instr = 10 if leftmost data bit = 1 append 0
+#              if leftmost data bit = 0 leave unchanged
+#if instr = 11 if leftmost data bit = 1 append 1
+#              if leftmost data bit = 0 leave unchanged
+#
+e := "data" "codeC(B).0.!"  "" ? "B" "dataAB..(.)!" "" ? ~ ~ \
+            "codeC(B).10.!" "" ? "dataA(B).0" "" ? "dataA(B).0.!" "" ? ^ \
+                                   "dataAB.(.)" "" ? "dataAB.(.)!" "" ? ^ ~ \
+                                 "dataA(B).1" "" ? "dataA(B).1.!" "" ? ^ \
+                                   "dataAB.(.)" "" ? "dataAB.(.)!" "" ? ^ "0" \
+                                   ~ ~ \
+                                 ^ ~ \
+            "codeC(B).11.!" "" ? "dataA(B).0" "" ? "dataA(B).0.!" "" ? ^ \
+                                   "dataAB.(.)" "" ? "dataAB.(.)!" "" ? ^ ~ \
+                                 "dataA(B).1" "" ? "dataA(B).1.!" "" ? ^ \
+                                   "dataAB.(.)" "" ? "dataAB.(.)!" "" ? ^ 1 \
+                                   ~ ~ \
+                                ^ ~ \
+            ^ ^ ~
+
+#update code string (move first instruction to end)
+f := "code" "codeC(B).0.!"  "" ? "B" "codeCB.0(.)!"  "" ? "0"  ~ ~ ~ \
+            "codeC(B).10.!" "" ? "B" "codeCB.10(.)!" "" ? "10" ~ ~ ~ \
+            "codeC(B).11.!" "" ? "B" "codeCB.11(.)!" "" ? "11" ~ ~ ~ \
+     ^ ^ ~ "dataBB" "" ? ^

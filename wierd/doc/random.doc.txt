@@ -1,0 +1,39 @@
+Special data:
+(1,1): The number so far (starts at 0).
+(2,2): The negative of the bit to be set (starts at -1).
+
+(2,2) is doubled each time, and tested for zero.  This is an overflow trick that
+only works on binary computers, and if Wierd is ever ported to ternary
+computers, this program will run indefinitely or at least much longer than it
+should.
+
+In detail:
+1.  Put 0 in (1,1).
+2.  Put -1 in (2,2).
+3.  Get (2,2).
+4.  Push zero (dance "left left right") and subtract.  This is necessary because
+    a condition can only follow a 45 or 315 turn (there needs to be space for
+    turning back).  Following a 45 turn is quite useless though...
+5.  Test.  If zero, go to step 17.  Otherwise, continue to step 6.
+6.  Use a 45/315 split to randomly chose whether or not the bit is to be
+    included in the number.  Depending on the result, either continue to step 7
+    or jump to step 11.
+7.  Get (1,1).
+8.  Get (2,2).
+9.  Subtract (see why (2,2) is negated now?).
+10. Put the result back in (1,1).
+11. Get (2,2).
+12. Push a zero through the "left left right" dance.
+13. Get (2,2) again.
+14. Subtract twice.
+15. Put the result in (2,2).
+16. Go back to step 3.
+17. Get (3,3) and put in (2,2) (for output subroutine).
+18. Output as a binary number, using output.w.
+19. Done!
+
+Since the output routine is O(n), you should modify the interpreter to use a
+smaller data type (short or even char) if you want the program to terminate this
+year.  Of course, since outputted number is random, you just might be lucky and
+get a very small number which can be printed in less than a second.  The random
+number generation itself is quite fast.

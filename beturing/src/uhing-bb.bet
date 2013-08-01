@@ -1,0 +1,30 @@
+## A Beturing translatation of an entry for Tibor Rado's "Busy Beaver"
+## game (1962) by G Uhing in 1986.
+## $Id$
+##
+## When given only a blank tape intially, this 5-state, 2-symbol machine
+## runs for 2,358,064 iterations.
+##
+##    -0-  -1-
+## 1  1R2  1RH
+## 2  1L3  1R3
+## 3  0R5  0L4
+## 4  1L3  0L2
+## 5  1R4  1R1
+##
+## We use ' ' for 0 and '$' for 1 in the following.
+# D(0, -1)
+1...2...3.....4.5...
+*v*<*<*<*<*<*<*<*<*<
+..      ............
+*v      *>*>*>*>*v*^
+..      ............
+*v      *^*v*<*<*v*^
+ $.. $..  .... $ $..
+>/*></*>>|*<*><|>\*^
+$$..$$..$ ....$ $$..
+>@*^>>*^<>*>*^<v>>*^
+  ..............
+  *^*<*<*<*<*<*<
+  ......$ 
+  *^*<*<<2

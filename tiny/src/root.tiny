@@ -1,0 +1,10 @@
+0100 " Enter A number to take the square root >"  [ ? ] x
+0105 [ 0 ] c   [ 100 ] g
+0300 [x g / g + 2 /] g  [c 1 +] c
+0400 "Itteration " [c]? "  Guess:" [g]? " Square" [g g *] ? 
+0500 "  0:continue 1:exit  >"  [?] n
+0700 [ n 0 = 300 * ]@
+0800 "\n\n Final Guess: " [g]? "\n\n" 
+0900 "Another ? 1:exit 0:Yes, Another! " [?] n
+1000 [n 0 = 100 *] @
+1010 "\n\n Bye! \n\n" .

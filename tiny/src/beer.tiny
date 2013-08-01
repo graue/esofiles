@@ -1,0 +1,28 @@
+0100 # Print lyrics for 99 bottles of beer on the wall
+0110 "The Beer Song!\n\n"
+0120 [99] b            
+
+0130 [b]? [@]$ [9000] @
+0140 "of beer on the wall \n" [b]? [@]$ [9000] @
+0150 "of beer\n" 
+0160 [b 1 -] b  [b 0 = 210 *]@
+0170 "You take one down, pass it around..\n"
+0180 [b]? [@]$  [9000] @
+0190 "of beer on the wall \n\n"
+0200 [130] @ 
+
+# last stanza. 
+0210 "You take one down, pass it around.. \n"
+0220 "No more bottles of beer on the wall. \n\n\n\n"
+0230 "No more bottles of beer on the wall, \n"
+0240 "No more bottles of beer. You go to the store \n"
+0250 "and then buy some more, 99 bottles of beer on the wall \n\n\n" 
+0260 [9999] @
+
+# bottles plural subroutine
+9000 [b 1 = 9100 *] @ 
+9010 " bottles " [$]@
+9100 " bottle "  [$]@
+
+# Time to go home.
+9999 .

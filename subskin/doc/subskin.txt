@@ -1,0 +1,25 @@
+Subskin has one instruction, subtract and skip (the next instruction) if
+negative. Each instruction has 3 words called (AP BP RP).
+
+The instruction is
+	if( (*RP = *AP - *BP) <0) skip();
+Negative memory offsets result in undefined behavior.
+
+The memory consists of an infinitely large array of signed bignums. If
+an undefined memory value is read, the program terminates.
+
+There are 3 memory mapped registers:
+ * IP (Instruction Pointer) at position 0.
+ * OR (Output Register) at position 1. If >= 0 it is written as a
+   character. Values >= 256 result in termination of the program. After
+   printing the character it is set to -1.
+ * IR (Input Register) at position 2. If < 0 a byte from STDIN is read
+   and written into the register. On EOF a 256 is written into IR.
+
+The Register actions for Input and Output are evaluated before the
+instruction.
+
+Subskin code files (.subskin) contain one word of memory on each line in
+hex representation. Empty lines / lines without hex numbers are counted
+as zeros. The hex number has to be the first non-space character on the
+line; all characters after the first hex number are ignored.

@@ -1,0 +1,27 @@
+str(s|count) {
+	s [
+		s temp s temp s temp s temp
+		s temp s temp s temp s temp
+		count str(s|count)len | count
+		temp s temp s temp s temp s
+		temp s temp s temp s temp s
+	] s
+} (s|count)len
+
+revloop(in|count|out) {
+	count [
+		in temp in temp in temp in temp in
+		   temp in temp in temp in temp in
+		out temp out temp out temp out temp out
+		    temp out temp out temp out temp out
+		revloop(in|count|out)poolver
+	] count
+} (in|count|out)poolver
+
+reverse(in|out) {
+	str(in|count)len
+	revloop(in|count|out)poolver
+	nel(count|out)rts
+} (in|out)esrever
+
+(ent|in) { reverse(in|out)esrever } (out|ent)

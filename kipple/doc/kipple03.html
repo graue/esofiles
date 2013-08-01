@@ -1,0 +1,70 @@
+<HTML>
+<HEAD>
+<TITLE>The Kipple Language Specification</TITLE>
+<!-- LINK REL=StyleSheet HREF="../esoteric.css" TYPE="text/css" -->
+</HEAD>
+<BODY>
+
+<H1>The Kipple Language Specification</H1><HR>
+
+<P>Kipple is a minimalistic, <A HREF="http://www.wikipedia.org/wiki/Turing-complete">Turing-complete</A>, stack-based programming language where data is stored in 26 stacks named <EM>a</EM>-<EM>z</EM>. The values on the stacks are 32-bit signed integers. The language consists of four operators and one control structure. Each operator takes one or two operands, and an operand can either be a non-negative integer (<EM>0</EM>-<EM>2147483647</EM>) or a stack identifier (<EM>a</EM>-<EM>z</EM>). Stack identifiers are case insensitive. Note that allthough an integer operand has to be zero or positive, the stacks can hold negative numbers as well (which can be accomplished with the - operator). All the stacks start out empty, except stack <EM>i</EM> which will contain the programs input (see <A HREF="#IO">Input and Output</A>).</P>
+
+
+<H3>The operators</H3>
+<UL>
+
+<LI><P><STRONG>Push: &gt; or &lt;</STRONG><BR/>
+Syntax: <EM>Operand</EM><STRONG>&gt;</STRONG><EM>StackIndentifier</EM> or <EM>StackIndentifier</EM><STRONG>&lt;</STRONG><EM>Operand</EM><BR/>
+The Push operator takes the operand to the left and pushes it onto the specified stack. E.g. <code>12&gt;a</code> will push the value <EM>12</EM> onto stack <EM>a</EM>. <code>a&gt;b</code> will pop the topmost value from stack <EM>a</EM> and push it onto stack <EM>b</EM>. Popping an empty stack always returns <EM>0</EM>.
+<code>a&lt;b</code> is equivalent with <code>b&gt;a</code>.
+
+<LI><P><STRONG>Add: +</STRONG><BR/>
+Syntax: <EM>StackIndentifier</EM><STRONG>+</STRONG><EM>Operand</EM><BR/>
+The Add operator pushes the sum of the topmost item on the stack and the operand onto the stack. If the operand is a stack, then the value is popped from it. E.g. if the topmost value of stack <EM>a</EM> is <EM>1</EM>, then <CODE>a+2</CODE> will push <EM>3</EM> onto it. If <EM>a</EM> is empty, then <CODE>a+2</CODE> will push <EM>2</EM> onto it. If the topmost values of stack <EM>a</EM> and <EM>b</EM> are <EM>1</EM> and <EM>2</EM>, then <CODE>a+b</CODE> will pop the value <EM>2</EM> from stack <EM>b</EM> and push <EM>3</EM> onto stack <EM>a</EM>.
+
+
+<LI><P><STRONG>Subtract: -</STRONG><BR/>
+Syntax: <EM>StackIndentifier</EM><STRONG>-</STRONG><EM>Operand</EM><BR/>
+The Subtract operator works exactly like the Add operator, except that it subtracts instead of adding.
+
+<LI><P><STRONG>Clear: ?</STRONG><BR/>
+Syntax: <EM>StackIndentifier</EM><STRONG>?</STRONG><BR/>
+The Clear operator empties the stack if it's topmost item is <EM>0</EM>.
+
+</UL>
+
+<P>
+The interpreter will ignore anything that isn't next to an operator, so the following program would work: <CODE>a+2 this will be ignored c&lt;i</CODE>. However, the proper way to add comments is by using the # character. Anything between a # and an End-of-line character is removed before execution. ASCII character #10 is defined as End-of-line in Kipple.<BR/>
+</P>
+
+<P>Operands may be shared by two operators. E.g. <CODE>a&gt;b c&gt;b c?</CODE> may be written as <CODE>a&gt;b&lt;c?</CODE>.
+</P>
+
+<P>The program <CODE>1&gt;a&lt;2 a+a</CODE> will result in <EM>a</EM> containing the values <EM>[1 4]</EM> and <STRONG>not</STRONG> <EM>[1 3]</EM>. Likewise for the <STRONG>-</STRONG> operator.
+
+<H3>The control structure</H3>
+<P>There is only one control structure in Kipple: the loop.
+Syntax: <STRONG>(</STRONG><EM>StackIndentifier</EM> <EM>code</EM> <STRONG>)</STRONG>. As long as the specified stack is not empty, the <EM>code</EM> within the matching parentheses will be repeated. Loops may contain other loops. Example: <CODE>(a a>b)</CODE> will move all the values of stack <EM>a</EM> onto stack <EM>b</EM> (though the order will be reversed). A functionally identical, but more elegant way to do this is <CODE>(a>b)</CODE>.
+</P>
+
+<H3 ID="IO">Input and output</H3>
+<P>Before a Kipple program is executed, all input is pushed onto stack <EM>i</EM>. That means it's impossible to get input during program execution. Input is read as a string of bytes.</P>
+
+<P>When a Kipple program ends the contents of stack <EM>o</EM> are written to output. Output is written as bytes, even though the stack contains 32-bit integers. The following program will write it's input to output (i.e. cat): <CODE>(i&gt;o)</CODE></P>
+
+<P>To make output of numbers more convenient, the special stack <EM>@</EM> has been added to the language. When a program tries to push a value onto stack <EM>@</EM>, the ASCII values of each digit is pushed onto it instead. E.g. while the program <CODE>100&gt;o</CODE> will output "d" (d is ASCII #100), the program <CODE>100&gt;@ (@&gt;o)</CODE> will output "100".
+</P>
+
+<H3>Strings</H3>
+<P>There are no such things as strings in Kipple. However, the official interpreter has a preprocessor which translates strings (anything between double quotes) in the code to Kipple statements. <EM>Note that this is a feature of the interpreter, not the language!</EM></P> <P> Example: <CODE>o&lt;"abc"</CODE> will be translated into <CODE>o&lt;97 o&lt;98 o&lt;99</CODE>. <CODE>"abc"&gt;o</CODE> however, will be translated into <CODE>99&gt;o 98&gt;o 97&gt;o</CODE>. In other words, the order in which the characters are pushed onto the stack is depending on which push operator is used. Escape characters are currently not supported. Using the preprocessor, Hello World can be written as simple as this: <CODE>"Hello World!"&gt;o</CODE>
+</P>
+
+<!-- P><A HREF="index.html">Back to the Kipple Home Page</A></P -->
+<HR>
+<P>Copyright (C) 2003 <A HREF="mailto:rune@krokodille.com">Rune Berge</A><BR/>
+The Kipple language is licensed under the <A HREF="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</A>.</P>
+
+<!-- H5>Last modified: <SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">document.write(document.lastModified);</SCRIPT></H5 -->
+
+</BODY>
+</HTML>

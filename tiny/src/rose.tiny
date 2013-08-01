@@ -1,0 +1,48 @@
+#! tiny
+00001 # Rose
+00002 #
+00003 # Detect and confer new members of the Potentates of the Petals
+00004 #
+00005 # If you know the secret, don't tell.
+00006 #
+00010 "\e[2J\e[0;0H"
+00015 "Welcome, \nDo you seek the title of 'Potentate of the Petals'?\n"
+00020 "0:yes  1:no >" [? 1 = 99999 *]@
+00025 [0]~
+00030 "\n\nVery Well, I can tell you only these things..              \n\n"
+00040 " 1. The name of the game is 'Petals around Rose'.\n"
+00041 "    The name is important\n\n"
+00050 " 2. There are either no petals, or an even number of petals.  \n\n"
+00055 "You must tell me the correct number of petals six time in a row  \n"
+00056 "then I will certify that you know the secret. \n"
+00057 "Don't tell the secret.\n\n"
+00060 "Ready? Press enter to continue " [?]
+00065 [ 0 ] c
+00070 [ 1 ] d 	[ 0 ] p 
+00075 "\e[2J\e[0;0H"
+00080 [~ 6 % 90 +] @  "\n " [d] ? " " 
+00090 "[1]\t|     |\n\t|  o  |\n\t|     |\n" [100] @
+00091 "[2]\t|o    |\n\t|     |\n\t|    o|\n" [100] @
+00092 "[3]\t|o    |\n\t|  o  |\n\t|    o|\n" [100] @ [p 2 +]p
+00093 "[4]\t|o   o|\n\t|     |\n\t|o   o|\n" [100] @
+00094 "[5]\t|o   o|\n\t|  o  |\n\t|o   o|\n" [100] @ [p 4 +]p
+00095 "[6]\t|o   o|\n\t|o   o|\n\t|o   o|\n" [100] @
+00100 [d 1 +] d		[d 6 < 80 *] @
+00110 "How many petals around the rose? " [?] q
+00120 [q p = 140 *] @
+00130 "Sorry, That was incorrect, The correct answer is " [p] ? "\n" 
+00131 [0] c  [ 150 ] @
+00140 "Yes "[p]?" is correct \n"	[c 1 +] c	[ 150 ] @
+00150 "You have now guessed " [c]? " correctly in a row \n" 
+00155 [ c 5 > 200 * ] @ 
+00160 "You have not yet earned your title, Do you wish to continue \n"
+00170 "0:continue  1:I Quit   >"	[?] t	[t 0 = 70 *] @	[t 1 = 190 *] @
+00175 [160] @ 
+00190 "Thanks for trying... \n" [ 99999 ] @
+00200 "\e[2J\e[0;0H\n\n"
+00201 "Congratulations! You have answered correctly 6 times in a row."
+00202 "You must know the secret\n"
+00203 "I confer upon you the title of \n\n\n"
+00210 "Potentate of the Petals\n\n"
+00220 "You must never tell anyoone the secret... \n\n"
+99999 .

@@ -1,0 +1,58 @@
+
+<< 00111100 <> 00111110 >>
+<< 00101000 () 00101001 >>
+<< 01011011 [] 01011101 >>
+<< 01111011 {} 01111101 >>
+
+mirror-char(c|d)
+{
+	c 0 c 1 c 2 c 3 c 4 c 5 c 6 c 7
+
+	<< no modification unless bit 7 is clear and 3 is set >>
+	7 |[ 3 [
+		6 [
+			4 [ 0 [
+				<< 01x11xx1 >>
+				1 t 2 1 t 2	<< swap bits 1 and 2 >>
+			] 0 ] 4
+		] |[
+			5 [
+				<< 001x1xxx >>
+				4 [
+					 2 [ 0 |[ 1 | 1 ]| 0 ] 2
+				] |[
+					2 |[ 1 |[ 0 | 0 ]| 1 ]| 2
+				]| 4
+			] 5
+		]| 6
+	] 3 ]| 7
+
+	7 d 6 d 5 d 4 d 3 d 2 d 1 d 0 d
+}
+(c|d)rahc-rorrim
+
+
+str(s|count) {
+	s [
+		s temp s temp s temp s temp
+		s temp s temp s temp s temp
+		count str(s|count)len | count
+		temp s temp s temp s temp s
+		temp s temp s temp s temp s
+	] s
+} (s|count)len
+
+revloop(in|count|out) {
+	count [
+		in [ mirror-char(in|out)rahc-rorrim ] out
+		revloop(in|count|out)poolver
+	] count
+} (in|count|out)poolver
+
+reverse(in|out) {
+	str(in|count)len
+	revloop(in|count|out)poolver
+	nel(count|out)rts
+} (in|out)esrever
+
+(in) { reverse(in|out)esrever } (out)

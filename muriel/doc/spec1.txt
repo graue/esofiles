@@ -1,0 +1,98 @@
+Muriel Language Specification (first draft) - 2001.01.19
+========================================================
+
+Overview
+--------
+Muriel ("Monumentally Useless Re-Iterative Execution Language") is an imperative
+programming language for processing strings and integers. It is similar in
+principle to SMITH in that it eschews control statements; however, it does have
+a statement which executes a string as a Muriel program.
+
+Creating loops and other program structures is therefore a similar process to
+writing quines in conventional languages. An infinite loop, for example, would
+be created by 'quining' the program into a string, then executing that string.
+
+Instructions
+------------
+The syntax of Muriel is intentionally terse, because you're likely to be typing
+everything two or three times over anyway. Besides, obfuscation is fun :-)
+A Muriel program consists of zero or more instructions separated by semicolons.
+a:0	Assign the integer variable 'a' with the value 0. Integer variables may
+	be any single lower-case letter [a-z].
+A:"Foo"	Assign the string variable 'A' with the value "Foo". String variables
+	may be any single capital letter [A-Z].
+."Foo"	Output the string "Foo". It must be a string.
+@".$0"	Execute the Muriel program ".$0". Variables in the current program are
+	not passed down to the new program, and control does NOT return to the
+	parent program upon completion.
+
+Expressions, functions and operators
+------------------------------------
+In the statements above, 0, "Foo" and ".$0" may be replaced with arbitrary
+expressions of the appropriate type.
+123	A numeric literal. All numbers are represented in decimal, and may be
+	positive or negative.
+n	Numeric variable.
+"Bar"	A string literal. This may contain one of the following escape
+	sequences:
+	\"	A " character
+	\n	'New line' character
+	\\	A \ character
+X	String variable.
+~	A string received from user input.
+2+2	Addition.
+"X"+"Y"	Concatenation.
+4-2	Subtraction. (Unary minus is also valid, ie -x means 0-x)
+2*2	Multiplication.
+2=2	Test for equality; returns 1 if true, 0 if false.
+2>1	Test for 'greater than'; returns 1 if true, 0 if false.
+2<3	Test for 'less than'. [Not sure if it's worth including this - it all
+	depends whether we want to be minimal or orthogonal.]
+$n	Returns the string representation of the numeric value of n.
+#N	Returns the number represented by the string N, or causes an error if N
+	does not make sense as a number.
+&N	Returns the length of the string N.
+%N,a,b	Returns a section of the string N. Counting the first character of N as
+	character number zero, the section is from character a up to (but not
+	including) character b. Causes an error if the numbers are out of range
+	or b<a.
+|N	'Quotify' string N - returns the string with ", \ and newline replaced
+	by their escape sequences. For example, if we make the assignment
+		A:"Arthur \"two-sheds\" Jackson"
+	then these statements would produce these outputs:
+		.A	->	Arthur "two-sheds" Jackson
+		.|A	->	Arthur \"two-sheds\" Jackson
+		.||A	->	Arthur \\\"two-sheds\\\" Jackson
+(N)	Brackets determine the order in which an expression is evaluated.
+	By default, expressions are parsed from left to right, so
+	5-1-1 equals 3, and $1+1 is invalid (it evaluates to "1"+1,
+	whereas $(1+1) equals "2").
+
+[Other functions that could be included, but we can probably do without:
+	/ (Integer division); < and > on strings]
+
+A sample Muriel program
+-----------------------
+Here is a Muriel version of the legendary 99 Bottles Of Beer program. It might
+be completely wrong, though:
+
+b:99;
+A:$b+" bottle"+(%"s",0,1-(b=1))+" of beer";
+.A+" on the wall,\n"+A+",\nTake one down, pass it around,\n";
+b:b-1;
+.$b+" bottle"+(%"s",0,1-(b=1))+" of beer on the wall.\n\n";
+Q:";\nA:$b+\" bottle\"+(%\"s\",0,1-(b=1))+\" of beer\";\n.A+\" on the wall,\\n\"+A+\",\\nTake one down, pass it around,\\n\";\nb:b-1;\n.$b+\" bottle\"+(%\"s\",0,1-(b=1))+\" of beer on the wall.\\n\\n\";\nQ:\"";
+R:"\";\nZ:\"b:\"+$b+Q+|Q+\"\\\";\\nR:\\\"\"+|R+R;\n@%Z,0,b>0*&Z";
+Z:"b:"+$b+Q+|Q+"\";\nR:\""+|R+R;
+@%Z,0,b>0*&Z
+
+Explanation: The first 5 lines print out a verse of the song. Quite
+straightforward, apart from the cunning use of string slicing with the '='
+operator to get around the lack of IF/THEN constructs. Then, variables Q and R
+are set to hold the body of the program - Q being from the beginning to the
+quoted part, R from the end of the quoted part to the end of the program.
+The 8th line pieces the program together so that Z contains a copy of the
+entire program, but with the first line altered so that b is assigned 98
+instead. The string slicing in the last line returns an empty string if b=0
+(which terminates the program when it is executed), or the entirety of Z if
+not (so that the next verse is printed when Z is executed).

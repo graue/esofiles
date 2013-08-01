@@ -1,0 +1,16 @@
+{M
+  [m
+    t$oO!aA!
+    qoo.=ro(on).=
+    b" bottles of beer"=
+    w" on the wall!\n"=
+    c<99>=
+    /c
+      c*r*?b*q*?w*q*?
+      c*r*?b*q*?"!\n"q*?
+      "Take one down and pass it around\n"q*?
+      cc*<1>as.?=
+      c*r*?b*q*?w*q*?
+    \
+  ]
+}
