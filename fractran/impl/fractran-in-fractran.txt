@@ -1,0 +1,209 @@
+[ESOTERIC FILES ARCHIVE NOTE:
+
+This program and accompanying explanation were written by the Stack Overflow
+user Amadeus.
+
+Source:       http://stackoverflow.com/a/1802570/1658868
+User profile: http://stackoverflow.com/users/191069
+License:      cc-wiki 3.0, http://creativecommons.org/licenses/by-sa/3.0/
+Date:         posted November 26, 2009; edited March 8, 2010
+]
+
+
+FTEVAL = [197*103/(2^11*101), 101/103, 103*127/(2*101), 101/103, 109/101,
+  2*23/(197*109), 109/23, 29/109,197*41*47/(31*59), 11^10*53/(127*197), 197/53,
+  37/197, 7^10*43/(11^10*37), 37/43, 59/(37*47), 59/47, 41*61/59, 31*67/(41*61),
+  61/67, 7*67/(127*61), 61/67,101/71, 73/(127^9*29), 79/(127^2*73),
+  83/(127*73), 89/(2*29), 163/29, 127^11*89/79, 337/83, 2*59/89, 71/61,
+  7*173/(127*163), 163/173, 337*167/163, 347/(31*337), 337/347, 151/337,
+  1/71,19*179/(3*7*193), 193/179, 157/(7*193), 17*181/193, 7*211/(19*181),
+  181/211, 193/181, 157/193, 223/(7*157), 157/223, 281*283/239,
+  3*257*269/(7*241), 241/269, 263/241, 7*271/(257*263), 263/271, 281/263,
+  241/(17*281), 1/281, 307/(7*283), 283/307, 293/283, 71*131/107, 193/(131*151),
+  227/(19*157), 71*311/227, 233/(151*167*311), 151*311/229, 7*317/(19*229),
+  229/317, 239*331/217, 71*313/157, 239*251/(151*167*313), 239*251/(151*313),
+  149/(251*293), 107/(293*331), 137/199, 2^100*13^100*353/(5^100*137),
+  2*13*353/(5*137), 137/353, 349/137, 107/349, 5^100*359/(13^100*149),
+  5*359/(13*149), 149/359, 199/149]
+
+This is written entirely by hand. I did make up a pseudo language to be
+able to express things more clearly, but I did not write a compiler and
+opted to write optimized Fractran code directly.
+
+FTEVAL takes input 3^initial_state * 5^encoded_program * 199, produces
+intermediate results 3^interpreted_program_state * 199, and completely
+halts at a number divisible by 233.
+
+The interpreted program is embeded as a list of base 10 digits inside a
+single base 11 number, using the digit "a" to mark the boundary except
+at the very end. The addition program [3/2] is encoded as
+
+int("3a2", 11) = 475.
+
+The multiplication program [455/33, 11/13, 1/11, 3/7, 11/2, 1/3] is
+encoded as
+
+int("1a3a11a2a3a7a1a11a11a13a455a33", 11) = 3079784207925154324249736405657
+
+which is a truly large number.
+
+The first test vector finished in less than one second, produced the
+desired result after 4545 iterations and halted after 6172 iterations.
+Here is the complete output.
+
+Unfortunately, sage segfaulted when I tried the second test vector (but
+I think it'll work under Nick's implementation using prime exponent
+vectors).
+
+The space here is really too small to explain everything. But here is my
+pseudocode. I will write up my process in a couple of days, hopefully.
+
+# Notations:
+# %p
+#     designates the exponent of prime factor p that divides the
+#     current state.
+# mov x y
+#     directly translates to the fraction y/x; its meaning: test if x divides
+#     the current state, if so divide the current state by x and multiply it by
+#     y.  In effect, the prime exponents of x and y are exchanged.  A Fractran
+#     program only comprises of these instructions; when one is executable, the
+#     program continues from the beginning.
+# dec x => mov x, 1
+#     wipes out all factors of x
+# inc x => mov 1, x
+#     this form is here for the sake of clarity, it usually appears in a
+#     loop's entry statement and is merged as such when compiled
+# sub n ret m {...}
+#     conceptually represents a Fractran sub-program, which will execute just
+#     like a normal Fractran program, that is, the sub-program's statements
+#     execute when triggered and loop back.  The sub-program only exits when none of
+#     its statement is executable, in which occasion we multiply the program's
+#     state by m.  We can also explicitly break out early on some conditions.
+#     It is also possible to enter a sub-prorgram via multiple entry points and
+#     we must take care to avoiding this kind of behavior (except in case where
+#     it is desirable).
+
+# entry point 101: return 29
+# Divide %2 modulo 11:
+#   - quotient is modified in-place
+#   - remainder goes to %127
+sub 101 ret 101 { mov 2^11, 197 }
+sub 101 ret 109 { mov 2, 127 }
+sub 109 ret 29 { mov 197, 2 }
+
+# entry point 59: return 61
+# Multiply %127 by 10^%31 then add result to %7,
+# also multiply %31 by 10 in-place.
+sub 59 ret 41*61 {
+  mov 31, 197*41
+  sub 197 ret 37 { mov 127, 11^10 }
+  sub 37 { mov 11^10, 7^10 }
+}
+sub 61 ret 61 { mov 41, 31 }
+sub 61 ret 61 { mov 127, 7 } # the case where %31==0
+
+# entry point 71: return 151 if success, 151*167 if reached last value
+# Pop the interpreted program stack (at %2) to %7.
+sub 71 {
+  # call sub 101
+  inc 101
+
+  # if remainder >= 9:
+  mov 29*127^9, 73
+  #     if remainder == 11, goto 79
+  mov 73*127^2, 79
+  #     else:
+  #         if remainder == 10, goto 83
+  mov 73*127, 83
+  #         else:
+  #             if quotient >= 1: goto 89
+  mov 29*2, 89
+  #             else: goto 163
+  mov 29, 163
+
+  # 79: restore remainder to original value, then goto 89
+  mov 79, 127^11*89
+
+  # 83: reached a border marker, ret
+  mov 83, 337
+
+  # 89: the default loop branch
+  # restore quotient to original value, call 59 and loop when that rets
+  mov 2*89, 59
+  mov 61, 71
+
+  # 163: reached stack bottom,
+  # ret with the halt signal
+  sub 163 ret 337*167 { mov 127, 7 }
+
+  # 337: clean up %31 before ret
+  sub 337 ret 151 { dec 31 }
+}
+
+# entry point 193, return 157
+# Divide %3 modulo %7:
+#   - quotient goes to %17
+#   - remainder goes to %19
+sub 193 ret 17*181 {
+  mov 3*7, 19
+}
+mov 7*193, 157
+sub 181 ret 193 { mov 19, 7 }
+mov 193, 157
+sub 157 ret 157 { dec 7 }
+
+# entry point 239: return 293
+# Multiply %17 by %7, result goes to %3
+mov 239, 281*283
+sub 241 { mov 7, 3*257 }
+sub 263 ret 281 { mov 257, 7 }
+mov 281*17, 241
+sub 283 ret 293 { dec 7 }
+
+# entry point 107: return 149 if success, 233 if stack empty
+# Pop the stack to try execute each fraction
+sub 107 {
+  # pop the stack
+  inc 71*131
+
+  # 151: popped a value
+  # call divmod %3 %7
+  mov 131*151, 193
+
+  # if remainder > 0:
+  mov 19*157, 227
+  #     pop and throw away the numerator
+  mov 227, 71*311
+  #     if stack is empty: halt!
+  mov 151*167*311, 233
+  #     else: call 239 to multiply back the program state and gave loop signal
+  mov 151*311, 229
+  sub 229 ret 239*331 { mov 19, 7 }
+  # else: (remainder == 0)
+  #     pop the numerator
+  mov 157, 71*313
+  #     clear the stack empty signal if present
+  #     call 239 to update program state and gave ret signal
+  mov 151*167*313, 239*251
+  mov 151*313, 239*251
+
+  # after program state is updated
+  # 313: ret
+  mov 293*251, 149
+  # 331: loop
+  mov 293*331, 107
+}
+
+# main
+sub 199 {
+  # copy the stack from %5 to %2 and %13
+  sub 137 ret 137 { mov 5^100, 2^100*13^100 }
+  sub 137 ret 349 { mov 5, 2*13 }
+
+  # call sub 107
+  mov 349, 107
+
+  # if a statement executed, restore stack and loop
+  sub 149 ret 149 { mov 13^100, 5^100 }
+  sub 149 ret 199 { mov 13, 5 }
+}
