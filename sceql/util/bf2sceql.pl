@@ -3,7 +3,7 @@ use strict;
 
 # Convert a brainfuck program to Sceql.
 # http://esolangs.org/wiki/Sceql
-# Written by Graue in 2012. Public domain. No warranty.
+# Written by Scott Feeney/Graue in 2012. Public domain. No warranty.
 
 # Brainfuck dialect is 8-bit wrapping, input 0 on EOF,
 # newline behavior not specified (depends on Sceql implementation).

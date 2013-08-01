@@ -1,13 +1,19 @@
 /*
-This program is hereby placed in the public domain. It may be used,
-modified, copied, distributed, sold, and otherwise exploited without
-restriction.
-
-graue@oceanbase.org
-http://www.oceanbase.org/graue/
-
 Interpreter for Gregor Richards's 2L language.
 Define POINTER_REVERSE for the incorrect up/down swap in Gregor's interpreter.
+
+Written in 2005 by Scott Feeney aka Graue
+
+http://esolangs.org/wiki/2L
+http://esolangs.org/wiki/User:Graue
+
+To the extent possible under law, the author(s) have dedicated all copyright
+and related and neighboring rights to this software to the public domain
+worldwide. This software is distributed without any warranty.
+
+You should have received a copy of the CC0 Public Domain Dedication along
+with this software. If not, see:
+http://creativecommons.org/publicdomain/zero/1.0/
 */
 
 #include <stdio.h>
