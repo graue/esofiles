@@ -1,0 +1,60 @@
+Delivered-To: nthern@gmail.com
+Received: by 10.182.156.114 with SMTP id wd18csp363596obb;
+        Tue, 30 Sep 2014 16:32:49 -0700 (PDT)
+X-Received: by 10.66.152.41 with SMTP id uv9mr68838523pab.25.1412119968729;
+        Tue, 30 Sep 2014 16:32:48 -0700 (PDT)
+Return-Path: <gregor-re-ntg@gregor.im>
+Received: from codu.org (libdl.so. [64.62.173.65])
+        by mx.google.com with ESMTP id do6si28116107pdb.223.2014.09.30.16.32.47
+        for <nthern@gmail.com>;
+        Tue, 30 Sep 2014 16:32:47 -0700 (PDT)
+Received-SPF: pass (google.com: domain of gregor-re-ntg@gregor.im designates 64.62.173.65 as permitted sender) client-ip=64.62.173.65;
+Authentication-Results: mx.google.com;
+       spf=pass (google.com: domain of gregor-re-ntg@gregor.im designates 64.62.173.65 as permitted sender) smtp.mail=gregor-re-ntg@gregor.im
+Received: from [192.168.2.201] (184-175-46-178.cable.teksavvy.com [184.175.46.178])
+	by codu.org (Postfix) with ESMTPSA id A5CDF7FDA
+	for <nthern@gmail.com>; Tue, 30 Sep 2014 23:32:46 +0000 (UTC)
+Message-ID: <542B3D9B.2050809@gregor.im>
+Date: Tue, 30 Sep 2014 19:32:43 -0400
+From: Gregor Richards <gregor-re-ntg@gregor.im>
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+MIME-Version: 1.0
+To: Nathan Thern <nthern@gmail.com>
+Subject: Re: Small fixes for ORK
+References: <CALEg2uq4CvKrxqa8V8rSdZxLBTd3JJykENCcDEgfSzXQpPDTkw@mail.gmail.com>
+In-Reply-To: <CALEg2uq4CvKrxqa8V8rSdZxLBTd3JJykENCcDEgfSzXQpPDTkw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+
+Hi,
+
+To be honest, I'm not enormously interested in the continued maintenance 
+of ORK. If you release your own version and link it however you please 
+from esolangs.org , I would be happy to update my own web page to point 
+at that.
+
+With valediction,
+  - Gregor Richards
+
+
+On 09/26/2014 08:44 AM, Nathan Thern wrote:
+> Hello Gregor -
+>
+> I was playing around with ORK recently and ran into two problems with
+> the implementation. The first is that small errors caused compilation
+> of ork.c and libork.cc to fail with my most recent gcc and make. These
+> are fixed with the first patch I've attached. The second problem is
+> with a particular pointer instantiation form that gets
+> short-circuited. This is addressed by the second patch.
+>
+> If you are willing to accept the patches and post ork version 0.10, I
+> would appreciate it. Furthermore, if you prefer, I can create the
+> .tar.bz and .zip files for you and post them on esolangs.org
+>
+> FYI - I am currently writing a new brainfuck interpreter in ORK which
+> uses a linked list as a tape instead of a number array. It will show
+> up on the esolang wiki sometime soon.
+>
+> regards,
+> Nate Thern
+
