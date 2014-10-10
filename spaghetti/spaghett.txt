@@ -1,0 +1,519 @@
+Spaghetti programming language
+by Jeffry Johnston <spaghetti@kidsquid.com>
+Sept 14, 2001
+
+
+Introduction
+------------
+This is an experiment in making a shorthand-type programming language.  If
+you don't like GOTO you won't like this language.  However, if you do like
+GOTO you still might not like this language :)  Designed to produce
+"spaghetti" code, to the point where every program line can be arranged
+pretty much randomly and the program should still function properly.
+
+
+Memory
+------
+There is one large block of 8-bit memory.  On program load the first 256
+bytes of memory will contain the values 0-255, location 256 will equal 26 and
+location 257 will equal 1.  The rest of the memory will be zeroed.  Any byte
+of memory can be changed.
+
+
+Variables
+---------
+The variables "a" through "z" are used together as a combined pointer, and
+are located from memory locations 256 to 281.  Pointers "a" and "b" together
+("b" automatically being the high byte) allows for 65536 bytes of memory to
+be accessed.  Operations on "a" through "z" will modify only the byte
+involved.  For example, assume that "a" is 255 and "b" is 7.  If 2 is added
+to "a", then "a" will equal 1 and "b" will still equal 7.  If addressing up
+to "z" is used, you'd need at least 4.11*10^62 bytes of memory ;).  I imagine
+that most programs will only need "a" and "b".
+
+The variable "*" is similar to the C dereference, useful for modifying or
+grabbing the byte of memory at the combined pointer.  This will initially
+point to location 282 because of locations 256 and 257.
+
+To reference a specific byte of memory, use a decimal number to represent the
+array element.  For an immediate value, use numbers less than 256.
+
+Examples:
+Spaghetti       Basic
+1776            m(1776)
+65              m(65) or 65, unless m(65) was modified
+256             m(256) or m(a)
+b               m(257) or m(b)
+*               m(...+256*b+a)
+  
+
+Commands
+--------
+Spaghetti       Basic                           C
+line[           line                            line:;
+x=y             x=y                             x=y;
+x+y             x=x+y                           x+=y;
+x-y             x=x-y                           x-=y;
+x&y             x=x AND y                       x&=y;
+x?              x=ASC(INPUT$(1))                x=(char)getchar();
+?x              PRINT CHR$(x);                  putchar(x);
+x<y:line        IF x<y THEN GOTO line ELSE      if (x<y) goto line; else
+x~y:line        IF x=y THEN GOTO line ELSE      if (x==y) goto line; else
+]line           :GOTO line                      goto line;
+'               '                               /*  */
+
+
+Line Numbers and Jumps
+----------------------
+The "[" command sets the line number for the current line.  Every non-blank
+line must have a leading line number.  Program execution will start at line
+number 1.
+            
+The "]" command specifies the line that will be jumped to.  Jumping to the
+next physical line is not allowed.  Jumping to line 0 exits the program.
+Every line must have a trailing jump instruction.
+
+
+Spaghetti Examples
+------------------
+2[*~13:0]3 'Echo
+1[*?]2 
+3[?*]1
+
+10[?100]11 'Hello World
+9[?108]10
+13[?101]2
+12[?10]0
+4[?111]5
+8[?114]9
+2[?108]3
+11[?33]12
+6[?87]7
+3[?108]4
+1[?48]13 
+5[?32]6
+7[?111]8
+
+1[*=99]800              '99 Bottles of beer   N=99  
+809[283~9:400]810       'xx Bottle(s) of beer on the wall
+813[283~13:814]815      'xx Bottle(s) of beer
+805[283~5:600]806       'Take one down and pass it around 
+812[283~12:600]813      'xx Bottle(s) of beer on the wall
+821[283=0]822           '100 200 300 400 500 600
+804[283~4:500]805       '100 200 300 400 600
+806[283~6:100]807       '700 600
+818[283~17:500]819      '100 200 300 400 500 600 600
+800[283~0:100]801       
+814[*-1]100             'N=N-1
+808[283~8:300]809
+810[283~10:600]811
+817[283~16:400]818
+803[283~3:400]804       
+820[283~19:600]821
+822[*~0:0]800           'IF N=0 THEN END
+807[283~7:200]808       
+819[283~18:600]820
+802[283~2:300]803       
+816[283~15:300]817
+811[283~11:700]812
+801[283~1:200]802       
+815[283~14:200]816
+103[284-10]104
+101[285=0]102           'B=0
+104[285+1]102
+105[284+48]106
+109[?284]110            'PRINT CHR$(B);
+102[284<10:105]103      'A=A MOD B:B=A\10
+106[285+48]107
+108[?285]109
+107[285~48:109]108      'IF A<>48 PRINT CHR$(A);
+100[284=*]101           'A=N
+110[283+1]800
+207[283+1]800
+206[?101]207
+205[?108]206
+204[?116]205
+203[?116]204
+202[?111]203
+201[?98]202
+200[?32]201             '200 PRINT " bottle";
+302[283+1]800
+301[?115]302 
+300[*~1:302]301         '300 IF N<>1 THEN PRINT "s";
+400[?32]401             '400 PRINT " of beer";
+402[?102]403
+401[?111]402
+404[?98]405
+403[?32]404
+406[?101]407
+405[?101]406
+408[283+1]800
+407[?114]408
+500[?32]501             '500 PRINT " on the wall";
+503[?32]504
+502[?110]503
+505[?104]506
+504[?116]505
+506[?101]507 
+508[?119]509
+511[?108]512 
+507[?32]508
+509[?97]510
+512[283+1]800
+510[?108]511
+501[?111]502
+601[?10]602
+600[?13]601             '600 PRINT
+602[283+1]800
+700[?84]701             '700 PRINT "Take one down, pass it around";
+703[?101]704
+706[?110]707
+709[?100]710
+712[?110]713 
+715[?112]716
+718[?115]719
+721[?116]722
+724[?114]725
+727[?110]728
+701[?97]702
+704[?32]705
+707[?101]708
+710[?111]711
+713[?44]714
+716[?97]717
+719[?32]720
+722[?32]723
+725[?111]726
+728[?100]729
+702[?107]703
+705[?111]706
+708[?32]709
+711[?119]712
+714[?32]715
+717[?115]718
+720[?105]721
+723[?97]724 
+726[?117]727
+729[283+1]800
+
+
+Spaghetti Compiler
+------------------
+'SPAGHETT.BAS -- Spaghetti program compiler for Microsoft QuickBasic
+'Programmed by Jeffry Johnston, September 16, 2001
+'Can output Basic, C, or ASM code.
+
+DEFINT A-Z
+PRINT "Spaghetti compiler, Programmed by Jeffry Johnston": PRINT
+INPUT "Enter filename of Spaghetti source [.SPG]: ", F$
+F = INSTR(F$, ".")
+IF F = 0 THEN E$ = ".SPG" ELSE E$ = MID$(F$, F): F$ = MID$(F$, 1, F - 1)
+PRINT "1) QuickBasic"
+PRINT "2) GW-BASIC / BasicA"
+PRINT "3) C"
+PRINT "4) A86 (MS-DOS)"
+PRINT "5) MASM (MS-DOS)"
+DO:
+INPUT "Choose output format: ", O:
+LOOP WHILE O < 1 OR O > 5
+SELECT CASE O
+CASE 1, 2
+  O$ = ".BAS"
+CASE 3
+  O$ = ".C"
+CASE 4, 5
+  O$ = ".ASM"
+END SELECT
+OPEN F$ + E$ FOR INPUT AS #1
+OPEN F$ + O$ FOR OUTPUT AS #2
+PRINT "Writing "; F$; O$; "..."
+SELECT CASE O
+CASE 1
+  PRINT #2, "DEFINT A-Z"
+  PRINT #2, "DIM M(30000)"
+  PRINT #2, "FOR P = 0 TO 255: M(P) = P: NEXT P"
+  PRINT #2, "OPEN " + CHR$(34) + "CONS:" + CHR$(34) + " FOR OUTPUT AS #1"
+  PRINT #2, "M(256) = 26: M(257) = 1"
+  PRINT #2, "GOTO 1"
+CASE 2
+  PRINT #2, "0 DEFINT A-Z: DIM M(20000): FOR P = 0 TO 255: M(P) = P: NEXT P: OPEN " + CHR$(34) + "CONS:" + CHR$(34) + " FOR OUTPUT AS #1: M(256) = 26: M(257) = 1: GOTO 1"
+CASE 3
+  PRINT #2, "#include <stdio.h>"
+  PRINT #2, "#include <string.h>"
+  PRINT #2, "int main(void) {"
+  PRINT #2, "  char m[32767],*p=m,*x,*y;"
+  PRINT #2, "  int i;"
+  PRINT #2, "  memset(m,0,32768);"
+  PRINT #2, "  for(i=0;i<256;i++,p++) *p=i;"
+  PRINT #2, "  m[256]=26; m[257]=1;"
+  PRINT #2, "  goto l1;"
+CASE 4
+  PRINT #2, "PROGRAM         PROC    NEAR"
+  PRINT #2, "        MOV     DI,OFFSET M"
+  PRINT #2, "        XOR     AX,AX"
+  PRINT #2, "ASCII:  STOSB"
+  PRINT #2, "        INC     AL"
+  PRINT #2, "        JNZ     ASCII"
+  PRINT #2, "        MOV     CX,16256"
+  PRINT #2, "        REP     STOSW"
+  PRINT #2, "        MOV     BYTE PTR M[256],26"
+  PRINT #2, "        MOV     BYTE PTR M[257],1"
+  PRINT #2, "        JMP     L1"
+CASE 5
+  PRINT #2, "DOSSEG"
+  PRINT #2, ".MODEL  SMALL"
+  PRINT #2, ".STACK  100h"
+  PRINT #2, ".DATA"
+  PRINT #2, "        M       DB      32768 DUP (?)"
+  PRINT #2, ".CODE"
+  PRINT #2, "PROGRAM         PROC    NEAR"
+  PRINT #2, "        MOV     AX,DGROUP"
+  PRINT #2, "        MOV     DS,AX"
+  PRINT #2, "        MOV     ES,AX"
+  PRINT #2, "        MOV     DI,OFFSET M"
+  PRINT #2, "        XOR     AX,AX"
+  PRINT #2, "ASCII:  STOSB"
+  PRINT #2, "        INC     AL"
+  PRINT #2, "        JNZ     ASCII"
+  PRINT #2, "        MOV     CX,16256"
+  PRINT #2, "        REP     STOSW"
+  PRINT #2, "        MOV     BYTE PTR M[256],26"
+  PRINT #2, "        MOV     BYTE PTR M[257],1"
+  PRINT #2, "        JMP     L1"
+END SELECT
+L1 = -1: L2 = -1
+DO WHILE NOT EOF(1)
+  LINE INPUT #1, A$: A$ = LTRIM$(RTRIM$(A$))
+  IF A$ = "" THEN GOTO L00P
+  A$ = A$ + "@": L = L + 1
+  S = 1: GOSUB GETNUM
+  IF L1 = N OR L2 = N THEN E$ = "Invalid line order": GOTO EROR ELSE L2 = -1
+  SELECT CASE O
+  CASE 1, 2
+    PRINT #2, N$ + " ";
+  CASE 3
+    PRINT #2, "l" + N$ + ":;"
+  CASE 4, 5
+    PRINT #2, "L" + N$ + ":"
+  END SELECT
+  IF MID$(A$, S + 1, 1) <> "[" THEN E$ = "Missing line number": GOTO EROR
+  S = S + 2
+  C$ = "": IF MID$(A$, S, 1) = "?" THEN S = S + 1: C$ = "#"
+  V$ = "X": GOSUB PARSE
+  IF C$ = "" THEN C$ = MID$(A$, S, 1): S = S + 1
+  IF C$ <> "#" AND C$ <> "?" THEN V$ = "Y": GOSUB PARSE
+  SELECT CASE C$
+  CASE "="
+    SELECT CASE O
+    CASE 1, 2
+      PRINT #2, "M(X) = M(Y): ";
+    CASE 3
+      PRINT #2, "  *x=*y;";
+    CASE 4, 5
+      PRINT #2, "        MOV     AL,[SI]"
+      PRINT #2, "        MOV     [DI],AL"
+    END SELECT
+  CASE "+"
+    SELECT CASE O
+    CASE 1, 2
+      PRINT #2, "M(X) = (M(X) + M(Y)) MOD 256: ";
+    CASE 3
+      PRINT #2, "  *x=(*x+*y)%256;";
+    CASE 4, 5
+      PRINT #2, "        MOV     AL,[SI]"
+      PRINT #2, "        ADD     [DI],AL"
+    END SELECT
+  CASE "-"
+    SELECT CASE O
+    CASE 1, 2
+      PRINT #2, "M(X) = (256 + M(X) - M(Y)) MOD 256: ";
+    CASE 3
+      PRINT #2, "  *x=(256+*x-*y)%256;";
+    CASE 4, 5
+      PRINT #2, "        MOV     AL,[SI]"
+      PRINT #2, "        SUB     [DI],AL"
+    END SELECT
+  CASE "&"
+    SELECT CASE O
+    CASE 1, 2
+      PRINT #2, "M(X) = M(X) AND M(Y): ";
+    CASE 3
+      PRINT #2, "  *x&=*y;";
+    CASE 4, 5
+      PRINT #2, "        MOV     AL,[SI]"
+      PRINT #2, "        AND     [DI],AL"
+    END SELECT
+  CASE "?"
+    SELECT CASE O
+    CASE 1, 2
+      PRINT #2, "M(X) = ASC(INPUT$(1)): ";
+    CASE 3
+      PRINT #2, "  *x=(char)getchar();";
+    CASE 4, 5
+      PRINT #2, "        MOV     AH,08h"
+      PRINT #2, "        INT     21h"
+      PRINT #2, "        MOV     [DI],AL"
+    END SELECT
+  CASE "#"
+    SELECT CASE O
+    CASE 1
+      PRINT #2, "PRINT #1, CHR$(M(X)); : ";
+    CASE 2
+      PRINT #2, "IF M(X) <> 10 THEN PRINT #1, CHR$(M(X)); : ";
+    CASE 3
+      PRINT #2, "  putchar(*x);";
+    CASE 4, 5
+      PRINT #2, "        MOV     AH,02h"
+      PRINT #2, "        MOV     DL,[DI]"
+      PRINT #2, "        INT     21h"
+    END SELECT
+  CASE "<"
+    S = S + 1: GOSUB GETNUM: S = S + 1: L2 = N
+    SELECT CASE O
+    CASE 1, 2
+      PRINT #2, "IF M(X) < M(Y) THEN ";
+      GOSUB GTO
+      PRINT #2, " ELSE ";
+    CASE 3
+      PRINT #2, "  if (*x<*y) ";
+      GOSUB GTO
+      PRINT #2, " else";
+    CASE 4, 5
+      PRINT #2, "        MOV     AL,[SI]"
+      PRINT #2, "        CMP     [DI],AL"
+      T = T + 1
+      PRINT #2, "        JAE     T" + LTRIM$(STR$(T))
+      GOSUB GTO
+      PRINT #2, "T" + LTRIM$(STR$(T)) + ":"
+    END SELECT
+  CASE "~"
+    S = S + 1: GOSUB GETNUM: S = S + 1: L2 = N
+    SELECT CASE O
+    CASE 1, 2
+      PRINT #2, "IF M(X) = M(Y) THEN ";
+      GOSUB GTO
+      PRINT #2, " ELSE ";
+    CASE 3
+      PRINT #2, "  if (*x==*y)";
+      GOSUB GTO
+      PRINT #2, " else";
+    CASE 4, 5
+      PRINT #2, "        MOV     AL,[SI]"
+      PRINT #2, "        CMP     [DI],AL"
+      T = T + 1
+      PRINT #2, "        JNZ     T" + LTRIM$(STR$(T))
+      GOSUB GTO
+      PRINT #2, "T" + LTRIM$(STR$(T)) + ":"
+    END SELECT
+  END SELECT
+  IF MID$(A$, S, 1) <> "]" THEN E$ = "Missing jump": GOTO EROR
+  S = S + 1: GOSUB GETNUM: L1 = N
+  GOSUB GTO
+  A$ = MID$(A$, 1, LEN(A$) - 1)
+  V = INSTR(MID$(A$, S), "'")
+  SELECT CASE O
+  CASE 1, 2
+    IF V = 0 THEN PRINT #2, "" ELSE PRINT #2, " " + MID$(A$, S + V - 1)
+  CASE 3
+    IF V = 0 THEN PRINT #2, "" ELSE PRINT #2, " /* " + MID$(A$, S + V) + " */"
+  CASE 4, 5
+    IF V > 0 THEN PRINT #2, "; " + MID$(A$, S + V)
+  END SELECT
+L00P:
+LOOP
+SELECT CASE O
+CASE 1, 2
+  PRINT #2, ""
+CASE 3
+  PRINT #2, "end:;"
+  PRINT #2, "  return 0;"
+  PRINT #2, "}"
+CASE 4
+  PRINT #2, "PROGRAM         ENDP"
+  PRINT #2, "M:"
+CASE 5
+  PRINT #2, "PROGRAM         ENDP"
+  PRINT #2, "END     PROGRAM"
+END SELECT
+PRINT "Done."
+CLOSE #1, #2
+END
+
+EROR:
+  PRINT LTRIM$(STR$(L)); ": "; E$
+END
+
+GETNUM:
+  N = 0
+  DO
+    V = ASC(MID$(A$, S, 1)) - 48
+    IF V < 0 OR V > 9 THEN S = S - 1: EXIT DO
+    N = N * 10 + V: S = S + 1
+  LOOP
+  N$ = LTRIM$(STR$(N))
+RETURN
+
+PARSE:
+  SELECT CASE MID$(A$, S, 1)
+  CASE "a" TO "z"
+    X$ = LTRIM$(STR$(ASC(MID$(A$, S, 1)) + 159))
+    SELECT CASE O
+    CASE 1, 2
+      PRINT #2, V$ + " = " + X$ + ": ";
+    CASE 3
+      PRINT #2, "  " + LCASE$(V$) + "=m+" + X$ + ";"
+    CASE 4, 5
+      PRINT #2, "        MOV     ";
+      PRINT #2, MID$("DS", ASC(V$) - 87, 1) + "I,OFFSET M+" + X$
+    END SELECT
+  CASE "*"
+    SELECT CASE O
+    CASE 1, 2
+      PRINT #2, V$ + " = 256 * M(257) + M(256): ";
+    CASE 3
+      PRINT #2, "  " + LCASE$(V$) + "=m+256*m[257]+m[256];"
+    CASE 4, 5
+      PRINT #2, "        MOV     ";
+      PRINT #2, MID$("DS", ASC(V$) - 87, 1) + "I,WORD PTR M[256]"
+    END SELECT
+  CASE ELSE
+    GOSUB GETNUM
+    SELECT CASE O
+    CASE 1, 2
+      PRINT #2, V$ + " = " + N$ + ": ";
+    CASE 3
+      PRINT #2, "  " + LCASE$(V$) + "=m+" + N$ + ";"
+    CASE 4, 5
+      PRINT #2, "        MOV     ";
+      PRINT #2, MID$("DS", ASC(V$) - 87, 1) + "I,OFFSET M+" + N$
+    END SELECT
+  END SELECT
+  S = S + 1
+RETURN
+
+GTO:
+  IF VAL(N$) = 0 THEN
+    SELECT CASE O
+    CASE 1
+      PRINT #2, "END";
+    CASE 2
+      PRINT #2, "SYSTEM";
+    CASE 3
+      PRINT #2, " goto end;";
+    CASE 4
+      PRINT #2, "        RET"
+    CASE 5
+      PRINT #2, "        MOV     AX,4C00h"
+      PRINT #2, "        INT     21h"
+    END SELECT
+  ELSE
+    SELECT CASE O
+    CASE 1, 2
+      PRINT #2, "GOTO " + N$;
+    CASE 3
+      PRINT #2, " goto l" + N$ + ";";
+    CASE 4, 5
+      PRINT #2, "        JMP     L" + N$
+    END SELECT
+  END IF
+RETURN
