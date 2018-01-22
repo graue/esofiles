@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 
 # Interpreter in Perl for the CHIQRSX9+ language.
-# April 3-5, 2002 by Ørjan Johansen.
+# April 3-5, 2002 by Ã˜rjan Johansen.
 # You may use this program as you wish.
 
 use 5.004; # Requires at least Perl 5.4.
@@ -34,7 +34,7 @@ VERSE
 
 sub turing {
   srand;
-  my $lang = int rand 256;
+  my $lang = 7;
   my $prog = '';
   for (split //, $_[0]) {
     $prog .= chr +(ord($_)+$lang & 255)
