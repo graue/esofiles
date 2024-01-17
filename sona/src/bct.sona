@@ -1,0 +1,97 @@
+# This simulates BCT with the program "110100" and data "10"
+# The input is the program string as a number reversed.
+# The number of leading zeros is held in a separate padding variable.
+# Example 000011101011000 -> 000 0x110101110000 -> pad = 3, data = 3440
+
+ijo PaliKama li 11
+ijo KoPali li 2
+
+ijo Sona li 1
+ijo KoSona li 1
+
+ken Sona anu KoSona la nanpa Sona KoSona
+
+ijo SonaAla li Sona en KoSona
+ijo SonaAla li SonaAla ala
+ken SonaAla la pini
+
+ijo Tenpo li PaliKama
+ijo NanpaKipisi li ala
+ma Kipisi
+ijo Tenpo li Tenpo weka 2
+ijo NanpaKipisi li NanpaKipisi en 1
+ken Tenpo la tawa Kipisi
+
+ijo PaliKipisi li NanpaKipisi en KoPali
+ken PaliKipisi ala la pini
+
+ijo Tenpo li Sona
+ijo NanpaKipisi li ala
+ma Kipisi
+ijo Tenpo li Tenpo weka 2
+ijo NanpaKipisi li NanpaKipisi en 1
+ken Tenpo la tawa Kipisi
+ijo KipisiSona li NanpaKipisi
+
+ijo Pali li PaliKama
+ijo Nanpa li 0
+
+# ----------------------------------
+
+ma Suno
+# periodic code
+ken Nanpa weka PaliKipisi la ijo Pali li PaliKama
+ken Nanpa weka PaliKipisi la ijo Nanpa li 0
+
+ijo Wan li Pali weka 2
+ijo Wan li Wan mute 2
+ijo Wan li Pali ante Wan
+
+ijo Ala li Wan ala
+
+ijo Pali li Pali weka 2
+ijo Nanpa li Nanpa en 1
+ken Nanpa weka PaliKipisi la ijo Pali li PaliKama
+ken Nanpa weka PaliKipisi la ijo Nanpa li 0
+
+ijo Ko li Sona ala
+ken Ala mute Sona la ijo KipisiSona li KipisiSona ante 1
+ken Ala mute Sona la ijo Sona li Sona weka 2
+# KoSona has to be non 0 if Ko is Sona is empty
+ken Ala mute Ko la ijo KoSona li KoSona ante 1
+
+ijo WanKama li Pali weka 2
+ijo WanKama li WanKama mute 2
+ijo WanKama li Pali ante WanKama
+ken Wan la ijo Pali li Pali weka 2
+ken Wan la ijo Nanpa li Nanpa en 1
+
+ijo Pana li Sona weka 2
+ijo Pana li Pana mute 2
+ijo Pana li Sona ante Pana
+ken Sona ala la ijo Pana li ala
+ijo Pana li Wan mute Pana
+
+ijo Tenpo li 1
+ijo NanpaTenpo li 1
+ijo NanpaMute li KoSona en KipisiSona
+
+ijo Pini li Sona anu KoSona
+ijo Pini li Pini ala
+ijo Pini li Pini mute Ala
+ken Pini la pini
+
+ma Mute
+ijo Tenpo li Tenpo mute 2
+ijo NanpaTenpo li NanpaTenpo en 1
+ken NanpaMute weka NanpaTenpo la tawa Mute
+
+ijo WanKamaAla li WanKama ala
+ken Pana mute WanKamaAla la ijo KoSona li KoSona en 1
+
+ken Pana mute WanKama la ijo KoSona li 0
+ken Pana mute WanKama la ijo KipisiSona li NanpaMute
+ken Pana mute WanKama la ijo Sona li Sona en Tenpo
+
+ken Sona anu KoSona la nanpa Sona KoSona
+ken Sona anu KoSona la tawa Suno
