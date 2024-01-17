@@ -1,0 +1,17 @@
+(Unix 'cat' in Dis.  This is the language test; I shall be working on a)
+('Hello, world' program presently.  In the meantime, here's cat with   )
+(explanation:                                                          )
+
+    * (Set the data pointer to 42--from the ASCII code of '*')
+    ^ (Jump to label 1, below, via the ! at the new data pointer.)
+
+||||||||||||||||||||||||||||||||
+      (Placeholders.)
+
+      (label 1:)
+   }{ (Read a character, write, automatically die on EOF.)
+    * (Set data pointer back to 42.)
+    ^ (Read character, write character, repeat.)
+||||| (More placeholders.)
+ !||* (Data for jump and data pointer instructions which are used
+       elsewhere.)
