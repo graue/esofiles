@@ -1,0 +1,9 @@
+(This program will find the distance between two coordinates in 3D space.)))
+(Please input [X1].y1..z1..x2..y2..z2.));>)
+(Please input .x1.[y1].z1..x2..y2..z2.));>)
+(Please input .x1..y1.[z1].x2..y2..z2.));>)
+(Please input .x1..y1..z1.[x2].y2..z2.));>)
+(Please input .x1..y1..z1..x2.[y2].z2.));>)
+(Please input .x1..y1..z1..x2..y2.[z2]));)
+<<<$<<<-$*>$>>>-$*>$<<<-$*$<<+$>>>>+>_}}1$<^
+(Distance: ):)
