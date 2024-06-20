@@ -1,0 +1,64 @@
+Grin has 48 commands. It has a tape size of 2^63 and programs can be up to 2^63 commands. 
+All values are 64-bit floating points.
+
+By default, grin.exe runs code.txt. Drag and drop any file onto it to parse it.
+
+It works very similarly to BrainFuck - simply replace the "+"s with "}"s and the "-"s 
+with "{"s and you'll get a working program. MathFuck adds a single value register and
+utilizes it to allow easier arithmatic than in BrainFuck. # marks the beginning and end
+of a comment.
+
+
+
+
+Commands:
+
+>	shift memory cell right
+<	shift memory cell left
+.	output the content of this memory cell as an ASCII character
+:	output the content of this cell as a number.
+,	set this memory cell's value to the ASCII value of input
+;	set this memory cell's value to a number inputted
+'	output the register as an ASCII character
+"	output the register as a number
++	add this memory cell to the value in the register and put the answer in this memory cell
+-	subtract the value in the register from the value in this memory cell
+*	multiply this memory cell by the value in the register
+/	divide this memory cell by the value in the register
+^	raise this memory cell to the exponent in the register
+$	store the current memory cell in the register
+\	store the value that's in the register in the current memory cell
+~	swap the value in the register and the current memory cell
+=	set the register to 0
+_	set the memory cell under the pointer to 0
+%	current memory cell is modulo'd by the value in the register
+r	round the memory cell to the nearest integer
+&	perform a logical NAND on the memory cell and the register
+|	perform a logical OR on the memory cell and the register
+!	perform a logical NOT on the memory cell
+@	Negate the memory cell under the pointer
+[	jump past the matching ] if the current memory cell is <= 0
+]	jump back to the matching [
+?	If the cell under the pointer is >0 it becomes 1 and if it's <0 it becomes -1
+}	increment the memory cell under the pointer by 1
+{	decrement the memory cell under the pointer by 1
+(	print all characters up to the next ) to the console
+)	print a newline
+s	put the sine of the number in the current memory cell in the current memory cell
+c	calculate the cosine of the current memory cell
+t	calculate the tangent of the current memory cell
+S	calculate the arcsine of the current memory cell
+C	calculate arccos
+T	calculate arctan
+1	divides 1 by the current memory cell and places it there
+2	performs modulo 2 on the current memory cell
+e	sets the current cell's value to e
+p	sets the current cell's value to pi
+l	takes the natural log of the current cell and stores it there
+m	stores the arithmatic mean of the current cell and the register in this cell
+q	takes the square root of the current memory cell and places it there
+L	takes the log of the current cell using the register as the base and puts it in the cell
+j	if the register is >0 the program skips the number of instructions specified by the register, if a decimal is specified the number is rounded down
+D	toggles following trigonometric functions to operate on degrees or radians; degrees is the default
+`	end the program
+#	starts and ends a comment
