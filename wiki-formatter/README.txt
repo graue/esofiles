@@ -1,0 +1,1 @@
+This sh script takes an input file, formats it to display as a code block on the wiki, and then copies the formatted code to be pasted into the editing window. The sed script used can also be invoked directly to use content from other sources.
