@@ -48,7 +48,7 @@ sub	run
 		: /\*/	? $a = $mem[$d] = int ($mem[$d] / 3) + $mem[$d] % 3 * $size / 3
 		: /p/	? $a = $mem[$d] = op ($a, $mem[$d])
 		: /</	? print chr $a % 256
-		: /\//	? $a = eof () ? $size - 1 : getc ()
+		: /\//	? $a = eof () ? $size - 1 : ord( getc () )
 		: /v/	? last
 		: ();
 		warn "attempt to exploit security hole\n"
